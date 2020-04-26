@@ -10,7 +10,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/corona.jpg",
+    "icon": "./assets/images/corona.png",
     "scheme": "myapp",
     "facebookAppId": "237156577505364",
     "facebookDisplayName": "Rona",

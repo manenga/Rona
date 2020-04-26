@@ -63,12 +63,7 @@ export default class WorldViewScreen extends React.Component {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
             <Image
-              source={
-                {uri: 'https://corona.rickkln.com/static/36a619931c32e2167fbaf50f9806310b/e43a9/coronavirus.png'}
-                // __DEV__
-                //   ? require('../assets/images/robot-dev.png')
-                //   : require('../assets/images/robot-prod.png')
-              }
+              source={require('../assets/images/coronavirus.png')}
               style={styles.welcomeImage}
             />
           </View>
