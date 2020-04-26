@@ -5,6 +5,7 @@ import { MonoText } from '../components/StyledText';
 import styles from '../constants/Styles';
 import Colors from '../constants/Colors';
 import { format } from '../constants/Extensions'
+import * as FacebookAds from 'expo-ads-facebook';
 
 export default class WorldViewScreen extends React.Component {
   constructor(props) {
@@ -78,6 +79,7 @@ export default class WorldViewScreen extends React.Component {
             <Text style={styles.getStartedText}>Coronavirus Cases:</Text>
             <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
               <MonoText style={{fontSize: 32}}>{format(this.state.worldConfirmed)}</MonoText>
+              {/* <Text>(+10 change)</Text> */}
             </View>
 
             <Text style={styles.getStartedText}>Deaths:</Text>
@@ -91,7 +93,27 @@ export default class WorldViewScreen extends React.Component {
             </View>
           </View>
         </ScrollView>
+        <ViewWithBanner/> 
       </View>
     );
   }
 }
+
+function ViewWithBanner(props) {
+  return (
+    <View style={{paddingBottom: 20}}>
+      <FacebookAds.BannerAd
+        placementId="237156577505364_237619077459114"
+        type="standard"
+        onPress={() => console.log('click')}
+        onError={error => console.log('error', error)}
+      />
+    </View>
+  );
+}
+
+/* Features
+- todayCases, todayDeaths
+- collapsible sections
+    most affected countries by total deaths, new deaths, total cases, new cases
+*/

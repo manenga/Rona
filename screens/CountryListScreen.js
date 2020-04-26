@@ -5,9 +5,8 @@ import { Icon } from "react-native-elements";
 import styles from '../constants/Styles';
 // import { AlphabetListView } from 'react-native-alphabetlistview';
 import { format } from '../constants/Extensions'
-import Colors from '../constants/Colors';
 
-class CountryViewScreen extends React.Component {
+class CountryListScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -94,4 +93,8 @@ class CountryViewScreen extends React.Component {
   };
   }
 
-export default CountryViewScreen;
+export default CountryListScreen;
+
+/* Features
+- continent filter chips
+*/

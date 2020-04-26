@@ -2,6 +2,7 @@
   "expo": {
     "name": "Rona",
     "slug": "Rona",
+    "privacy": "unlisted",
     "platforms": [
       "ios",
       "android",
@@ -9,8 +10,10 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/corona.jpg",
     "scheme": "myapp",
+    "facebookAppId": "237156577505364",
+    "facebookDisplayName": "Rona",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -22,9 +25,18 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
+    "userInterfaceStyle": "automatic",
+    "android": {
+      "versionCode": 1,
+      "userInterfaceStyle": "dark",
+      "package": "com.manengamungandi.rona"
     },
-    "description": ""
+    "ios": {
+      "buildNumber": "1.0.0",
+      "supportsTablet": true,
+      "userInterfaceStyle": "dark",
+      "bundleIdentifier": "com.manengamungandi.rona"
+    },
+    "description": "Mobile App to track the Covid19 Global Pandemic for South Africa "
   }
 }

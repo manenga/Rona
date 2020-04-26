@@ -5,9 +5,10 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import { AppearanceProvider } from 'react-native-appearance';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
+import * as FacebookAds from 'expo-ads-facebook';
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,12 @@ export default function App(props) {
           ...Ionicons.font,
           'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
         });
+        
+
+        // Add Test device for Facebook Ads to show in development.
+        if (Platform.OS === "android" || Platform.OS === "ios") {
+          FacebookAds.AdSettings.addTestDevice(FacebookAds.AdSettings.currentDeviceHash);
+        }
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn('CHECK THIS OUUUT');
@@ -48,14 +55,16 @@ export default function App(props) {
     return null;
   } else {
     return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <Stack.Navigator>
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </View>
+      <AppearanceProvider>
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+            <Stack.Navigator>
+              <Stack.Screen name="Root" component={BottomTabNavigator} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+      </AppearanceProvider>
     );
   }
 }

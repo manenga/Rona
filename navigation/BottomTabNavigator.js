@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
-
 import TabBarIcon from '../components/TabBarIcon';
 import WorldViewScreen from '../screens/WorldViewScreen';
-import CountryViewScreen from '../screens/CountryViewScreen';
+import CountryListScreen from '../screens/CountryListScreen';
+import CountryDetailScreen from '../screens/CountryDetailScreen';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'World';
@@ -14,7 +14,7 @@ export default function BottomTabNavigator({ navigation, route }) {
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
-  return (
+  return ( 
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
         name="World"
@@ -25,11 +25,11 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Countries"
-        component={CountryViewScreen}
+        name="Country"
+        component={CountryDetailScreen}
         options={{
-          title: 'Country View',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-compass" />, // md-map
+          title: 'South Africa',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-pin" />, // ios-compass
         }}
       />
     </BottomTab.Navigator>

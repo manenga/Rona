@@ -1,10 +1,9 @@
 import * as WebBrowser from 'expo-web-browser';
+import * as React from 'react';
 
 export function format(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
-
-
 
 function DevelopmentModeNotice() {
     if (__DEV__) {

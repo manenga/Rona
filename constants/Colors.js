@@ -1,6 +1,8 @@
 const tintColor = '#2f95dc';
 const primary = '#B03633';
 const darkGrey = '#434041';
+const grey = '#1FFFFFFF';
+const lightGrey = '#DCDCDC';
 
 export default {
   tintColor,
