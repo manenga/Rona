@@ -28,6 +28,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         activeTintColor: Colors.primary,
         inactiveTintColor: 'gray',
         style: {
+          padding: 4,
           backgroundColor: 'white',
       },
       }}>
@@ -36,7 +37,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={WorldViewScreen}
         options={{
           title: 'World View',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-globe" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="globe-africa" />,
         }}
       />
       <BottomTab.Screen
@@ -44,7 +45,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={CountryDetailScreen}
         options={{
           title: 'South Africa',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-pin" />, // ios-compass
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="map-marked-alt" />,
         }}
       />
     </BottomTab.Navigator>
