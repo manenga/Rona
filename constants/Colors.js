@@ -1,3 +1,9 @@
+//
+// Author: Manenga Mungandi
+// Colors.js
+// Rona
+//
+
 const tintColor = '#2f95dc';
 const primary = '#B03633';
 const darkGrey = '#434041';

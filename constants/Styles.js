@@ -1,3 +1,9 @@
+//
+// Author: Manenga Mungandi
+// Styles.js
+// Rona
+//
+
 import { StyleSheet, Platform } from 'react-native';
 import Color from '../constants/Colors';
 

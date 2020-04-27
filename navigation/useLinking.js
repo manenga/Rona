@@ -1,3 +1,9 @@
+//
+// Author: Manenga Mungandi
+// useLinking.js
+// Rona
+//
+
 import { useLinking } from '@react-navigation/native';
 import { Linking } from 'expo';
 

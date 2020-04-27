@@ -1,3 +1,9 @@
+//
+// Author: Manenga Mungandi
+// CountryDetailScreen.js
+// Rona
+//
+
 import * as React from 'react';
 import { Text, View, Image, FlatList } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';

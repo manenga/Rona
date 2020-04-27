@@ -1,9 +1,14 @@
+//
+// Author: Manenga Mungandi
+// WorldViewScreen.js
+// Rona
+//
+
 import * as React from 'react';
 import { Image, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { MonoText } from '../components/StyledText';
 import styles from '../constants/Styles';
-import Colors from '../constants/Colors';
 import { format } from '../constants/Extensions'
 import * as FacebookAds from 'expo-ads-facebook';
 

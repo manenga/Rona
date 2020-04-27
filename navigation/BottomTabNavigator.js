@@ -1,3 +1,9 @@
+//
+// Author: Manenga Mungandi
+// BottomTabNavigator.js
+// Rona
+//
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import * as React from 'react';
 import TabBarIcon from '../components/TabBarIcon';
