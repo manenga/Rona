@@ -5,17 +5,18 @@
 //
 
 import * as React from 'react';
-import { View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from '../constants/Styles';
-import { BasicSummaryView } from '../components/StyledViews';
+import { BasicSummaryView, LoadingSummaryRow } from '../components/StyledViews';
 import * as FacebookAds from 'expo-ads-facebook';
 
 class CountryDetailScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        dataSource: ''
+        dataSource: '',
+        summaryLoaded: false,
       };
   }
 
@@ -33,6 +34,7 @@ class CountryDetailScreen extends React.Component {
     .catch((error) => console.error(error))
     .finally(() => {
       // console.log('finally finished')
+      this.setState({summaryLoaded: true})
     })
   }
 
@@ -44,19 +46,30 @@ class CountryDetailScreen extends React.Component {
     var todayCases = item.todayCases ?? 0;
     var todayDeaths = item.todayDeaths ?? 0;
     var flag = 'https://corona.lmao.ninja/assets/img/flags/za.png';
-    const props = {headerText: 'South Africa', headerImage: flag, cases: item.cases, deaths: item.deaths, recovered: item.recovered};
+    const props = {
+      headerText: 'South Africa', 
+      headerImage: flag, 
+      cases: item.cases, 
+      deaths: item.deaths, 
+      recovered: item.recovered
+    };
 
-    return (
+    if (this.state.summaryLoaded) {
+      return (
         <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
             <ScrollView 
               style={[styles.container, {height: '100%'}]} 
               contentContainerStyle={styles.contentContainer}>
-              <BasicSummaryView props={props}/>
+                <BasicSummaryView props={props}/>
             </ScrollView>
             <AdViewWithBanner/> 
         </View>
-    )}; 
+      ); 
+    } else {
+      return <LoadingSummaryRow/>;
+    }
   }
+}
 
 function AdViewWithBanner(props) {
     return (

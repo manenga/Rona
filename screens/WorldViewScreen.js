@@ -10,7 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import styles from '../constants/Styles';
 import { format } from '../constants/Extensions'
 import * as FacebookAds from 'expo-ads-facebook';
-import { BasicSummaryView } from '../components/StyledViews';
+import { BasicSummaryView, LoadingSummaryRow } from '../components/StyledViews';
 
 export default class WorldViewScreen extends React.Component {
   constructor(props) {
@@ -21,6 +21,7 @@ export default class WorldViewScreen extends React.Component {
       worldDeaths: 0,
       worldConfirmed: 0,
       WorldRecovered: 0,
+      summaryLoaded: false,
     };
   }
 
@@ -59,6 +60,7 @@ export default class WorldViewScreen extends React.Component {
       .catch((error) => console.error(error))
       .finally(() => {
         console.log('finally finished')
+        this.setState({summaryLoaded: true})
       })
   }
 
@@ -69,24 +71,28 @@ export default class WorldViewScreen extends React.Component {
       recovered: format(this.state.WorldRecovered)
     };
 
-    return (
-      <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={require('../assets/images/coronavirus.png')}
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View>
-            {/* <DevelopmentModeNotice /> */}
-            <BasicSummaryView props={props}/>
-          </View>
-        </ScrollView>
-        <ViewWithBanner/> 
-      </View>
-    );
+    if (this.state.summaryLoaded) {
+      return (
+        <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
+          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+            <View style={styles.welcomeContainer}>
+              <Image
+                source={require('../assets/images/coronavirus.png')}
+                style={styles.welcomeImage}
+              />
+            </View>
+  
+            <View>
+              {/* <DevelopmentModeNotice /> */}
+              <BasicSummaryView props={props}/>
+            </View>
+          </ScrollView>
+          <ViewWithBanner/> 
+        </View>
+      );
+    } else {
+      return <LoadingSummaryRow/>;
+    }
   }
 }
 
