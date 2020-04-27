@@ -79,7 +79,7 @@ export default class WorldViewScreen extends React.Component {
             />
           </View>
 
-          <View style={styles.getStartedContainer}>
+          <View>
             {/* <DevelopmentModeNotice /> */}
             <BasicSummaryView props={props}/>
           </View>

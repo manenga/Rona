@@ -48,7 +48,9 @@ class CountryDetailScreen extends React.Component {
 
     return (
         <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
-            <ScrollView style={[styles.container, {height: '100%'}]} contentContainerStyle={styles.contentContainer}>
+            <ScrollView 
+              style={[styles.container, {height: '100%'}]} 
+              contentContainerStyle={styles.contentContainer}>
               <BasicSummaryView props={props}/>
             </ScrollView>
             <AdViewWithBanner/> 

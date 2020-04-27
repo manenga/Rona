@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     },
     getStartedContainer: {
       alignItems: 'center',
-      marginHorizontal: 50,
+      marginHorizontal: 5,
     },
     homeScreenFilename: {
       marginVertical: 7,
