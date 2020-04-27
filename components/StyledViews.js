@@ -7,10 +7,22 @@
 import * as React from 'react';
 import { ActivityIndicator, Text, View, Image } from 'react-native';
 import styles from '../constants/Styles';
+import Colors from '../constants/Colors';
 import { format } from '../constants/Extensions';
 import { MonoText } from '../components/StyledText';
 import { Card } from 'react-native-elements'
-
+import {
+    BallIndicator,
+    BarIndicator,
+    DotIndicator,
+    MaterialIndicator,
+    PacmanIndicator,
+    PulseIndicator,
+    SkypeIndicator,
+    UIActivityIndicator,
+    WaveIndicator,
+  } from 'react-native-indicators';
+    
 export class BasicSummaryView extends React.Component {
     constructor(props) {
         super(props);
@@ -51,9 +63,9 @@ function BasicSummaryRow(props) {
 
 export function LoadingSummaryRow(props) {
     return (
-        <View style={{paddingVertical: 10, alignItems: 'center', justifyContent: 'center'}}>
-            <ActivityIndicator style={{color: 'white'}} size='small'/>
-            <Text style={{color: '#AE3A37', marginTop: 8, fontSize: 17}}>Loading data...</Text>
+        <View style={{marginTop:35, alignItems: 'center', justifyContent: 'center'}}>
+            <SkypeIndicator style={{marginBottom: 30}} color={Colors.primary} />
+            <Text style={{color: '#AE3A37', fontSize: 17}}>Loading data...</Text>
         </View>
     );
   }
