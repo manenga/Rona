@@ -47,18 +47,17 @@ const styles = StyleSheet.create({
       paddingHorizontal: 4,
     },
     metricHighlightContainer: {
-      backgroundColor: 'rgba(253, 155, 152, 0.6)',
+      backgroundColor: '#FFF1F1',
       borderRadius: 3,
       paddingHorizontal: 4,
     },
     getStartedText: {
       fontSize: 21,
       lineHeight: 32,
-      color: Color.grey,
+      color: Color.darkGrey,
       textAlign: 'center',
     },
     countryNameHeaderText: {
-      fontSize: 21,
       color: 'rgba(96,100,109, 1)',
       lineHeight: 32,
       textAlign: 'center',
@@ -67,6 +66,12 @@ const styles = StyleSheet.create({
       fontWeight: 'bold', 
       fontSize: 18, 
       color: '#600200'
+    },
+    lastUpdateFooterText: {
+      fontSize: 11,
+      color: 'rgba(96,100,109, 1)',
+      textAlign: 'center',
+      marginTop: 4, 
     },
     tabBarInfoContainer: {
       position: 'absolute',
@@ -136,9 +141,6 @@ const styles = StyleSheet.create({
     },
     gradientView: {
       alignItems: 'center', 
-      padding: 20, 
-      borderRadius:10, 
-      borderWidth: 1, 
       borderColor: 'transparent'
     }
   });

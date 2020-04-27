@@ -49,8 +49,11 @@ class CountryDetailScreen extends React.Component {
     const props = {
       headerText: 'South Africa', 
       headerImage: flag, 
-      cases: item.cases, 
+      tests: item.tests,
+      cases: item.cases,
+      todayCases: todayCases, 
       deaths: item.deaths, 
+      todayDeaths: todayDeaths,
       recovered: item.recovered
     };
 

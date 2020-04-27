@@ -13,13 +13,17 @@ import { format } from '../constants/Extensions'
 import * as FacebookAds from 'expo-ads-facebook';
 import { BasicSummaryView, CasesPieChart, LoadingSummaryRow } from '../components/StyledViews';
 import { LineChart, BarChart, PieChart, ProgressChart, StackedBarChart } from "react-native-chart-kit";
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default class WorldViewScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       dataSource: '',
+      lastUpdate: 0,
       worldTests: 0,
+      todayDeaths: 0,
+      todayCases: 0,
       worldDeaths: 0,
       worldConfirmed: 0,
       worldRecovered: 0,
@@ -31,13 +35,15 @@ export default class WorldViewScreen extends React.Component {
     fetch('https://corona.lmao.ninja/v2/all')
       .then((response) => {
         console.log('=============================')
-        // console.log('response: ' + response)
+        console.log('response: ' + response.todayCases)
         return response.json()
       })
       .then((json) => {
         const tests = json.tests ?? 0;
         const deaths = json.deaths ?? 0;
+        const todayDeaths = json.todayDeaths ?? 0;
         const confirmed = json.cases ?? 0;
+        const todayCases = json.todayCases ?? 0;
         const recovered = json.recovered ?? 0;
         const lastUpdate = json.updated ?? 0;
         // console.log('Json: ' + json.toString)
@@ -46,27 +52,36 @@ export default class WorldViewScreen extends React.Component {
         this.setState({dataSource: json})
         this.setState({worldTests: tests})
         this.setState({worldDeaths: deaths})
+        this.setState({todayCases: todayCases})
+        this.setState({todayDeaths: todayDeaths})
+        this.setState({lastUpdate: lastUpdate})
         this.setState({worldConfirmed: confirmed})
         this.setState({worldRecovered: recovered})
         
         // Print Summary
-        console.log('Number of deaths: ' + format(deaths))
-        console.log('Number of confirmed cases: ' + format(confirmed))
-        console.log('Number of recovered cases: ' + format(recovered))
+        // console.log('Number of todayDeaths: ' + format(todayDeaths))
+        // console.log('Number of confirmed cases: ' + format(confirmed))
+        // console.log('Number of todayCases: ' + format(todayCases))
       })
       .catch((error) => console.error(error))
       .finally(() => {
-        console.log('finally finished')
+        // console.log('finally finished')
         this.setState({summaryLoaded: true})
       })
   }
 
   render() {
     // Data for BasicSummaryView
+    console.log('Number of todayDeaths: ' + format(this.state.todayDeaths))
+    console.log('Number of todayCases: ' + format(this.state.todayCases))
     const props = {
+      tests: format(this.state.worldTests), 
       cases: format(this.state.worldConfirmed), 
+      todayDeaths: this.state.todayDeaths, 
+      todayCases: this.state.todayCases, 
       deaths: format(this.state.worldDeaths), 
-      recovered: format(this.state.worldRecovered)
+      recovered: format(this.state.worldRecovered),
+      lastUpdate: this.state.lastUpdate
     };
 
     // Data for CasesPieChartView
@@ -104,17 +119,15 @@ export default class WorldViewScreen extends React.Component {
 
     if (this.state.summaryLoaded) {
       return (
-        <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
-          <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, {alignItems: 'center'}]}>
-            <Image
-              source={require('../assets/images/coronavirus.png')}
-              style={[styles.welcomeImage, {marginBottom: 30}]}
-            />
+        <LinearGradient 
+          style={[styles.gradientView, {height: '100%', width: '100%', borderRadius: 0}]}
+          colors={['#600200', '#D35D5A', '#390100']}>
+            <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, {alignItems: 'center'}]}>
             <BasicSummaryView props={props}/>
             {/* <CasesPieChartView props={data}/> */}
           </ScrollView>
           <ViewWithBanner/> 
-        </View>
+        </LinearGradient>
       );
     } else {
       return <LoadingSummaryRow/>;
@@ -130,7 +143,7 @@ function CasesPieChartView(props) {
 
 function ViewWithBanner(props) {
   return (
-    <View style={{paddingBottom: 20}}>
+    <View style={{width: '100%', paddingBottom: 20}}>
       <FacebookAds.BannerAd
         placementId="237156577505364_237619077459114"
         type="standard"

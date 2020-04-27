@@ -14,6 +14,7 @@ import { Card } from 'react-native-elements'
 import { DotIndicator, PulseIndicator, SkypeIndicator } from 'react-native-indicators';
 import { LineChart, BarChart, PieChart, ProgressChart, StackedBarChart } from "react-native-chart-kit";
 import { LinearGradient } from 'expo-linear-gradient';
+import Moment from 'moment';
 
 export class BasicSummaryView extends React.Component {
     constructor(props) {
@@ -32,22 +33,26 @@ export class BasicSummaryView extends React.Component {
         { hasHeaderText ? <Image source={{uri: headerImage}} style={styles.basicSummaryViewHeaderImage}/> : null }
         { hasHeaderText ? <Text style={styles.countryNameHeaderText}>{headerText}</Text> : null }
 
-        <LinearGradient colors={['#B03633', '#D35D5A', '#B03633']} style={[styles.gradientView, {width: "80%", aspectRatio: 1}]}>
-            <BasicSummaryRow props={{header: 'Coronavirus Cases:', value: format(data.cases ?? 0)}}/>
-            <BasicSummaryRow props={{header: 'Deaths:', value: format(data.deaths ?? 0), valueColor: 'red'}}/>
-            <BasicSummaryRow props={{header: 'Recovered:', value: format(data.recovered ?? 0), valueColor: 'green'}}/>
-        </LinearGradient>
+        <Card containerStyle={{borderRadius: 2, shadowRadius: 2, padding: 25}}>
+            <BasicSummaryRow props={{header: 'Tests', value: format(data.tests ?? 0)}}/>
+            <BasicSummaryRow props={{header: 'Cases', value: format(data.cases ?? 0), subValue: data.todayCases}}/>
+            <BasicSummaryRow props={{header: 'Recovered', value: format(data.recovered ?? 0)}}/>
+            <BasicSummaryRow props={{header: 'Deaths', value: format(data.deaths ?? 0), subValue: data.todayDeaths}}/>
+            <Text style={styles.lastUpdateFooterText}>Last update {Moment(data.lastUpdate).format('d MMM HH:mm')}</Text>
+        </Card>
     </View>
   );}
 }
 
 function BasicSummaryRow(props) {
     const data = props.props;
+    const subValue = data.subValue ?? 0;
     return (
       <View>
           <Text style={styles.getStartedText}>{data.header}</Text>
           <View style={[styles.metricHighlightContainer, styles.homeScreenFilename, {alignItems: 'center'}]}>
               <MonoText style={{fontSize: 32, color: data.valueColor ?? 'black'}}>{data.value}</MonoText>
+              {data.subValue > 0 && <Text style={[styles.lastUpdateFooterText, {marginBottom: 5}]}>+{format(subValue)} today</Text> }
           </View>
       </View>
     );
@@ -76,7 +81,7 @@ export function LoadingSummaryRow(props) {
     let chartConfig = data.chartConfig ?? defaultChartConfig
 
     return (
-        <LinearGradient colors={['#B03633', '#D35D5A', '#B03633']} style={[styles.gradientView, {marginTop: 30, width: '80%', padding: 0}]}>
+        <LinearGradient colors={['#FFDDDC']} style={[styles.gradientView, {marginTop: 30, width: '80%', padding: 0}]}>
         <PieChart
             style={{marginTop: 0}}
             data={data}
