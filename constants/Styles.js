@@ -129,6 +129,11 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-start',
       marginTop: 1,
     },
+    basicSummaryViewHeaderImage: {
+      width: 70, 
+      height: 40, 
+      resizeMode: 'contain'
+    }
   });
 
   export default styles;

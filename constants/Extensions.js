@@ -43,3 +43,8 @@ function DevelopmentModeNotice() {
       'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
     );
   }
+
+  // TODO
+  // Object level function extensions
+  // https://stackoverflow.com/questions/47630632/react-where-to-extend-object-prototype
+  //

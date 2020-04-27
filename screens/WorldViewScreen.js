@@ -7,10 +7,10 @@
 import * as React from 'react';
 import { Image, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { MonoText } from '../components/StyledText';
 import styles from '../constants/Styles';
 import { format } from '../constants/Extensions'
 import * as FacebookAds from 'expo-ads-facebook';
+import { BasicSummaryView } from '../components/StyledViews';
 
 export default class WorldViewScreen extends React.Component {
   constructor(props) {
@@ -63,6 +63,12 @@ export default class WorldViewScreen extends React.Component {
   }
 
   render() {
+    const props = {
+      cases: format(this.state.worldConfirmed), 
+      deaths: format(this.state.worldDeaths), 
+      recovered: format(this.state.WorldRecovered)
+    };
+
     return (
       <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -75,22 +81,7 @@ export default class WorldViewScreen extends React.Component {
 
           <View style={styles.getStartedContainer}>
             {/* <DevelopmentModeNotice /> */}
-
-            <Text style={styles.getStartedText}>Coronavirus Cases:</Text>
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={{fontSize: 32}}>{format(this.state.worldConfirmed)}</MonoText>
-              {/* <Text>(+10 change)</Text> */}
-            </View>
-
-            <Text style={styles.getStartedText}>Deaths:</Text>
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={{fontSize: 32, color: 'red'}}>{format(this.state.worldDeaths)}</MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>Recovered:</Text>
-            <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={{fontSize: 32, color: 'green'}}>{format(this.state.WorldRecovered)}</MonoText>
-            </View>
+            <BasicSummaryView props={props}/>
           </View>
         </ScrollView>
         <ViewWithBanner/> 

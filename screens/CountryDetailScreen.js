@@ -5,11 +5,10 @@
 //
 
 import * as React from 'react';
-import { Text, View, Image, FlatList } from 'react-native';
-import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import styles from '../constants/Styles';
-import { MonoText } from '../components/StyledText'
-import { format } from '../constants/Extensions'
+import { BasicSummaryView } from '../components/StyledViews';
 import * as FacebookAds from 'expo-ads-facebook';
 
 class CountryDetailScreen extends React.Component {
@@ -40,40 +39,17 @@ class CountryDetailScreen extends React.Component {
   render() {
     let item = this.state.dataSource;
     // console.log('Rendering country: ' + item.country)
+    // console.log('Rendering country: ' + item.cases);
 
     var todayCases = item.todayCases ?? 0;
     var todayDeaths = item.todayDeaths ?? 0;
     var flag = 'https://corona.lmao.ninja/assets/img/flags/za.png';
+    const props = {headerText: 'South Africa', headerImage: flag, cases: item.cases, deaths: item.deaths, recovered: item.recovered};
 
     return (
         <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
             <ScrollView style={[styles.container, {height: '100%'}]} contentContainerStyle={styles.contentContainer}>
-                <View style={styles.getStartedContainer}>
-                    <Image source={{uri: flag}} style={{width: 70, height: 40, resizeMode: 'contain'}}/>  
-                    <Text style={styles.countryNameHeaderText}>South Africa</Text>
-
-                    <Text style={styles.getStartedText}>Coronavirus Cases:</Text>
-                    <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-                        <MonoText style={{fontSize: 32}}>{format(item.cases ?? 0)}</MonoText>
-                        {/* <MonoText style={{fontSize: 32}}>{format(item.cases ?? 0) + todayCases > 0 ? '(+' + todayCases + 'change)' : ''}</MonoText> */}
-                    </View>
-
-                    {/* <Text style={styles.getStartedText}>Tests:</Text>
-                    <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-                        <MonoText style={{fontSize: 32}}>{format(item.tests ?? 0)}</MonoText>
-                    </View> */}
-
-                    <Text style={styles.getStartedText}>Deaths:</Text>
-                    <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-                        <MonoText style={{fontSize: 32, color: 'red'}}>{format(item.deaths ?? 0)}</MonoText>
-                        {/* <MonoText style={{fontSize: 32, color: 'red'}}>{format(item.deaths ?? 0)  + '(+2 change)'}</MonoText> */}
-                    </View>
-
-                    <Text style={styles.getStartedText}>Recovered:</Text>
-                    <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-                        <MonoText style={{fontSize: 32, color: 'green'}}>{format(item.recovered ?? 0)}</MonoText>
-                    </View>
-                </View>
+              <BasicSummaryView props={props}/>
             </ScrollView>
             <AdViewWithBanner/> 
         </View>
