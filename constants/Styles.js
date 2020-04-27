@@ -10,7 +10,6 @@ import Color from '../constants/Colors';
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
     },
     developmentModeText: {
       marginBottom: 20,

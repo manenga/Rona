@@ -46,7 +46,7 @@ class CountryDetailScreen extends React.Component {
     var flag = 'https://corona.lmao.ninja/assets/img/flags/za.png';
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
             <ScrollView style={[styles.container, {height: '100%'}]} contentContainerStyle={styles.contentContainer}>
                 <View style={styles.getStartedContainer}>
                     <Image source={{uri: flag}} style={{width: 70, height: 40, resizeMode: 'contain'}}/>  

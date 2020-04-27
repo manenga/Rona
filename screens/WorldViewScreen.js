@@ -64,7 +64,7 @@ export default class WorldViewScreen extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
             <Image
