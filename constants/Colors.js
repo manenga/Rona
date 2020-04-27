@@ -11,6 +11,8 @@ const grey = '#1FFFFFFF';
 const lightGrey = '#DCDCDC';
 
 export default {
+  grey,
+  lightGrey,
   tintColor,
   primary,
   darkGrey,
