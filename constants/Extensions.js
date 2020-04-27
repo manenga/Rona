@@ -11,6 +11,13 @@ export function format(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+export function percentage(number, total) {
+  const result = number/total * 100;
+  console.log('number ' + number + ' total ' + total)
+  console.log('percentage ' + result)
+  return result;
+}
+
 function DevelopmentModeNotice() {
     if (__DEV__) {
       const learnMoreButton = (

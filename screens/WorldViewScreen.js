@@ -8,19 +8,21 @@ import * as React from 'react';
 import { Image, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from '../constants/Styles';
+import Color from '../constants/Colors';
 import { format } from '../constants/Extensions'
 import * as FacebookAds from 'expo-ads-facebook';
-import { BasicSummaryView, LoadingSummaryRow } from '../components/StyledViews';
+import { BasicSummaryView, CasesPieChart, LoadingSummaryRow } from '../components/StyledViews';
+import { LineChart, BarChart, PieChart, ProgressChart, StackedBarChart } from "react-native-chart-kit";
 
 export default class WorldViewScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       dataSource: '',
-      countries: [],
+      worldTests: 0,
       worldDeaths: 0,
       worldConfirmed: 0,
-      WorldRecovered: 0,
+      worldRecovered: 0,
       summaryLoaded: false,
     };
   }
@@ -33,29 +35,24 @@ export default class WorldViewScreen extends React.Component {
         return response.json()
       })
       .then((json) => {
-        var deaths = 0;
-        var confirmed = 0;
-        var recovered = 0;
-        var lastUpdate = 0;
-        var countries = [];
+        const tests = json.tests ?? 0;
+        const deaths = json.deaths ?? 0;
+        const confirmed = json.cases ?? 0;
+        const recovered = json.recovered ?? 0;
+        const lastUpdate = json.updated ?? 0;
         // console.log('Json: ' + json.toString)
-
-        deaths += json.deaths
-        recovered += json.recovered
-        confirmed += json.cases
         
         // Save state
         this.setState({dataSource: json})
+        this.setState({worldTests: tests})
         this.setState({worldDeaths: deaths})
-        this.setState({countries: countries})
         this.setState({worldConfirmed: confirmed})
-        this.setState({WorldRecovered: recovered})
+        this.setState({worldRecovered: recovered})
         
         // Print Summary
         console.log('Number of deaths: ' + format(deaths))
         console.log('Number of confirmed cases: ' + format(confirmed))
         console.log('Number of recovered cases: ' + format(recovered))
-        console.log('Number of countries: ' + countries.length)
       })
       .catch((error) => console.error(error))
       .finally(() => {
@@ -65,27 +62,56 @@ export default class WorldViewScreen extends React.Component {
   }
 
   render() {
+    // Data for BasicSummaryView
     const props = {
       cases: format(this.state.worldConfirmed), 
       deaths: format(this.state.worldDeaths), 
-      recovered: format(this.state.WorldRecovered)
+      recovered: format(this.state.worldRecovered)
     };
+
+    // Data for CasesPieChartView
+    const data = [
+      {
+        name: "Confirmed",
+        population: 34, //this.state.worldConfirmed,
+        color: 'yellow',
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 10
+      },
+      {
+        name: "Deaths",
+        population: 2, //this.state.worldDeaths,
+        color: Color.primary,
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 10
+      },
+      {
+        name: "Recoveries",
+        population: 64, //this.state.worldRecovered,
+        legend: '64%',
+        color: "green",
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 10
+      },
+      // {
+      //   name: "Tests",
+      //   population: this.state.worldTests,
+      //   color: "rgba(131, 167, 234, 1)",
+      //   legendFontColor: "#7F7F7F",
+      //   legendFontSize: 10
+      // }
+    ];
 
     if (this.state.summaryLoaded) {
       return (
         <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
-          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-            <View style={styles.welcomeContainer}>
-              <Image
-                source={require('../assets/images/coronavirus.png')}
-                style={styles.welcomeImage}
-              />
-            </View>
-  
-            <View>
-              {/* <DevelopmentModeNotice /> */}
-              <BasicSummaryView props={props}/>
-            </View>
+          <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, {alignItems: 'center'}]}>
+            <Image
+              source={require('../assets/images/coronavirus.png')}
+              style={styles.welcomeImage}
+            />
+            <BasicSummaryView props={props}/>
+            <CasesPieChartView props={data}/>
           </ScrollView>
           <ViewWithBanner/> 
         </View>
@@ -94,6 +120,12 @@ export default class WorldViewScreen extends React.Component {
       return <LoadingSummaryRow/>;
     }
   }
+}
+
+function CasesPieChartView(props) {
+  return (
+    <CasesPieChart props={props} />
+  );
 }
 
 function ViewWithBanner(props) {
