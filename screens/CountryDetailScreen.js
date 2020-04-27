@@ -50,7 +50,7 @@ class CountryDetailScreen extends React.Component {
             <ScrollView style={[styles.container, {height: '100%'}]} contentContainerStyle={styles.contentContainer}>
                 <View style={styles.getStartedContainer}>
                     <Image source={{uri: flag}} style={{width: 70, height: 40, resizeMode: 'contain'}}/>  
-                    <Text style={[styles.getStartedText, {marginTop: 12, marginBottom: 32, fontWeight: 'bold', fontSize: 18}]}>South Africa</Text>
+                    <Text style={styles.countryNameHeaderText}>South Africa</Text>
 
                     <Text style={styles.getStartedText}>Coronavirus Cases:</Text>
                     <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>

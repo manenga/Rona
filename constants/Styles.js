@@ -41,15 +41,32 @@ const styles = StyleSheet.create({
       color: 'rgba(96,100,109, 0.8)',
     },
     codeHighlightContainer: {
+      paddingHorizontal: 10,
       backgroundColor: 'rgba(0,0,0,0.05)',
+      borderRadius: 5,
+      paddingHorizontal: 4,
+    },
+    metricHighlightContainer: {
+      backgroundColor: 'rgba(60, 2, 0, 0.9)',
       borderRadius: 3,
       paddingHorizontal: 4,
     },
     getStartedText: {
       fontSize: 21,
+      lineHeight: 32,
+      color: '#212121',
+      textAlign: 'center',
+    },
+    countryNameHeaderText: {
+      fontSize: 21,
       color: 'rgba(96,100,109, 1)',
       lineHeight: 32,
       textAlign: 'center',
+      marginTop: 12, 
+      marginBottom: 32, 
+      fontWeight: 'bold', 
+      fontSize: 18, 
+      color: '#600200'
     },
     tabBarInfoContainer: {
       position: 'absolute',
