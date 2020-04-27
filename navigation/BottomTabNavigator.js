@@ -10,6 +10,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import WorldViewScreen from '../screens/WorldViewScreen';
 import CountryListScreen from '../screens/CountryListScreen';
 import CountryDetailScreen from '../screens/CountryDetailScreen';
+import Colors from '../constants/Colors';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'World';
@@ -21,7 +22,12 @@ export default function BottomTabNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
   return ( 
-    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+    <BottomTab.Navigator 
+      initialRouteName={INITIAL_ROUTE_NAME}
+      tabBarOptions={{
+        activeTintColor: Colors.primary,
+        inactiveTintColor: 'gray',
+      }}>
       <BottomTab.Screen
         name="World"
         component={WorldViewScreen}
