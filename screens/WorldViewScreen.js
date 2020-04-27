@@ -73,33 +73,33 @@ export default class WorldViewScreen extends React.Component {
     const data = [
       {
         name: "Confirmed",
-        population: 34, //this.state.worldConfirmed,
-        color: 'yellow',
-        legendFontColor: "#7F7F7F",
-        legendFontSize: 10
+        population: this.state.worldConfirmed,
+        color: '#FD9B98',
+        legendFontColor: "white",
+        legendFontSize: 12
+      },
+      {
+        name: "Tests",
+        population: this.state.worldConfirmed,
+        color: 'black',
+        legendFontColor: 'white',
+        legendFontSize: 12
       },
       {
         name: "Deaths",
-        population: 2, //this.state.worldDeaths,
+        population: this.state.worldDeaths,
         color: Color.primary,
-        legendFontColor: "#7F7F7F",
-        legendFontSize: 10
+        legendFontColor: "#600200",
+        legendFontSize: 12
       },
       {
         name: "Recoveries",
-        population: 64, //this.state.worldRecovered,
+        population: this.state.worldRecovered,
         legend: '64%',
-        color: "green",
-        legendFontColor: "#7F7F7F",
-        legendFontSize: 10
+        color: "#509F5A",
+        legendFontColor: "#02420A",
+        legendFontSize: 12
       },
-      // {
-      //   name: "Tests",
-      //   population: this.state.worldTests,
-      //   color: "rgba(131, 167, 234, 1)",
-      //   legendFontColor: "#7F7F7F",
-      //   legendFontSize: 10
-      // }
     ];
 
     if (this.state.summaryLoaded) {
@@ -108,10 +108,10 @@ export default class WorldViewScreen extends React.Component {
           <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, {alignItems: 'center'}]}>
             <Image
               source={require('../assets/images/coronavirus.png')}
-              style={styles.welcomeImage}
+              style={[styles.welcomeImage, {marginBottom: 30}]}
             />
             <BasicSummaryView props={props}/>
-            <CasesPieChartView props={data}/>
+            {/* <CasesPieChartView props={data}/> */}
           </ScrollView>
           <ViewWithBanner/> 
         </View>

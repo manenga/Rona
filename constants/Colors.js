@@ -5,19 +5,16 @@
 //
 
 const tintColor = '#2f95dc';
-const primary = '#B03633';
-const palePrimary = '#FFDDDC';
-const darkGrey = '#434041';
-const grey = '#1FFFFFFF';
-const lightGrey = '#DCDCDC';
 
 export default {
-  grey,
-  lightGrey,
+  grey: '#EFF0F1',
+  brightBlue: '#1FFFFFFF',
+  lightGrey: '#DCDCDC',
+  green: '#5DBA7D',
   tintColor,
-  primary,
-  palePrimary,
-  darkGrey,
+  primary: '#B03633',
+  palePrimary: '#FFDDDC',
+  darkGrey: '#434041', //#212121
   tabIconDefault: '#ccc',
   tabIconSelected: tintColor,
   tabBar: '#fefefe',

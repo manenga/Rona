@@ -13,7 +13,8 @@ import { MonoText } from '../components/StyledText';
 import { Card } from 'react-native-elements'
 import { DotIndicator, PulseIndicator, SkypeIndicator } from 'react-native-indicators';
 import { LineChart, BarChart, PieChart, ProgressChart, StackedBarChart } from "react-native-chart-kit";
- 
+import { LinearGradient } from 'expo-linear-gradient';
+
 export class BasicSummaryView extends React.Component {
     constructor(props) {
         super(props);
@@ -31,12 +32,11 @@ export class BasicSummaryView extends React.Component {
         { hasHeaderText ? <Image source={{uri: headerImage}} style={styles.basicSummaryViewHeaderImage}/> : null }
         { hasHeaderText ? <Text style={styles.countryNameHeaderText}>{headerText}</Text> : null }
 
-        <Card 
-            containerStyle={{backgroundColor: '#FFC7C6', width: "80%", aspectRatio: 1, justifyContent: 'center'}}>
+        <LinearGradient colors={['#B03633', '#D35D5A', '#B03633']} style={[styles.gradientView, {width: "80%", aspectRatio: 1}]}>
             <BasicSummaryRow props={{header: 'Coronavirus Cases:', value: format(data.cases ?? 0)}}/>
             <BasicSummaryRow props={{header: 'Deaths:', value: format(data.deaths ?? 0), valueColor: 'red'}}/>
             <BasicSummaryRow props={{header: 'Recovered:', value: format(data.recovered ?? 0), valueColor: 'green'}}/>
-        </Card>
+        </LinearGradient>
     </View>
   );}
 }
@@ -46,7 +46,7 @@ function BasicSummaryRow(props) {
     return (
       <View>
           <Text style={styles.getStartedText}>{data.header}</Text>
-          <View style={[styles.codeHighlightContainer, styles.homeScreenFilename, {alignItems: 'center'}]}>
+          <View style={[styles.metricHighlightContainer, styles.homeScreenFilename, {alignItems: 'center'}]}>
               <MonoText style={{fontSize: 32, color: data.valueColor ?? 'black'}}>{data.value}</MonoText>
           </View>
       </View>
@@ -63,36 +63,34 @@ export function LoadingSummaryRow(props) {
   }
 
   // More on this: https://github.com/indiespirit/react-native-chart-kit
+  // TODO: convert legend number to percentage
   export function CasesPieChart(props) {  
     let defaultChartConfig = {
-        backgroundGradientFrom: "#1E2923",
-    backgroundGradientTo: "#08130D",
+        backgroundColor: 'rgba(253, 155, 152, 0.6)',
         color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
         style: {
         borderRadius: 8
         }
     }
-    // console.log(props)
     const data = props.props.props ?? [];
     let chartConfig = data.chartConfig ?? defaultChartConfig
-    // console.log(props.props.props)
 
     return (
-        // <Card containerStyle={{backgroundColor: '#5B0200', width: "80%", aspectRatio: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <PieChart
-                style={{marginTop: 20}}
-                data={data}
-                width={Dimensions.get('window').width * .8}
-                height={150}
-                chartConfig={chartConfig}
-                accessor="population"
-                // backgroundColor="transparent"
-                paddingLeft="0"
-                hasLegend={true}
-                absolute
-                />
-        // </Card>
+        <LinearGradient colors={['#B03633', '#D35D5A', '#B03633']} style={[styles.gradientView, {marginTop: 30, width: '80%', padding: 0}]}>
+        <PieChart
+            style={{marginTop: 0}}
+            data={data}
+            backgroundColor={'rgba(253, 155, 152, 0.6)'}
+            width={Dimensions.get('window').width * .8}
+            height={150}
+            chartConfig={chartConfig}
+            accessor="population"
+            // backgroundColor="transparent"
+            paddingLeft="0"
+            hasLegend={true}
+            absolute
+        />
+        </LinearGradient>
     );
   }
 

@@ -47,14 +47,14 @@ const styles = StyleSheet.create({
       paddingHorizontal: 4,
     },
     metricHighlightContainer: {
-      backgroundColor: 'rgba(60, 2, 0, 0.9)',
+      backgroundColor: 'rgba(253, 155, 152, 0.6)',
       borderRadius: 3,
       paddingHorizontal: 4,
     },
     getStartedText: {
       fontSize: 21,
       lineHeight: 32,
-      color: '#212121',
+      color: Color.grey,
       textAlign: 'center',
     },
     countryNameHeaderText: {
@@ -133,6 +133,13 @@ const styles = StyleSheet.create({
       width: 70, 
       height: 40, 
       resizeMode: 'contain'
+    },
+    gradientView: {
+      alignItems: 'center', 
+      padding: 20, 
+      borderRadius:10, 
+      borderWidth: 1, 
+      borderColor: 'transparent'
     }
   });
 
