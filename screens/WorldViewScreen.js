@@ -11,8 +11,8 @@ import styles from '../constants/Styles';
 import Color from '../constants/Colors';
 import { format } from '../constants/Extensions'
 import * as FacebookAds from 'expo-ads-facebook';
-import { ActiveCasesPieChart, BasicSummaryView, CasesPieChart, LoadingSummaryRow, TestsPieChart } from '../components/StyledViews';
-import { LineChart, BarChart, PieChart, ProgressChart, StackedBarChart } from "react-native-chart-kit";
+import { BasicPieChart, BasicSummaryView, LoadingSummaryRow } from '../components/StyledViews';
+import { PieChart } from "react-native-chart-kit";
 import { LinearGradient } from 'expo-linear-gradient';
 
 export default class WorldViewScreen extends React.Component {
@@ -84,40 +84,7 @@ export default class WorldViewScreen extends React.Component {
       lastUpdate: this.state.lastUpdate
     };
 
-    // Data for CasesPieChartView
-    const data = [
-      {
-        name: "Confirmed",
-        population: this.state.worldConfirmed,
-        color: '#FD9B98',
-        legendFontColor: "white",
-        legendFontSize: 12
-      },
-      {
-        name: "Tests",
-        population: this.state.worldConfirmed,
-        color: 'black',
-        legendFontColor: 'white',
-        legendFontSize: 12
-      },
-      {
-        name: "Deaths",
-        population: this.state.worldDeaths,
-        color: Color.primary,
-        legendFontColor: "#600200",
-        legendFontSize: 12
-      },
-      {
-        name: "Recoveries",
-        population: this.state.worldRecovered,
-        legend: '64%',
-        color: "#509F5A",
-        legendFontColor: "#02420A",
-        legendFontSize: 12
-      },
-    ];
-
-    const activeCaseData = [
+    const activeInactiveCaseData = [
       {
         name: "Active",
         population: 55,
@@ -129,29 +96,29 @@ export default class WorldViewScreen extends React.Component {
         name: "Inactive",
         population: 200,
         color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
         legendFontSize: 12
       },
     ];
 
-    const activeCaseData2 = [
+    const mildSeriousCaseData = [
       {
         name: "Serious",
         population: 25,
         color: Color.primary,
-        legendFontColor: Color.primary,
+        legendFontColor: 'black',
         legendFontSize: 12
       },
       {
         name: "Mild",
         population: 175,
         color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
         legendFontSize: 12
       },
     ];
 
-    const recoveryCaseData = [
+    const recoveryDiagnosedCaseData = [
       {
         name: "Diagnosed",
         population: 25,
@@ -163,12 +130,12 @@ export default class WorldViewScreen extends React.Component {
         name: "Recovered",
         population: 175,
         color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
         legendFontSize: 12
       },
     ];
 
-    const deathRateCaseData = [
+    const deathsDiagnosedCaseData = [
       {
         name: "Diagnosed",
         population: 180,
@@ -180,7 +147,7 @@ export default class WorldViewScreen extends React.Component {
         name: "Deaths",
         population: 25,
         color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
         legendFontSize: 12
       },
     ];
@@ -198,7 +165,7 @@ export default class WorldViewScreen extends React.Component {
         name: "Unconfirmed",
         population: 95,
         color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
         legendFontSize: 12
       },
     ];
@@ -209,13 +176,12 @@ export default class WorldViewScreen extends React.Component {
           style={[styles.gradientView, {height: '100%', width: '100%', borderRadius: 0}]}
           colors={['#600200', '#D35D5A', '#390100']}>
             <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, {alignItems: 'center'}]}>
-            <BasicSummaryView props={props}/>
-            {/* <CasesPieChartView props={data}/> */}
-            <ActiveCasesPieChart props={activeCaseData}/>
-            <ActiveCasesPieChart props={activeCaseData2}/>
-            <ActiveCasesPieChart props={recoveryCaseData}/>
-            <ActiveCasesPieChart props={deathRateCaseData}/>
-            <TestsPieChart props={testsData}/>
+              <BasicSummaryView props={props}/>
+              <BasicPieChart props={{data: testsData, headerText: 'Tests Breakdown', footerText: 'Total tests taken cases'}}/>
+              <BasicPieChart props={{data: recoveryDiagnosedCaseData, headerText: 'Recovered / Diagnosed Cases', footerText: 'Total active cases'}}/>
+              <BasicPieChart props={{data: deathsDiagnosedCaseData, headerText: 'Deaths / Diagnosed Cases', footerText: 'Total active cases'}}/>
+              <BasicPieChart props={{data: activeInactiveCaseData, headerText: 'Active / Inactive Cases', footerText: 'Total confirmed cases'}}/>
+              <BasicPieChart props={{data: mildSeriousCaseData, headerText: 'Mild / Serious Cases', footerText: 'Total active cases'}}/>
           </ScrollView>
           <ViewWithBanner/> 
         </LinearGradient>
@@ -224,12 +190,6 @@ export default class WorldViewScreen extends React.Component {
       return <LoadingSummaryRow/>;
     }
   }
-}
-
-function CasesPieChartView(props) {
-  return (
-    <CasesPieChart props={props} />
-  );
 }
 
 function ViewWithBanner(props) {

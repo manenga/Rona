@@ -5,7 +5,7 @@
 //
 
 import * as React from 'react';
-import { ActivityIndicator, Text, View, Image, Dimensions } from 'react-native';
+import { Text, View, Image, Dimensions } from 'react-native';
 import styles from '../constants/Styles';
 import Colors from '../constants/Colors';
 import { format } from '../constants/Extensions';
@@ -15,6 +15,7 @@ import { DotIndicator, PulseIndicator, SkypeIndicator } from 'react-native-indic
 import { LineChart, BarChart, PieChart, ProgressChart, StackedBarChart } from "react-native-chart-kit";
 import { LinearGradient } from 'expo-linear-gradient';
 import Moment from 'moment';
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export class BasicSummaryView extends React.Component {
     constructor(props) {
@@ -47,9 +48,14 @@ export class BasicSummaryView extends React.Component {
 function BasicSummaryRow(props) {
     const data = props.props;
     const subValue = data.subValue ?? 0;
+    const icon = 'vials';
+
     return (
       <View>
-          <Text style={styles.getStartedText}>{data.header}</Text>
+          <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            {/* hidden for now <FontAwesome5 name={icon} size={17} color={Colors.darkGrey}/> */}
+            <Text style={[styles.getStartedText, {marginLeft: 12}]}>{data.header}</Text>
+          </View>
           <View style={[styles.metricHighlightContainer, styles.homeScreenFilename, {alignItems: 'center'}]}>
               <MonoText style={{fontSize: 32, color: data.valueColor ?? 'black'}}>{data.value}</MonoText>
               {data.subValue > 0 && <Text style={[styles.lastUpdateFooterText, {marginBottom: 5}]}>+{format(subValue)} today</Text> }
@@ -75,74 +81,32 @@ export function LoadingSummaryRow(props) {
     );
   }
 
-  export function ActiveCasesPieChart(props) {  
-    const data = props.props ?? [];
-    let chartConfig = data.chartConfig ?? defaultChartConfig
-    return (
-        <Card containerStyle={{borderRadius: 2, shadowRadius: 2, padding: 25}}>
-            <Text style={styles.countryNameHeaderText}>Confirmed Case Breakdown</Text>
-            <PieChart
-                style={{marginTop: 0}}
-                data={data}
-                // backgroundColor={'rgba(253, 155, 152, 0.6)'}
-                width={Dimensions.get('window').width * .6}
-                height={100}
-                chartConfig={chartConfig}
-                accessor="population"
-                paddingLeft="0"
-                hasLegend={true}
-                absolute
-            />
-            <Text style={styles.lastUpdateFooterText}>Total confirmed cases: {format(27162)}</Text>
-        </Card>
-    );
-  }
-
-  export function TestsPieChart(props) {  
-    const data = props.props ?? [];
-    let chartConfig = data.chartConfig ?? defaultChartConfig
-    return (
-        <Card containerStyle={{borderRadius: 2, shadowRadius: 2, padding: 25}}>
-            <Text style={styles.countryNameHeaderText}>Tests Breakdown</Text>
-            <PieChart
-                style={{marginTop: 0}}
-                data={data}
-                // backgroundColor={'rgba(253, 155, 152, 0.6)'}
-                width={Dimensions.get('window').width * .6}
-                height={100}
-                chartConfig={chartConfig}
-                accessor="population"
-                paddingLeft="0"
-                hasLegend={true}
-                absolute
-            />
-            <Text style={styles.lastUpdateFooterText}>Total tests taken: {format(637223)}</Text>
-        </Card>
-    );
-  }
-
   // More on this: https://github.com/indiespirit/react-native-chart-kit
   // TODO: convert legend number to percentage
-  export function CasesPieChart(props) {  
-    const data = props.props.props ?? [];
+  export function BasicPieChart(props) {  
+    const data = props.props.data ?? [];
+    const headerText = props.props.headerText ?? '';
+    const footerText = props.props.footerText ?? '';
+    const footerValue = props.props.footerValue ?? 0;
+    // const backgroundColor = 'rgba(253, 155, 152, 0.6)';
+    // console.log(props);
     let chartConfig = data.chartConfig ?? defaultChartConfig
-
     return (
-        <LinearGradient colors={['#FFDDDC']} style={[styles.gradientView, {marginTop: 30, padding: 0}]}>
-        <PieChart
-            style={{marginTop: 0}}
-            data={data}
-            backgroundColor={'rgba(253, 155, 152, 0.6)'}
-            width={Dimensions.get('window').width * .8}
-            height={150}
-            chartConfig={chartConfig}
-            accessor="population"
-            // backgroundColor="transparent"
-            paddingLeft="0"
-            hasLegend={true}
-            absolute
-        />
-        </LinearGradient>
+        <Card containerStyle={{borderRadius: 2, shadowRadius: 2, padding: 25}}>
+            <Text style={styles.countryNameHeaderText}>{headerText}</Text>
+            <PieChart
+                style={{marginTop: 0}}
+                data={data}
+                width={Dimensions.get('window').width * .7}
+                height={100}
+                chartConfig={chartConfig}
+                accessor="population"
+                paddingLeft="0"
+                hasLegend={true}
+                absolute
+            />
+            <Text style={styles.lastUpdateFooterText}>{footerText} {format(footerValue)}</Text>
+        </Card>
     );
   }
 
@@ -151,3 +115,7 @@ export function LoadingSummaryRow(props) {
 export function TimelineView(props) {  
   
 }
+
+// Nice to have charts
+// Cases over time / Recoveries / Deaths
+// New cases over time / Deaths

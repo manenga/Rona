@@ -49,6 +49,8 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
     </BottomTab.Navigator>
+
+    // Optional TODO - Prevention Tab
   );
 }
 
