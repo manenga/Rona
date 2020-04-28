@@ -2,7 +2,7 @@
   "expo": {
     "name": "Rona",
     "slug": "Rona",
-    "privacy": "unlisted",
+    "privacy": "public",
     "platforms": [
       "ios",
       "android",

@@ -3,7 +3,9 @@
 // WorldViewScreen.js
 // Rona
 //
-
+// Potential nice to have features:
+// most affected countries by total deaths, new deaths, total cases, new cases
+//
 import * as React from 'react';
 import { Image, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -15,26 +17,27 @@ import { BasicPieChart, BasicSummaryView, LoadingSummaryRow } from '../component
 import { PieChart } from "react-native-chart-kit";
 import { LinearGradient } from 'expo-linear-gradient';
 
+const initialState = {
+  dataSource: '',
+  lastUpdate: 0,
+  worldTests: 0,
+  todayDeaths: 0,
+  todayCases: 0,
+  worldDeaths: 0,
+  worldConfirmed: 0,
+  worldRecovered: 0,
+  summaryLoaded: false,
+}
+
 export default class WorldViewScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      dataSource: '',
-      lastUpdate: 0,
-      worldTests: 0,
-      todayDeaths: 0,
-      todayCases: 0,
-      worldDeaths: 0,
-      worldConfirmed: 0,
-      worldRecovered: 0,
-      summaryLoaded: false,
-    };
+    this.state = initialState;
   }
 
   componentDidMount(){
     fetch('https://corona.lmao.ninja/v2/all')
       .then((response) => {
-        console.log('=============================')
         // console.log('response: ' + response)
         return response.json()
       })
@@ -46,7 +49,6 @@ export default class WorldViewScreen extends React.Component {
         const todayCases = json.todayCases ?? 0;
         const recovered = json.recovered ?? 0;
         const lastUpdate = json.updated ?? 0;
-        // console.log('Json: ' + json.toString)
         
         // Save state
         this.setState({dataSource: json})
@@ -84,92 +86,6 @@ export default class WorldViewScreen extends React.Component {
       lastUpdate: this.state.lastUpdate
     };
 
-    const activeInactiveCaseData = [
-      {
-        name: "Active",
-        population: 55,
-        color: Color.primary,
-        legendFontColor: Color.primary,
-        legendFontSize: 12
-      },
-      {
-        name: "Inactive",
-        population: 200,
-        color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'black',
-        legendFontSize: 12
-      },
-    ];
-
-    const mildSeriousCaseData = [
-      {
-        name: "Serious",
-        population: 25,
-        color: Color.primary,
-        legendFontColor: 'black',
-        legendFontSize: 12
-      },
-      {
-        name: "Mild",
-        population: 175,
-        color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'black',
-        legendFontSize: 12
-      },
-    ];
-
-    const recoveryDiagnosedCaseData = [
-      {
-        name: "Diagnosed",
-        population: 25,
-        color: Color.primary,
-        legendFontColor: Color.primary,
-        legendFontSize: 12
-      },
-      {
-        name: "Recovered",
-        population: 175,
-        color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'black',
-        legendFontSize: 12
-      },
-    ];
-
-    const deathsDiagnosedCaseData = [
-      {
-        name: "Diagnosed",
-        population: 180,
-        color: Color.primary,
-        legendFontColor: Color.primary,
-        legendFontSize: 12
-      },
-      {
-        name: "Deaths",
-        population: 25,
-        color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'black',
-        legendFontSize: 12
-      },
-    ];
-
-    // TODO - use percentages instead
-    const testsData = [
-      {
-        name: "Confirmed",
-        population: 5,
-        color: Color.primary,
-        legendFontColor: Color.primary,
-        legendFontSize: 12
-      },
-      {
-        name: "Unconfirmed",
-        population: 95,
-        color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'black',
-        legendFontSize: 12
-      },
-    ];
-
     if (this.state.summaryLoaded) {
       return (
         <LinearGradient 
@@ -205,8 +121,90 @@ function ViewWithBanner(props) {
   );
 }
 
-/* Features
-- todayCases, todayDeaths
-- collapsible sections
-    most affected countries by total deaths, new deaths, total cases, new cases
-*/
+// Mark: Chart Data
+
+const activeInactiveCaseData = [
+  {
+    name: "Active",
+    population: 55,
+    color: Color.primary,
+    legendFontColor: Color.primary,
+    legendFontSize: 12
+  },
+  {
+    name: "Inactive",
+    population: 200,
+    color: 'rgba(253, 155, 152, 0.6)',
+    legendFontColor: 'black',
+    legendFontSize: 12
+  },
+];
+
+const mildSeriousCaseData = [
+  {
+    name: "Serious",
+    population: 25,
+    color: Color.primary,
+    legendFontColor: 'black',
+    legendFontSize: 12
+  },
+  {
+    name: "Mild",
+    population: 175,
+    color: 'rgba(253, 155, 152, 0.6)',
+    legendFontColor: 'black',
+    legendFontSize: 12
+  },
+];
+
+const recoveryDiagnosedCaseData = [
+  {
+    name: "Diagnosed",
+    population: 25,
+    color: Color.primary,
+    legendFontColor: Color.primary,
+    legendFontSize: 12
+  },
+  {
+    name: "Recovered",
+    population: 175,
+    color: 'rgba(253, 155, 152, 0.6)',
+    legendFontColor: 'black',
+    legendFontSize: 12
+  },
+];
+
+const deathsDiagnosedCaseData = [
+  {
+    name: "Diagnosed",
+    population: 180,
+    color: Color.primary,
+    legendFontColor: Color.primary,
+    legendFontSize: 12
+  },
+  {
+    name: "Deaths",
+    population: 25,
+    color: 'rgba(253, 155, 152, 0.6)',
+    legendFontColor: 'black',
+    legendFontSize: 12
+  },
+];
+
+// TODO - use percentages instead
+const testsData = [
+  {
+    name: "Confirmed",
+    population: 5,
+    color: Color.primary,
+    legendFontColor: Color.primary,
+    legendFontSize: 12
+  },
+  {
+    name: "Unconfirmed",
+    population: 95,
+    color: 'rgba(253, 155, 152, 0.6)',
+    legendFontColor: 'black',
+    legendFontSize: 12
+  },
+];

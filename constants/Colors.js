@@ -12,6 +12,7 @@ export default {
   lightGrey: '#DCDCDC',
   green: '#5DBA7D',
   tintColor,
+  blue: '#81b0ff',
   primary: '#B03633',
   palePrimary: '#FFDDDC',
   darkGrey: '#434041', //#212121
