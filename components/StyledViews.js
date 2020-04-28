@@ -38,7 +38,7 @@ export class BasicSummaryView extends React.Component {
             <BasicSummaryRow props={{header: 'Cases', value: format(data.cases ?? 0), subValue: data.todayCases}}/>
             <BasicSummaryRow props={{header: 'Recovered', value: format(data.recovered ?? 0)}}/>
             <BasicSummaryRow props={{header: 'Deaths', value: format(data.deaths ?? 0), subValue: data.todayDeaths}}/>
-            <Text style={styles.lastUpdateFooterText}>Last update {Moment(data.lastUpdate).format('d MMM HH:mm')}</Text>
+            <Text style={styles.lastUpdateFooterText}>Last update: {Moment(data.lastUpdate).format('D MMM HH:mm')}</Text>
         </Card>
     </View>
   );}
@@ -58,6 +58,14 @@ function BasicSummaryRow(props) {
     );
 }
 
+let defaultChartConfig = {
+    backgroundColor: 'rgba(253, 155, 152, 0.6)',
+    color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+    style: {
+    borderRadius: 8
+    }
+}
+
 export function LoadingSummaryRow(props) {
     return (
         <View style={{marginTop:35, alignItems: 'center', justifyContent: 'center'}}>
@@ -67,21 +75,60 @@ export function LoadingSummaryRow(props) {
     );
   }
 
+  export function ActiveCasesPieChart(props) {  
+    const data = props.props ?? [];
+    let chartConfig = data.chartConfig ?? defaultChartConfig
+    return (
+        <Card containerStyle={{borderRadius: 2, shadowRadius: 2, padding: 25}}>
+            <Text style={styles.countryNameHeaderText}>Confirmed Case Breakdown</Text>
+            <PieChart
+                style={{marginTop: 0}}
+                data={data}
+                // backgroundColor={'rgba(253, 155, 152, 0.6)'}
+                width={Dimensions.get('window').width * .6}
+                height={100}
+                chartConfig={chartConfig}
+                accessor="population"
+                paddingLeft="0"
+                hasLegend={true}
+                absolute
+            />
+            <Text style={styles.lastUpdateFooterText}>Total confirmed cases: {format(27162)}</Text>
+        </Card>
+    );
+  }
+
+  export function TestsPieChart(props) {  
+    const data = props.props ?? [];
+    let chartConfig = data.chartConfig ?? defaultChartConfig
+    return (
+        <Card containerStyle={{borderRadius: 2, shadowRadius: 2, padding: 25}}>
+            <Text style={styles.countryNameHeaderText}>Tests Breakdown</Text>
+            <PieChart
+                style={{marginTop: 0}}
+                data={data}
+                // backgroundColor={'rgba(253, 155, 152, 0.6)'}
+                width={Dimensions.get('window').width * .6}
+                height={100}
+                chartConfig={chartConfig}
+                accessor="population"
+                paddingLeft="0"
+                hasLegend={true}
+                absolute
+            />
+            <Text style={styles.lastUpdateFooterText}>Total tests taken: {format(637223)}</Text>
+        </Card>
+    );
+  }
+
   // More on this: https://github.com/indiespirit/react-native-chart-kit
   // TODO: convert legend number to percentage
   export function CasesPieChart(props) {  
-    let defaultChartConfig = {
-        backgroundColor: 'rgba(253, 155, 152, 0.6)',
-        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-        style: {
-        borderRadius: 8
-        }
-    }
     const data = props.props.props ?? [];
     let chartConfig = data.chartConfig ?? defaultChartConfig
 
     return (
-        <LinearGradient colors={['#FFDDDC']} style={[styles.gradientView, {marginTop: 30, width: '80%', padding: 0}]}>
+        <LinearGradient colors={['#FFDDDC']} style={[styles.gradientView, {marginTop: 30, padding: 0}]}>
         <PieChart
             style={{marginTop: 0}}
             data={data}

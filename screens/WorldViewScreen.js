@@ -11,7 +11,7 @@ import styles from '../constants/Styles';
 import Color from '../constants/Colors';
 import { format } from '../constants/Extensions'
 import * as FacebookAds from 'expo-ads-facebook';
-import { BasicSummaryView, CasesPieChart, LoadingSummaryRow } from '../components/StyledViews';
+import { ActiveCasesPieChart, BasicSummaryView, CasesPieChart, LoadingSummaryRow, TestsPieChart } from '../components/StyledViews';
 import { LineChart, BarChart, PieChart, ProgressChart, StackedBarChart } from "react-native-chart-kit";
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -35,7 +35,7 @@ export default class WorldViewScreen extends React.Component {
     fetch('https://corona.lmao.ninja/v2/all')
       .then((response) => {
         console.log('=============================')
-        console.log('response: ' + response.todayCases)
+        // console.log('response: ' + response)
         return response.json()
       })
       .then((json) => {
@@ -72,8 +72,8 @@ export default class WorldViewScreen extends React.Component {
 
   render() {
     // Data for BasicSummaryView
-    console.log('Number of todayDeaths: ' + format(this.state.todayDeaths))
-    console.log('Number of todayCases: ' + format(this.state.todayCases))
+    // console.log('Number of todayDeaths: ' + format(this.state.todayDeaths))
+    // console.log('Number of todayCases: ' + format(this.state.todayCases))
     const props = {
       tests: format(this.state.worldTests), 
       cases: format(this.state.worldConfirmed), 
@@ -117,6 +117,92 @@ export default class WorldViewScreen extends React.Component {
       },
     ];
 
+    const activeCaseData = [
+      {
+        name: "Active",
+        population: 55,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Inactive",
+        population: 200,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'rgba(253, 155, 152, 0.6)',
+        legendFontSize: 12
+      },
+    ];
+
+    const activeCaseData2 = [
+      {
+        name: "Serious",
+        population: 25,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Mild",
+        population: 175,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'rgba(253, 155, 152, 0.6)',
+        legendFontSize: 12
+      },
+    ];
+
+    const recoveryCaseData = [
+      {
+        name: "Diagnosed",
+        population: 25,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Recovered",
+        population: 175,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'rgba(253, 155, 152, 0.6)',
+        legendFontSize: 12
+      },
+    ];
+
+    const deathRateCaseData = [
+      {
+        name: "Diagnosed",
+        population: 180,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Deaths",
+        population: 25,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'rgba(253, 155, 152, 0.6)',
+        legendFontSize: 12
+      },
+    ];
+
+    // TODO - use percentages instead
+    const testsData = [
+      {
+        name: "Confirmed",
+        population: 5,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Unconfirmed",
+        population: 95,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'rgba(253, 155, 152, 0.6)',
+        legendFontSize: 12
+      },
+    ];
+
     if (this.state.summaryLoaded) {
       return (
         <LinearGradient 
@@ -125,6 +211,11 @@ export default class WorldViewScreen extends React.Component {
             <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, {alignItems: 'center'}]}>
             <BasicSummaryView props={props}/>
             {/* <CasesPieChartView props={data}/> */}
+            <ActiveCasesPieChart props={activeCaseData}/>
+            <ActiveCasesPieChart props={activeCaseData2}/>
+            <ActiveCasesPieChart props={recoveryCaseData}/>
+            <ActiveCasesPieChart props={deathRateCaseData}/>
+            <TestsPieChart props={testsData}/>
           </ScrollView>
           <ViewWithBanner/> 
         </LinearGradient>
