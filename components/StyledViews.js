@@ -103,7 +103,6 @@ export function LoadingSummaryRow(props) {
                 accessor="population"
                 paddingLeft="0"
                 hasLegend={true}
-                absolute
             />
             <Text style={styles.lastUpdateFooterText}>{footerText} {format(footerValue)}</Text>
         </Card>
