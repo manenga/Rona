@@ -187,7 +187,7 @@ export default class WorldViewScreen extends React.Component {
           colors={['#600200', '#D35D5A', '#390100']}>
             <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, {alignItems: 'center'}]}>
               <BasicSummaryView props={props}/>
-              <BasicPieChart props={{data: testsData, headerText: 'Tests Breakdown', footerText: 'Total tests taken cases', footerValue: this.state.worldTests}}/>
+              <BasicPieChart props={{data: testsData, headerText: 'Tests Breakdown', footerText: 'Total tests taken', footerValue: this.state.worldTests}}/>
               <BasicPieChart props={{data: recoveryDiagnosedCaseData, headerText: 'Recovered / Diagnosed Cases', footerText: 'Total active cases', footerValue: this.state.active}}/>
               <BasicPieChart props={{data: deathsDiagnosedCaseData, headerText: 'Deaths / Diagnosed Cases', footerText: 'Total active cases', footerValue: this.state.active}}/>
               <BasicPieChart props={{data: activeInactiveCaseData, headerText: 'Active / Inactive Cases', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>

@@ -197,7 +197,7 @@ class CountryDetailScreen extends React.Component {
                     containerStyle={{height: 35, marginBottom: 25}}
                 />
                 <BasicSummaryView props={props}/>
-                <BasicPieChart props={{data: testsData, headerText: 'Tests Breakdown', footerText: 'Total tests taken cases', footerValue: item.tests}}/>
+                <BasicPieChart props={{data: testsData, headerText: 'Tests Breakdown', footerText: 'Total tests taken', footerValue: item.tests}}/>
                 <BasicPieChart props={{data: recoveryDiagnosedCaseData, headerText: 'Recovered / Diagnosed Cases', footerText: 'Total active cases', footerValue: item.active}}/>
                 <BasicPieChart props={{data: deathsDiagnosedCaseData, headerText: 'Deaths / Diagnosed Cases', footerText: 'Total active cases', footerValue: item.active}}/>
                 <BasicPieChart props={{data: activeInactiveCaseData, headerText: 'Active / Inactive Cases', footerText: 'Total cases', footerValue: item.cases}}/>
