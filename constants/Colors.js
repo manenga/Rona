@@ -11,8 +11,10 @@ export default {
   brightBlue: '#1FFFFFFF',
   lightGrey: '#DCDCDC',
   green: '#5DBA7D',
+  blue: '#73C2FB',
   tintColor,
   blue: '#81b0ff',
+  black: '#000',
   primary: '#B03633',
   palePrimary: '#FFDDDC',
   darkGrey: '#434041', //#212121

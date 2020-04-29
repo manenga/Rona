@@ -130,34 +130,34 @@ export default class WorldViewScreen extends React.Component {
 
     const recoveryDiagnosedCaseData = [
       {
-        name: "Cases",
-        population: this.state.worldConfirmed,
-        color: Color.primary,
-        legendFontColor: Color.primary,
+        name: "Recovered",
+        population: this.state.worldRecovered,
+        color: 'green',
+        legendFontColor: 'green',
         legendFontSize: 12
       },
       {
-        name: "Recovered",
-        population: this.state.worldRecovered,
-        color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'black',
+        name: "",
+        population: this.state.worldConfirmed,
+        color: Color.lightGrey,
+        legendFontColor: Color.black,
         legendFontSize: 12
       },
     ];
 
     const deathsDiagnosedCaseData = [
       {
-        name: "Cases",
-        population: this.state.worldConfirmed,
+        name: "Deaths",
+        population: this.state.worldDeaths,
         color: Color.primary,
         legendFontColor: Color.primary,
         legendFontSize: 12
       },
       {
-        name: "Deaths",
-        population: this.state.worldDeaths,
-        color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'black',
+        name: "",
+        population: this.state.worldConfirmed,
+        color: Color.lightGrey,
+        legendFontColor: Color.black,
         legendFontSize: 12
       },
     ];
@@ -165,14 +165,14 @@ export default class WorldViewScreen extends React.Component {
     // TODO - use percentages instead
     const testsData = [
       {
-        name: "Confirmed",
+        name: "Cases",
         population: this.state.worldConfirmed,
         color: Color.primary,
         legendFontColor: Color.primary,
         legendFontSize: 12
       },
       {
-        name: "Unconfirmed",
+        name: "",
         population: this.state.worldTests - this.state.worldConfirmed,
         color: 'rgba(253, 155, 152, 0.6)',
         legendFontColor: 'black',
@@ -188,10 +188,10 @@ export default class WorldViewScreen extends React.Component {
             <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, {alignItems: 'center'}]}>
               <BasicSummaryView props={props}/>
               <BasicPieChart props={{data: testsData, headerText: 'Tests Breakdown', footerText: 'Total tests taken', footerValue: this.state.worldTests}}/>
-              <BasicPieChart props={{data: recoveryDiagnosedCaseData, headerText: 'Recovered / Diagnosed Cases', footerText: 'Total active cases', footerValue: this.state.active}}/>
-              <BasicPieChart props={{data: deathsDiagnosedCaseData, headerText: 'Deaths / Diagnosed Cases', footerText: 'Total active cases', footerValue: this.state.active}}/>
-              <BasicPieChart props={{data: activeInactiveCaseData, headerText: 'Active / Inactive Cases', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
-              <BasicPieChart props={{data: mildSeriousCaseData, headerText: 'Mild / Serious Cases', footerText: 'Total active cases', footerValue: this.state.active}}/>
+              <BasicPieChart props={{data: recoveryDiagnosedCaseData, headerText: 'Recovery Rate', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
+              <BasicPieChart props={{data: deathsDiagnosedCaseData, headerText: 'Fatality Rate', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
+              <BasicPieChart props={{data: activeInactiveCaseData, headerText: 'Cases Breakdown', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
+              <BasicPieChart props={{data: mildSeriousCaseData, headerText: 'Cases Breakdown', footerText: 'Total active cases', footerValue: this.state.active}}/>
           </ScrollView>
           <ViewWithBanner/> 
         </LinearGradient>
