@@ -98,6 +98,94 @@ class CountryDetailScreen extends React.Component {
       recovered: item.recovered
     };
 
+    // Mark: Chart Data
+
+    const activeInactiveCaseData = [
+      {
+        name: "Active",
+        population: item.active,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Inactive",
+        population: item.cases - item.active,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
+        legendFontSize: 12
+      },
+    ];
+
+    const mildSeriousCaseData = [
+      {
+        name: "Critical",
+        population: item.critical,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Mild",
+        population: item.active - item.critical,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
+        legendFontSize: 12
+      },
+    ];
+
+    const recoveryDiagnosedCaseData = [
+      {
+        name: "Cases",
+        population: item.cases,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Recovered",
+        population: item.recovered,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
+        legendFontSize: 12
+      },
+    ];
+
+    const deathsDiagnosedCaseData = [
+      {
+        name: "Cases",
+        population: item.cases,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Deaths",
+        population: item.deaths,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
+        legendFontSize: 12
+      },
+    ];
+
+    // TODO - use percentages instead
+    const testsData = [
+      {
+        name: "Confirmed",
+        population: item.cases,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Unconfirmed",
+        population: item.tests - item.cases,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
+        legendFontSize: 12
+      },
+    ];
+
     if (this.state.summaryLoaded) {
       return (
         <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
@@ -109,11 +197,11 @@ class CountryDetailScreen extends React.Component {
                     containerStyle={{height: 35, marginBottom: 25}}
                 />
                 <BasicSummaryView props={props}/>
-                <BasicPieChart props={{data: testsData, headerText: 'Tests Breakdown', footerText: 'Total tests taken cases'}}/>
-                <BasicPieChart props={{data: recoveryDiagnosedCaseData, headerText: 'Recovered / Diagnosed Cases', footerText: 'Total active cases'}}/>
-                <BasicPieChart props={{data: deathsDiagnosedCaseData, headerText: 'Deaths / Diagnosed Cases', footerText: 'Total active cases'}}/>
-                <BasicPieChart props={{data: activeInactiveCaseData, headerText: 'Active / Inactive Cases', footerText: 'Total confirmed cases'}}/>
-                <BasicPieChart props={{data: mildSeriousCaseData, headerText: 'Mild / Serious Cases', footerText: 'Total active cases'}}/>
+                <BasicPieChart props={{data: testsData, headerText: 'Tests Breakdown', footerText: 'Total tests taken cases', footerValue: item.tests}}/>
+                <BasicPieChart props={{data: recoveryDiagnosedCaseData, headerText: 'Recovered / Diagnosed Cases', footerText: 'Total active cases', footerValue: item.active}}/>
+                <BasicPieChart props={{data: deathsDiagnosedCaseData, headerText: 'Deaths / Diagnosed Cases', footerText: 'Total active cases', footerValue: item.active}}/>
+                <BasicPieChart props={{data: activeInactiveCaseData, headerText: 'Active / Inactive Cases', footerText: 'Total cases', footerValue: item.cases}}/>
+                <BasicPieChart props={{data: mildSeriousCaseData, headerText: 'Mild / Critical Cases', footerText: 'Total active cases', footerValue: item.active}}/>
             </ScrollView>
             <AdViewWithBanner/> 
         </View>
@@ -136,93 +224,5 @@ function AdViewWithBanner(props) {
         </View>
     );
 }
-
-// Mark: Chart Data
-
-const activeInactiveCaseData = [
-  {
-    name: "Active",
-    population: 55,
-    color: Color.primary,
-    legendFontColor: Color.primary,
-    legendFontSize: 12
-  },
-  {
-    name: "Inactive",
-    population: 200,
-    color: 'rgba(253, 155, 152, 0.6)',
-    legendFontColor: 'black',
-    legendFontSize: 12
-  },
-];
-
-const mildSeriousCaseData = [
-  {
-    name: "Serious",
-    population: 25,
-    color: Color.primary,
-    legendFontColor: 'black',
-    legendFontSize: 12
-  },
-  {
-    name: "Mild",
-    population: 175,
-    color: 'rgba(253, 155, 152, 0.6)',
-    legendFontColor: 'black',
-    legendFontSize: 12
-  },
-];
-
-const recoveryDiagnosedCaseData = [
-  {
-    name: "Diagnosed",
-    population: 25,
-    color: Color.primary,
-    legendFontColor: Color.primary,
-    legendFontSize: 12
-  },
-  {
-    name: "Recovered",
-    population: 175,
-    color: 'rgba(253, 155, 152, 0.6)',
-    legendFontColor: 'black',
-    legendFontSize: 12
-  },
-];
-
-const deathsDiagnosedCaseData = [
-  {
-    name: "Diagnosed",
-    population: 180,
-    color: Color.primary,
-    legendFontColor: Color.primary,
-    legendFontSize: 12
-  },
-  {
-    name: "Deaths",
-    population: 25,
-    color: 'rgba(253, 155, 152, 0.6)',
-    legendFontColor: 'black',
-    legendFontSize: 12
-  },
-];
-
-// TODO - use percentages instead
-const testsData = [
-  {
-    name: "Confirmed",
-    population: 5,
-    color: Color.primary,
-    legendFontColor: Color.primary,
-    legendFontSize: 12
-  },
-  {
-    name: "Unconfirmed",
-    population: 95,
-    color: 'rgba(253, 155, 152, 0.6)',
-    legendFontColor: 'black',
-    legendFontSize: 12
-  },
-];
 
 export default CountryDetailScreen;
