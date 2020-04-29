@@ -44,7 +44,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Country"
         component={CountryDetailScreen}
         options={{
-          title: 'South Africa',
+          title: 'Country View',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="map-marked-alt" />,
         }}
       />

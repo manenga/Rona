@@ -19,6 +19,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 const initialState = {
   dataSource: '',
+  active: 0,
+  critical: 0,
   lastUpdate: 0,
   worldTests: 0,
   todayDeaths: 0,
@@ -43,6 +45,8 @@ export default class WorldViewScreen extends React.Component {
       })
       .then((json) => {
         const tests = json.tests ?? 0;
+        const active = json.active ?? 0;
+        const critical = json.critical ?? 0;
         const deaths = json.deaths ?? 0;
         const todayDeaths = json.todayDeaths ?? 0;
         const confirmed = json.cases ?? 0;
@@ -53,6 +57,8 @@ export default class WorldViewScreen extends React.Component {
         // Save state
         this.setState({dataSource: json})
         this.setState({worldTests: tests})
+        this.setState({active: active})
+        this.setState({critical: critical})
         this.setState({worldDeaths: deaths})
         this.setState({todayCases: todayCases})
         this.setState({todayDeaths: todayDeaths})
@@ -86,6 +92,94 @@ export default class WorldViewScreen extends React.Component {
       lastUpdate: this.state.lastUpdate
     };
 
+    // Mark: Chart Data
+
+    const activeInactiveCaseData = [
+      {
+        name: "Active",
+        population: this.state.active,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Inactive",
+        population: this.state.worldConfirmed - this.state.active,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
+        legendFontSize: 12
+      },
+    ];
+
+    const mildSeriousCaseData = [
+      {
+        name: "Critical",
+        population: this.state.critical,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Mild",
+        population: this.state.active - this.state.critical,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
+        legendFontSize: 12
+      },
+    ];
+
+    const recoveryDiagnosedCaseData = [
+      {
+        name: "Cases",
+        population: this.state.worldConfirmed,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Recovered",
+        population: this.state.worldRecovered,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
+        legendFontSize: 12
+      },
+    ];
+
+    const deathsDiagnosedCaseData = [
+      {
+        name: "Cases",
+        population: this.state.worldConfirmed,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Deaths",
+        population: this.state.worldDeaths,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
+        legendFontSize: 12
+      },
+    ];
+
+    // TODO - use percentages instead
+    const testsData = [
+      {
+        name: "Confirmed",
+        population: this.state.worldConfirmed,
+        color: Color.primary,
+        legendFontColor: Color.primary,
+        legendFontSize: 12
+      },
+      {
+        name: "Unconfirmed",
+        population: this.state.worldTests - this.state.worldConfirmed,
+        color: 'rgba(253, 155, 152, 0.6)',
+        legendFontColor: 'black',
+        legendFontSize: 12
+      },
+    ];
+
     if (this.state.summaryLoaded) {
       return (
         <LinearGradient 
@@ -93,11 +187,11 @@ export default class WorldViewScreen extends React.Component {
           colors={['#600200', '#D35D5A', '#390100']}>
             <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, {alignItems: 'center'}]}>
               <BasicSummaryView props={props}/>
-              <BasicPieChart props={{data: testsData, headerText: 'Tests Breakdown', footerText: 'Total tests taken cases'}}/>
-              <BasicPieChart props={{data: recoveryDiagnosedCaseData, headerText: 'Recovered / Diagnosed Cases', footerText: 'Total active cases'}}/>
-              <BasicPieChart props={{data: deathsDiagnosedCaseData, headerText: 'Deaths / Diagnosed Cases', footerText: 'Total active cases'}}/>
-              <BasicPieChart props={{data: activeInactiveCaseData, headerText: 'Active / Inactive Cases', footerText: 'Total confirmed cases'}}/>
-              <BasicPieChart props={{data: mildSeriousCaseData, headerText: 'Mild / Serious Cases', footerText: 'Total active cases'}}/>
+              <BasicPieChart props={{data: testsData, headerText: 'Tests Breakdown', footerText: 'Total tests taken cases', footerValue: this.state.worldTests}}/>
+              <BasicPieChart props={{data: recoveryDiagnosedCaseData, headerText: 'Recovered / Diagnosed Cases', footerText: 'Total active cases', footerValue: this.state.active}}/>
+              <BasicPieChart props={{data: deathsDiagnosedCaseData, headerText: 'Deaths / Diagnosed Cases', footerText: 'Total active cases', footerValue: this.state.active}}/>
+              <BasicPieChart props={{data: activeInactiveCaseData, headerText: 'Active / Inactive Cases', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
+              <BasicPieChart props={{data: mildSeriousCaseData, headerText: 'Mild / Serious Cases', footerText: 'Total active cases', footerValue: this.state.active}}/>
           </ScrollView>
           <ViewWithBanner/> 
         </LinearGradient>
@@ -120,91 +214,3 @@ function ViewWithBanner(props) {
     </View>
   );
 }
-
-// Mark: Chart Data
-
-const activeInactiveCaseData = [
-  {
-    name: "Active",
-    population: 55,
-    color: Color.primary,
-    legendFontColor: Color.primary,
-    legendFontSize: 12
-  },
-  {
-    name: "Inactive",
-    population: 200,
-    color: 'rgba(253, 155, 152, 0.6)',
-    legendFontColor: 'black',
-    legendFontSize: 12
-  },
-];
-
-const mildSeriousCaseData = [
-  {
-    name: "Serious",
-    population: 25,
-    color: Color.primary,
-    legendFontColor: 'black',
-    legendFontSize: 12
-  },
-  {
-    name: "Mild",
-    population: 175,
-    color: 'rgba(253, 155, 152, 0.6)',
-    legendFontColor: 'black',
-    legendFontSize: 12
-  },
-];
-
-const recoveryDiagnosedCaseData = [
-  {
-    name: "Diagnosed",
-    population: 25,
-    color: Color.primary,
-    legendFontColor: Color.primary,
-    legendFontSize: 12
-  },
-  {
-    name: "Recovered",
-    population: 175,
-    color: 'rgba(253, 155, 152, 0.6)',
-    legendFontColor: 'black',
-    legendFontSize: 12
-  },
-];
-
-const deathsDiagnosedCaseData = [
-  {
-    name: "Diagnosed",
-    population: 180,
-    color: Color.primary,
-    legendFontColor: Color.primary,
-    legendFontSize: 12
-  },
-  {
-    name: "Deaths",
-    population: 25,
-    color: 'rgba(253, 155, 152, 0.6)',
-    legendFontColor: 'black',
-    legendFontSize: 12
-  },
-];
-
-// TODO - use percentages instead
-const testsData = [
-  {
-    name: "Confirmed",
-    population: 5,
-    color: Color.primary,
-    legendFontColor: Color.primary,
-    legendFontSize: 12
-  },
-  {
-    name: "Unconfirmed",
-    population: 95,
-    color: 'rgba(253, 155, 152, 0.6)',
-    legendFontColor: 'black',
-    legendFontSize: 12
-  },
-];
