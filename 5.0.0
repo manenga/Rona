@@ -1,0 +1,6 @@
+Installing 1 other package using npm.
+> npm install --save mem@
++ mem@6.1.0
+added 2 packages from 1 contributor, updated 1 package and audited 980194 packages in 6.213s
+found 4 low severity vulnerabilities
+  run `npm audit fix` to fix them, or `npm audit` for details

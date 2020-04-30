@@ -1,0 +1,4 @@
++ mem@6.1.0
+updated 1 package and audited 980194 packages in 6.68s
+found 4 low severity vulnerabilities
+  run `npm audit fix` to fix them, or `npm audit` for details
