@@ -304,7 +304,9 @@ class CountryDetailScreen extends React.Component {
                 <BasicPieChart props={{data: recoveryDiagnosedCaseData, headerText: 'Recovery Rate', footerText: 'Total cases', footerValue: item.cases}}/>
                 <BasicPieChart props={{data: deathsDiagnosedCaseData, headerText: 'Fatality Rate', footerText: 'Total cases', footerValue: item.cases}}/>
                 <BasicPieChart props={{data: activeInactiveCaseData, headerText: 'Cases Breakdown', footerText: 'Total cases', footerValue: item.cases}}/>
-                <BasicPieChart props={{data: provincialData, headerText: 'Provincial Breakdown', footerText: 'Total cases', footerValue: item.cases, height: 165, isAbsolute: true}}/>
+                {this.state.isZA && 
+                  <BasicPieChart props={{data: provincialData, headerText: 'Provincial Breakdown', footerText: 'Total cases', footerValue: item.cases, height: 165, isAbsolute: true}}/>
+                }
                 {/* <BasicPieChart props={{data: mildSeriousCaseData, headerText: 'Mild / Critical Cases', footerText: 'Total active cases', footerValue: item.active}}/> */}
             </ScrollView>
             <AdViewWithBanner/> 
