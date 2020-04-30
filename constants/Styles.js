@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
       paddingHorizontal: 4,
     },
     getStartedText: {
-      fontSize: 21,
+      fontSize: 14,
       lineHeight: 32,
       color: Color.darkGrey,
       textAlign: 'center',
