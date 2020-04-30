@@ -15,9 +15,11 @@ import Color from '../constants/Colors';
 import { BasicPieChart, BasicSummaryView, LoadingSummaryRow } from '../components/StyledViews';
 import * as FacebookAds from 'expo-ads-facebook';
 import { ButtonGroup } from 'react-native-elements';
+import Papa from 'papaparse';
 
 const initialState = {
   dataSource: '',
+  ZAProvincialData: '',
   isZA: true,
   summaryLoaded: false,
 }
@@ -40,7 +42,6 @@ class CountryDetailScreen extends React.Component {
   }
 
   reloadData() {
-    // console.log('loading data for ' + this.state.isZA ? "ZA" : "ZM")
     const country = this.state.isZA ? Country.ZA.query : Country.ZM.query;
     fetch('https://corona.lmao.ninja/v2/countries/' + country)
     .then((response) => {
@@ -56,6 +57,21 @@ class CountryDetailScreen extends React.Component {
       // console.log('finally finished')
       this.setState({summaryLoaded: true})
     })
+  }
+
+  reloadZAProvincialData() {
+    Papa.parse('https://raw.githubusercontent.com/dsfsi/covid19za/master/data/covid19za_provincial_cumulative_timeline_confirmed.csv', {
+      download: true,
+      header: true,
+      complete: function(results) {
+        data = results.data ?? 'none'
+        errors = results.errors ?? 'none'
+        meta = results.meta ?? 'none'
+        
+        console.log('/n/nPapaparse data ' + JSON.stringify(data) + '/n/n')
+        this.setState({ZAProvincialData: data})
+      }
+    });
   }
 
   updateIndex (selectedIndex) {
