@@ -39,6 +39,26 @@ class CountryDetailScreen extends React.Component {
 
   componentDidMount(){ 
     this.reloadData()
+
+    let results;
+    Papa.parse('https://raw.githubusercontent.com/dsfsi/covid19za/master/data/covid19za_provincial_cumulative_timeline_confirmed.csv', {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: function(data) {
+        results = data.data ?? 'none'
+        errors = data.errors ?? 'none'
+        meta = data.meta ?? 'none'
+        
+        // console.log('/n/nPapaparse data ' + JSON.stringify(data) + '/n/n')
+      }
+    });
+
+    setTimeout(()=> {
+      console.log(results[0]);
+      // console.log(results[results.length - 1]);
+      this.setState({ZAProvincialData: results});
+    }, 1500);
   }
 
   reloadData() {
@@ -57,21 +77,6 @@ class CountryDetailScreen extends React.Component {
       // console.log('finally finished')
       this.setState({summaryLoaded: true})
     })
-  }
-
-  reloadZAProvincialData() {
-    Papa.parse('https://raw.githubusercontent.com/dsfsi/covid19za/master/data/covid19za_provincial_cumulative_timeline_confirmed.csv', {
-      download: true,
-      header: true,
-      complete: function(results) {
-        data = results.data ?? 'none'
-        errors = results.errors ?? 'none'
-        meta = results.meta ?? 'none'
-        
-        console.log('/n/nPapaparse data ' + JSON.stringify(data) + '/n/n')
-        this.setState({ZAProvincialData: data})
-      }
-    });
   }
 
   updateIndex (selectedIndex) {
@@ -184,7 +189,6 @@ class CountryDetailScreen extends React.Component {
       },
     ];
 
-    // TODO - use percentages instead
     const testsData = [
       {
         name: "Cases",
@@ -202,6 +206,89 @@ class CountryDetailScreen extends React.Component {
       },
     ];
 
+    var provincialData = []
+    const array = this.state.ZAProvincialData ?? [];
+    const today = array[array.length - 1];
+    
+    if (today != null) {
+      console.log(today);
+      console.log(today["EC"]);
+
+      provincialData = [
+        {
+          name: "EC",
+          population: parseInt(today['EC']) ?? 0,
+          color: 'pink',
+          legendFontColor: 'black',
+          legendFontSize: legendFontSize
+        },
+        {
+          name: "FS",
+          population: parseInt(today['FS']) ?? 0,
+          color: 'grey',
+          legendFontColor: 'black',
+          legendFontSize: legendFontSize
+        },
+        {
+          name: "GP",
+          population: parseInt(today['GP']) ?? 0,
+          color: 'cyan',
+          legendFontColor: 'black',
+          legendFontSize: legendFontSize
+        },
+        {
+          name: "KZN",
+          population: parseInt(today['KZN']) ?? 0,
+          color: 'orange',
+          legendFontColor: 'black',
+          legendFontSize: legendFontSize
+        },
+        {
+          name: "LP",
+          population: parseInt(today['LP']) ?? 0,
+          color: 'red',
+          legendFontColor: 'black',
+          legendFontSize: legendFontSize
+        },
+        {
+          name: "MP",
+          population: parseInt(today['MP']) ?? 0,
+          color: 'yellow',
+          legendFontColor: 'black',
+          legendFontSize: legendFontSize
+        },
+        {
+          name: "NW",
+          population: parseInt(today['NW']) ?? 0,
+          color: 'pink',
+          legendFontColor: 'black',
+          legendFontSize: legendFontSize
+        },
+        {
+          name: "NC",
+          population: parseInt(today['NC']) ?? 0,
+          color: 'blue',
+          legendFontColor: 'black',
+          legendFontSize: legendFontSize
+        },
+        {
+          name: "WC",
+          population: parseInt(today['WC']) ?? 0,
+          color: 'purple',
+          legendFontColor: 'black',
+          legendFontSize: legendFontSize
+        },
+        {
+          name: "UNKNOWN",
+          population: parseInt(today['UNKNOWN']) ?? 0,
+          color: 'black',
+          legendFontColor: 'black',
+          legendFontSize: legendFontSize
+        },
+      ];
+      provincialData.sort((a,b) => a.population < b.population);
+    }
+
     if (this.state.summaryLoaded) {
       return (
         <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
@@ -217,6 +304,7 @@ class CountryDetailScreen extends React.Component {
                 <BasicPieChart props={{data: recoveryDiagnosedCaseData, headerText: 'Recovery Rate', footerText: 'Total cases', footerValue: item.cases}}/>
                 <BasicPieChart props={{data: deathsDiagnosedCaseData, headerText: 'Fatality Rate', footerText: 'Total cases', footerValue: item.cases}}/>
                 <BasicPieChart props={{data: activeInactiveCaseData, headerText: 'Cases Breakdown', footerText: 'Total cases', footerValue: item.cases}}/>
+                <BasicPieChart props={{data: provincialData, headerText: 'Provincial Breakdown', footerText: 'Total cases', footerValue: item.cases, height: 165, isAbsolute: true}}/>
                 {/* <BasicPieChart props={{data: mildSeriousCaseData, headerText: 'Mild / Critical Cases', footerText: 'Total active cases', footerValue: item.active}}/> */}
             </ScrollView>
             <AdViewWithBanner/> 

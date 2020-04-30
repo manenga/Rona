@@ -88,6 +88,8 @@ export function LoadingSummaryRow(props) {
     const headerText = props.props.headerText ?? '';
     const footerText = props.props.footerText ?? '';
     const footerValue = props.props.footerValue ?? 0;
+    const height = props.props.height ?? 100;
+    const isAbsolute = props.props.isAbsolute ?? false;
     // const backgroundColor = 'rgba(253, 155, 152, 0.6)';
     // console.log(props);
     let chartConfig = data.chartConfig ?? defaultChartConfig
@@ -98,10 +100,11 @@ export function LoadingSummaryRow(props) {
                 style={{marginTop: 0}}
                 data={data}
                 width={Dimensions.get('window').width * .7}
-                height={100}
+                height={height}
                 chartConfig={chartConfig}
                 accessor="population"
                 paddingLeft="0"
+                absolute={isAbsolute}
                 hasLegend={true}
             />
             <Text style={styles.lastUpdateFooterText}>{footerText} {format(footerValue)}</Text>
