@@ -34,7 +34,7 @@ export class BasicSummaryView extends React.Component {
         { hasHeaderText ? <Image source={{uri: headerImage}} style={styles.basicSummaryViewHeaderImage}/> : null }
         { hasHeaderText ? <Text style={styles.countryNameHeaderText}>{headerText}</Text> : null }
 
-        <CardV2 props={data}/>
+        <CardV3 props={data}/>
     </View>
   );}
 }
@@ -90,7 +90,67 @@ function CardV2(props) {
     );
 }
 
+function CardV3(props) {
+    const data = props.props ?? [];
+    const subValue = data.subValue ?? 0;
+    const icon = data.icon;
+    const iconColor = data.iconColor ?? Colors.black;
+    return(
+        <Card containerStyle={{borderRadius: 2, shadowRadius: 2, padding: 25}}>
+            <View style={{justifyContent: 'space-between', alignItems: 'center',  backgroundColor: 'rgba(253, 155, 152, 0.20)', margin: 4, padding: 12, borderRadius: 5}}>
+                <Text style={[styles.getStartedText, {fontSize: 12, color: Colors.darkGrey, lineHeight: 12}]}>Cases</Text>
+                <View style={{justifyContent: 'space-around'}}>
+                    <Text style={{fontSize: 24, color: data.valueColor ?? iconColor ?? 'black'}}>245,223,232</Text>
+                    {subValue > 0
+                        ? <Text style={[styles.lastUpdateFooterText, {marginTop: 5, marginBottom: 0, fontSize: 7}]}>+{format(2323)} today</Text>
+                        : <Text style={[styles.lastUpdateFooterText, {marginTop: 5, marginBottom: 0, fontSize: 7}]}></Text>
+                    }
+                </View>
+                <View style={{backgroundColor: Colors.lightGrey, height: 0.75, width: '100%', marginBottom: 10}}/>
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <MiniSummaryRow props={{header: 'Tests', value: format(data.tests ?? 0), icon: 'vials', iconColor: 'blue'}}/>
+                    <MiniSummaryRow props={{header: 'Recovered', value: format(data.recovered ?? 0), icon: 'vials', iconColor: 'green'}}/>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <MiniSummaryRow props={{header: 'Active', value: format(data.deaths ?? 0), subValue: data.todayDeaths, icon: 'vials', iconColor: 'red'}}/>
+                    <MiniSummaryRow props={{header: 'Critical', value: format(data.deaths ?? 0), subValue: data.todayDeaths, icon: 'vials', iconColor: 'red'}}/>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <MiniSummaryRow props={{header: "Today's Deaths", value: format(data.deaths ?? 0), subValue: data.todayDeaths, icon: 'vials', iconColor: 'red'}}/>
+                    <MiniSummaryRow props={{header: 'Deaths', value: format(data.deaths ?? 0), subValue: data.todayDeaths, icon: 'vials', iconColor: 'red'}}/>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <MiniSummaryRow props={{header: 'Recovery Rate', value: '20%', iconColor: 'red'}}/>
+                    <MiniSummaryRow props={{header: 'Fatality Rate', value: '2%', iconColor: 'red'}}/>
+                </View>
+            </View>
+            <Text style={[styles.lastUpdateFooterText, {marginBottom: 0}]}>Last update: {Moment(data.lastUpdate).format('D MMM HH:mm')}</Text>
+        </Card>
+    );
+}
+
 // Rows
+
+function MiniSummaryRow(props) {
+    const data = props.props;
+    const subValue = data.subValue ?? 0;
+    const icon = data.icon;
+    const iconColor = data.iconColor ?? Colors.black;
+
+    return (
+        <View style={{justifyContent: 'space-between', alignItems: 'center', padding: 10, width: Dimensions.get('window').width * .31}}>
+            {/* <FontAwesome5 name={icon} size={12} color={iconColor}/> */}
+            <Text style={[styles.getStartedText, {fontSize: 8, color: 'black', lineHeight: 12,}]}>{data.header}</Text>
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{fontSize: 15, color: data.valueColor ?? iconColor ?? 'black'}}>{data.value}</Text>
+                {subValue > 0
+                    ? <Text style={[styles.lastUpdateFooterText, {marginTop: 2, marginBottom: 0, fontSize: 7}]}>+{format(subValue)} today</Text>
+                    : <Text style={[styles.lastUpdateFooterText, {marginTop: 2, marginBottom: 0, fontSize: 7}]}></Text>
+                }
+            </View>
+        </View>
+    );
+}
 
 function SquareSummaryRow(props) {
     const data = props.props;
@@ -101,6 +161,7 @@ function SquareSummaryRow(props) {
     return (
         <View style={{aspectRatio: 1, justifyContent: 'space-between', alignItems: 'center',  backgroundColor: 'rgba(253, 155, 152, 0.20)', margin: 4, padding: 12, borderRadius: 5, height: 120}}>
             <FontAwesome5 name={icon} size={16} color={iconColor}/>
+            <View style={{backgroundColor: Colors.lightGrey, height: 0.75, width: '100%'}}/>
             <View style={{justifyContent: 'space-around'}}>
                 <Text style={{fontSize: 15, color: data.valueColor ?? iconColor ?? 'black'}}>{data.value}</Text>
                 {subValue > 0
@@ -108,6 +169,7 @@ function SquareSummaryRow(props) {
                     : <Text style={[styles.lastUpdateFooterText, {marginTop: 5, marginBottom: 0, fontSize: 7}]}></Text>
                 }
             </View>
+            <View style={{backgroundColor: Colors.lightGrey, height: 0.75, width: '100%'}}/>
             <Text style={[styles.getStartedText, {marginLeft: 12, fontSize: 8, color: 'black', lineHeight: 12,}]}>{data.header}</Text>
         </View>
     );
