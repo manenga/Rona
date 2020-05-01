@@ -158,7 +158,7 @@ class CountryDetailScreen extends React.Component {
       },
     ];
 
-    const recoveryDiagnosedCaseData = [
+    const recoveryDeathsDiagnosedCaseData = [
       {
         name: "Recovered",
         population: item.recovered,
@@ -166,16 +166,6 @@ class CountryDetailScreen extends React.Component {
         legendFontColor: 'green',
         legendFontSize: legendFontSize
       },
-      {
-        name: "",
-        population: item.cases - item.recovered,
-        color: Color.lightGrey,
-        legendFontColor: Color.darkGrey,
-        legendFontSize: legendFontSize
-      },
-    ];
-
-    const deathsDiagnosedCaseData = [
       {
         name: "Deaths",
         population: item.deaths,
@@ -185,7 +175,7 @@ class CountryDetailScreen extends React.Component {
       },
       {
         name: "",
-        population: item.cases - item.deaths,
+        population: item.cases - (item.deaths + item.recovered),
         color: Color.lightGrey,
         legendFontColor: Color.darkGrey,
         legendFontSize: legendFontSize
@@ -201,7 +191,7 @@ class CountryDetailScreen extends React.Component {
         legendFontSize: legendFontSize
       },
       {
-        name: "",
+        name: "Unknown",
         population: item.tests - item.cases,
         color: Color.lightGrey,
         legendFontColor: 'black',
@@ -290,6 +280,7 @@ class CountryDetailScreen extends React.Component {
         },
       ];
       provincialData.sort((a,b) => a.population < b.population);
+      provincialData = provincialData.filter(a => a.population > 0);
     }
 
     if (this.state.summaryLoaded) {
@@ -303,7 +294,8 @@ class CountryDetailScreen extends React.Component {
                     containerStyle={{height: 35, marginBottom: 25}}
                 />
                 <BasicSummaryView props={props}/>
-                <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'TOTAL TESTS TAKEN', footerValue: item.tests}}/>
+                <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'Total tests taken', footerValue: item.tests}}/>
+                <BasicPieChart props={{data: recoveryDeathsDiagnosedCaseData, cardTitle: 'OUTCOME BREAKDOWN', footerText: 'Total cases', footerValue: item.cases}}/>
                 {/* <BasicPieChart props={{data: recoveryDiagnosedCaseData, cardTitle: 'Recovery Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
                 {/* <BasicPieChart props={{data: deathsDiagnosedCaseData, cardTitle: 'Fatality Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
                 {/* <BasicPieChart props={{data: activeInactiveCaseData, cardTitle: 'Cases Breakdown', footerText: 'Total cases', footerValue: item.cases}}/> */}

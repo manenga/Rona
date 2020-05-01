@@ -104,9 +104,9 @@ function CardV3(props) {
     return(
         <Card title={screenName.toString()} containerStyle={{borderRadius: 2, shadowRadius: 2, padding: 15, width: cardWidth}}>
             <View style={{justifyContent: 'space-between', alignItems: 'center',  backgroundColor: 'rgba(253, 155, 152, 0.20)', margin: 4, padding: 12, borderRadius: 5}}>
-                <Text style={[styles.getStartedText, {fontSize: 12, color: Colors.darkGrey, lineHeight: 12}]}>CASES</Text>
+                <Text style={[styles.getStartedText, {fontSize: 12, color: Colors.darkGrey, fontWeight: '700', lineHeight: 12}]}>CASES</Text>
                 <View style={{justifyContent: 'space-around'}}>
-                    <Text style={{fontSize: 24, color: data.valueColor ?? iconColor ?? 'black'}}>{format(data.cases ?? 0)}</Text>
+                    <Text style={{fontSize: 32, fontWeight: 'bold', color: Colors.primary}}>{format(data.cases ?? 0)}</Text>
                     {subValue > 0
                         ? <Text style={[styles.lastUpdateFooterText, {marginTop: 5, marginBottom: 0, fontSize: 7}]}>+{format(data.todayCases)} today</Text>
                         : <Text style={[styles.lastUpdateFooterText, {marginTop: 5, marginBottom: 0, fontSize: 7}]}></Text>
@@ -114,25 +114,21 @@ function CardV3(props) {
                 </View>
                 <View style={{backgroundColor: Colors.lightGrey, height: 0.75, width: '100%', marginBottom: 10}}/>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: 'TESTS', value: format(data.tests ?? 0), icon: 'vials', iconColor: 'blue'}}/>
-                    {/* <MiniSummaryRow props={{header: 'TESTS POP', value: format(data.tests ?? 0), icon: 'vials', iconColor: 'blue'}}/> */}
-                    <MiniSummaryRow props={{header: 'RECOVERY RATE', value: parseInt((data.recovered/data.cases) * 100) + '%', icon: 'heartbeat', iconColor: 'green'}}/>
+                    <MiniSummaryRow props={{header: 'RECOVERED', value: format(data.recovered ?? 0), icon: 'heartbeat', iconColor: 'green'}}/>
+                    <MiniSummaryRow props={{header: 'DEATHS', value: format(data.deaths ?? 0), icon: 'praying-hands', iconColor: 'red'}}/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: 'RECOVERED', value: format(data.recovered ?? 0), icon: 'heartbeat', iconColor: 'green'}}/>
-                    <MiniSummaryRow props={{header: 'DEATHS', value: format(data.deaths ?? 0), subValue: format(data.todayDeaths ?? 0), icon: 'praying-hands', iconColor: 'red'}}/>
+                    <MiniSummaryRow props={{header: 'CASES TODAY', value: format(data.todayCases ?? 0), icon: 'search-plus', iconColor: 'blue'}}/>
+                    <MiniSummaryRow props={{header: "DEATHS TODAY", value: format(data.todayDeaths ?? 0), icon: 'praying-hands', iconColor: 'red'}}/>
                 </View>
-                {/* <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                     <MiniSummaryRow props={{header: 'RECOVERY RATE', value: parseInt((data.recovered/data.cases) * 100) + '%', icon: 'heartbeat', iconColor: 'green'}}/>
                     <MiniSummaryRow props={{header: 'DEATH RATE', value: parseInt((data.deaths/data.cases) * 100) + '%', icon: 'praying-hands', iconColor: 'red'}}/>
-                </View> */}
+                </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                     <MiniSummaryRow props={{header: 'ACTIVE', value: format(data.active ?? 0), icon: 'first-aid', iconColor: 'orange'}}/>
                     <MiniSummaryRow props={{header: 'CRITICAL', value: format(data.critical ?? 0), icon: 'procedures', iconColor: 'orange'}}/>
                 </View>
-                {/* <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: 'DEATH RATE', value: parseInt((data.deaths/data.cases) * 100) + '%', icon: 'praying-hands', iconColor: 'red'}}/>
-                </View> */}
             </View>
             <Text style={[styles.lastUpdateFooterText, {marginBottom: 0}]}>Last update: {Moment(data.lastUpdate).format('D MMM HH:mm')}</Text>
         </Card>
@@ -150,9 +146,9 @@ function MiniSummaryRow(props) {
     return (
         <View style={{justifyContent: 'space-between', alignItems: 'center', padding: 10, width: Dimensions.get('window').width * .31}}>
             <FontAwesome5 name={icon} size={17} color={Colors.darkGrey} style={{marginBottom: 7}}/>
-            <Text style={[styles.getStartedText, {fontSize: 10, color: 'black', lineHeight: 10,}]}>{data.header}</Text>
+            <Text style={[styles.getStartedText, {fontSize: 10, color: 'black', fontWeight: '600', lineHeight: 11,}]}>{data.header}</Text>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{fontSize: 19, color: data.valueColor ?? iconColor ?? 'black'}}>{data.value}</Text>
+                <Text style={{fontSize: 17, fontWeight: '300', color: data.valueColor ?? iconColor ?? 'black'}}>{data.value}</Text>
                 {subValue > 0
                     ? <Text style={[styles.lastUpdateFooterText, {marginTop: 2, marginBottom: 0, fontSize: 7}]}>+{format(subValue)} TODAY</Text>
                     : <Text style={[styles.lastUpdateFooterText, {marginTop: 2, marginBottom: 0, fontSize: 7}]}></Text>

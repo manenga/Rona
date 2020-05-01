@@ -31,6 +31,8 @@ const initialState = {
   summaryLoaded: false,
 }
 
+const legendFontSize = 11;
+
 export default class WorldViewScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -96,21 +98,21 @@ export default class WorldViewScreen extends React.Component {
     };
 
     // Mark: Chart Data
-
+    
     const activeInactiveCaseData = [
       {
         name: "Active",
         population: this.state.active,
         color: Color.primary,
         legendFontColor: Color.primary,
-        legendFontSize: 12
+        legendFontSize: legendFontSize
       },
       {
         name: "Inactive",
         population: this.state.worldConfirmed - this.state.active,
         color: 'rgba(253, 155, 152, 0.6)',
         legendFontColor: 'black',
-        legendFontSize: 12
+        legendFontSize: legendFontSize
       },
     ];
 
@@ -120,14 +122,14 @@ export default class WorldViewScreen extends React.Component {
         population: this.state.critical,
         color: Color.primary,
         legendFontColor: Color.primary,
-        legendFontSize: 12
+        legendFontSize: legendFontSize
       },
       {
         name: "Mild",
         population: this.state.active - this.state.critical,
         color: 'rgba(253, 155, 152, 0.6)',
         legendFontColor: 'black',
-        legendFontSize: 12
+        legendFontSize: legendFontSize
       },
     ];
 
@@ -137,31 +139,38 @@ export default class WorldViewScreen extends React.Component {
         population: this.state.worldRecovered,
         color: 'green',
         legendFontColor: 'green',
-        legendFontSize: 12
+        legendFontSize: legendFontSize
       },
       {
         name: "",
         population: this.state.worldConfirmed,
         color: Color.lightGrey,
         legendFontColor: Color.black,
-        legendFontSize: 12
+        legendFontSize: legendFontSize
       },
     ];
 
-    const deathsDiagnosedCaseData = [
+    const recoveryDeathsDiagnosedCaseData = [
+      {
+        name: "Recovered",
+        population: this.state.worldRecovered,
+        color: 'green',
+        legendFontColor: 'green',
+        legendFontSize: legendFontSize
+      },
       {
         name: "Deaths",
         population: this.state.worldDeaths,
         color: Color.primary,
         legendFontColor: Color.primary,
-        legendFontSize: 12
+        legendFontSize: legendFontSize
       },
       {
         name: "",
-        population: this.state.worldConfirmed,
+        population: this.state.worldConfirmed- (this.state.worldDeaths + this.state.worldRecovered),
         color: Color.lightGrey,
-        legendFontColor: Color.black,
-        legendFontSize: 12
+        legendFontColor: Color.darkGrey,
+        legendFontSize: legendFontSize
       },
     ];
 
@@ -175,7 +184,7 @@ export default class WorldViewScreen extends React.Component {
         legendFontSize: 12
       },
       {
-        name: "",
+        name: "Unknown",
         population: this.state.worldTests - this.state.worldConfirmed,
         color: 'rgba(253, 155, 152, 0.6)',
         legendFontColor: 'black',
@@ -191,8 +200,9 @@ export default class WorldViewScreen extends React.Component {
             <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, {alignItems: 'center'}]}>
               <BasicSummaryView props={props}/>
               <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'Total tests taken', footerValue: this.state.worldTests}}/>
-              <BasicPieChart props={{data: recoveryDiagnosedCaseData, cardTitle: 'RECOVERY RATE', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
-              <BasicPieChart props={{data: deathsDiagnosedCaseData, cardTitle: 'DEATH RATE', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
+              <BasicPieChart props={{data: recoveryDeathsDiagnosedCaseData, cardTitle: 'OUTCOME BREAKDOWN', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
+              {/* <BasicPieChart props={{data: recoveryDiagnosedCaseData, cardTitle: 'RECOVERY RATE', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
+              <BasicPieChart props={{data: deathsDiagnosedCaseData, cardTitle: 'DEATH RATE', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/> */}
               {/* <BasicPieChart props={{data: activeInactiveCaseData, cardTitle: 'CASES BREAKDOWN', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/> */}
               <BasicPieChart props={{data: mildSeriousCaseData, cardTitle: 'CASES BREAKDOWN', footerText: 'Total active cases', footerValue: this.state.active}}/>
           </ScrollView>
