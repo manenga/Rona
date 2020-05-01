@@ -11,9 +11,13 @@ import WorldViewScreen from '../screens/WorldViewScreen';
 import CountryListScreen from '../screens/CountryListScreen';
 import CountryDetailScreen from '../screens/CountryDetailScreen';
 import Colors from '../constants/Colors';
+import { TabBar } from "react-native-animated-nav-tab-bar";
+import Icon from 'react-native-vector-icons/Feather';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'World';
+
+const Tabs = createBottomTabNavigator();
 
 export default function BottomTabNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
@@ -22,34 +26,38 @@ export default function BottomTabNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
   return ( 
-    <BottomTab.Navigator 
-      initialRouteName={INITIAL_ROUTE_NAME}
-      tabBarOptions={{
-        activeTintColor: Colors.primary,
-        inactiveTintColor: 'gray',
-        style: {
-          padding: 4,
-          backgroundColor: 'white',
-      },
-      }}>
-      <BottomTab.Screen
-        name="World"
-        component={WorldViewScreen}
-        options={{
-          title: 'World View',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="globe-africa" />,
-        }}
+    <Tabs.Navigator
+    tabBarOptions={{
+      activeTintColor: "#2F7C6E",
+      inactiveTintColor: "#222222"
+    }}
+    tabBar={props => (
+      <TabBar
+        activeColors={"#2F7C6E"}
+        activeTabBackgrounds={"#DFF7F6"}
+        {...props}
       />
-      <BottomTab.Screen
-        name="Country"
-        component={CountryDetailScreen}
-        options={{
-          title: 'Country View',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="map-marked-alt" />,
-        }}
-      />
-    </BottomTab.Navigator>
-
+    )}
+  >
+    <Tabs.Screen
+      name="World View"
+      component={WorldViewScreen}
+      options={{
+        tabBarIcon: ({ focused, color, size }) => (
+          <TabBarIcon focused={focused} name="globe-africa" />
+        )
+      }}
+    />
+    <Tabs.Screen
+      name="Country View"
+      component={CountryDetailScreen}
+      options={{
+        tabBarIcon: ({ focused, color, size }) => (
+          <TabBarIcon focused={focused} name="map-marked-alt" />
+        )
+      }}
+    />
+    </Tabs.Navigator>
     // Optional TODO - Prevention Tab
   );
 }
