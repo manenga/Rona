@@ -8,16 +8,15 @@
 // news / tweets
 //
 import * as React from 'react';
-import { Text, Switch, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from '../constants/Styles';
 import Color from '../constants/Colors';
-import { BasicPieChart, BasicSummaryView, LoadingSummaryRow } from '../components/StyledViews';
+import { BasicPieChart, BasicSummaryView, LoadingSummaryRow, cardWidth } from '../components/StyledViews';
 import * as FacebookAds from 'expo-ads-facebook';
-import { ButtonGroup } from 'react-native-elements';
 import Papa from 'papaparse';
-import SegmentControl from 'react-native-segment-control';
-// import { AppBar, Tab, Tabs, TabPanel } from '@material-ui/core';
+import { Card, Divider } from 'react-native-elements';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const initialState = {
   dataSource: '',
@@ -112,7 +111,7 @@ class CountryDetailScreen extends React.Component {
     var flag = this.state.isZA ? Country.ZA.flag : Country.ZM.flag;
 
     const props = {
-      headerImage: flag, 
+      // headerImage: flag, 
       tests: item.tests,
       cases: item.cases,
       todayCases: todayCases, 
@@ -285,57 +284,22 @@ class CountryDetailScreen extends React.Component {
       provincialData = provincialData.filter(a => a.population > 0);
     }
 
-    const view = (selectedIndex) => {
-      // console.log('selectedIndex ' + selectedIndex)
-      const isZaTab = selectedIndex == 0 ? true : false;
-      if (this.state.isZA != isZaTab) {
-        // this.setState({isZA: isZaTab});
-      }
-      
-      return (
-        <ScrollView style={{backgroundColor: '#FFF1F1'}}>
-          <BasicSummaryView props={props}/>
-          <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'Total tests taken', footerValue: item.tests}}/>
-          <BasicPieChart props={{data: recoveryDeathsDiagnosedCaseData, cardTitle: 'OUTCOME BREAKDOWN', footerText: 'Total cases', footerValue: item.cases}}/>
-          {this.state.isZA && 
-              <BasicPieChart props={{data: provincialData, cardTitle: 'PROVINCIAL BREAKDOWN',  height: 175, isAbsolute: true}}/>
-          }
-        </ScrollView>
-      );
-    };
-    
-    const segments = [
-      {
-        index: 0,
-        title: 'South Africa',
-        view: view
-      },
-      {
-        index: 1,
-        title: 'Zambia',
-        view: view
-      }
-    ];
-
     if (this.state.summaryLoaded) {
       return (
         <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
-          <SegmentControl segments={segments } onIndexChange={this.updateIndex}/>
-          {/* <TouchableOpacity
-              // onPress={() => this.socialAuthClick()}
-              style={{padding: 8, marginTop: 8, alignSelf: 'center'}}
-              underlayColor='transparent'>
-                  <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderWidth: 2, borderColor: 'black', borderRadius: 28, paddingVertical: 10, paddingHorizontal: 15}}>
-                      <Text style={{fontFamily: 'HelveticaNeue-Bold', letterSpacing: 0.8, color: 'black', fontSize: 11}}>South Africa</Text>
-                  </View>
-          </TouchableOpacity> */}
+          <CountryHeader props={{
+              name: this.state.isZA ? Country.ZA.name : Country.ZM.name, 
+              flag: this.state.isZA ? Country.ZA.flag : Country.ZM.flag
+            }}/>
+          <ScrollView style={{backgroundColor: '#FFF1F1'}}>
+            <BasicSummaryView props={props}/>
+            <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'Total tests taken', footerValue: item.tests}}/>
+            <BasicPieChart props={{data: recoveryDeathsDiagnosedCaseData, cardTitle: 'OUTCOME BREAKDOWN', footerText: 'Total cases', footerValue: item.cases}}/>
+            {this.state.isZA && 
+                <BasicPieChart props={{data: provincialData, cardTitle: 'PROVINCIAL BREAKDOWN',  height: 175, isAbsolute: true}}/>
+            }
+          </ScrollView>
             {/* <ScrollView style={[styles.container, {height: '100%'}]}> */}
-                {/* <ButtonGroup
-                    selectedIndex={this.state.isZA ? 0 : 1}
-                    onPress={this.updateIndex}
-                    buttons={['South Africa', 'Zambia']}
-                    containerStyle={{height: 35, marginBottom: 25}}
-                /> 
                 {/* <BasicPieChart props={{data: recoveryDiagnosedCaseData, cardTitle: 'Recovery Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
                 {/* <BasicPieChart props={{data: deathsDiagnosedCaseData, cardTitle: 'Fatality Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
                 {/* <BasicPieChart props={{data: activeInactiveCaseData, cardTitle: 'Cases Breakdown', footerText: 'Total cases', footerValue: item.cases}}/> */}
@@ -350,6 +314,25 @@ class CountryDetailScreen extends React.Component {
   }
 }
 
+function CountryHeader(props) {
+  let name = props.props.name ?? 'SOUTH AFRICA';
+  let flag = props.props.flag ?? '';
+  const hasFlag = flag.trim() != "";
+  
+  return(
+    <TouchableOpacity
+        // onPress={() => this.socialAuthClick()}
+        underlayColor='transparent'>
+          <Card containerStyle={{borderRadius: 2, shadowRadius: 2, paddingBottom: 10, width: cardWidth}}>
+              <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                  {hasFlag && <Image source={{uri: flag}} style={[styles.basicSummaryViewHeaderImage, {height: 14, width: 28}]}/>}
+                  <Text style={{color: Color.darkGrey, fontWeight: '500', alignSelf: 'center'}}>{name}</Text>
+                  <FontAwesome5 name={'caret-square-down'} size={16} color={Color.primary} style={{}}/>
+              </View>
+          </Card>
+    </TouchableOpacity>
+  );
+}
 function AdViewWithBanner(props) {
     return (
         <View style={props, {paddingBottom: 20}}>

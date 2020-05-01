@@ -18,7 +18,7 @@ import Moment from 'moment';
 import { FontAwesome5 } from "@expo/vector-icons";
 // import { TouchableHighlight } from 'react-native-gesture-handler';
 
-const cardWidth = Dimensions.get('window').width * .90;
+export const cardWidth = Dimensions.get('window').width * .90;
 
 export class BasicSummaryView extends React.Component {
     constructor(props) {
