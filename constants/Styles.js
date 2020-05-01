@@ -135,8 +135,8 @@ const styles = StyleSheet.create({
       marginTop: 1,
     },
     basicSummaryViewHeaderImage: {
-      width: 70, 
-      height: 40, 
+      width: 50, 
+      height: 25, 
       alignSelf: 'center',
       resizeMode: 'contain'
     },

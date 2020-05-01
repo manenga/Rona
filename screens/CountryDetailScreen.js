@@ -16,6 +16,8 @@ import { BasicPieChart, BasicSummaryView, LoadingSummaryRow } from '../component
 import * as FacebookAds from 'expo-ads-facebook';
 import { ButtonGroup } from 'react-native-elements';
 import Papa from 'papaparse';
+import SegmentControl from 'react-native-segment-control';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const initialState = {
   dataSource: '',
@@ -80,6 +82,7 @@ class CountryDetailScreen extends React.Component {
   }
 
   updateIndex (selectedIndex) {
+    console.log('Index updated!');
     // this.setState({summaryLoaded: false})
     const country = selectedIndex == 0 ? Country.ZA.query : Country.ZM.query;
 
@@ -109,7 +112,6 @@ class CountryDetailScreen extends React.Component {
     var flag = this.state.isZA ? Country.ZA.flag : Country.ZM.flag;
 
     const props = {
-      headerText: this.state.isZA ? Country.ZA.name : Country.ZM.name, 
       headerImage: flag, 
       tests: item.tests,
       cases: item.cases,
@@ -283,27 +285,52 @@ class CountryDetailScreen extends React.Component {
       provincialData = provincialData.filter(a => a.population > 0);
     }
 
+    const view = (selectedIndex) => {
+      console.log('selectedIndex ' + selectedIndex)
+      const isZaTab = selectedIndex == 0 ? true : false;
+      if (this.state.isZA != isZaTab) {
+        // this.setState({isZA: isZaTab});
+      }
+      
+      return (
+        <ScrollView style={{backgroundColor: '#FFF1F1'}}>
+          <BasicSummaryView props={props}/>
+          <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'Total tests taken', footerValue: item.tests}}/>
+          <BasicPieChart props={{data: recoveryDeathsDiagnosedCaseData, cardTitle: 'OUTCOME BREAKDOWN', footerText: 'Total cases', footerValue: item.cases}}/>
+          {this.state.isZA && 
+              <BasicPieChart props={{data: provincialData, cardTitle: 'PROVINCIAL BREAKDOWN',  height: 175, isAbsolute: true}}/>
+          }
+        </ScrollView>
+      );
+    };
+    
+    const segments = [
+      {
+        title: 'South Africa',
+        view: view
+      },
+      {
+        title: 'Zambia',
+        view: view
+      }
+    ];
+
     if (this.state.summaryLoaded) {
       return (
         <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
-            <ScrollView style={[styles.container, {height: '100%'}]}>
-                <ButtonGroup
+          <SegmentControl segments={segments } color={Colors.primary} onRenderSegment={this.updateIndex}/>
+            {/* <ScrollView style={[styles.container, {height: '100%'}]}> */}
+                {/* <ButtonGroup
                     selectedIndex={this.state.isZA ? 0 : 1}
                     onPress={this.updateIndex}
                     buttons={['South Africa', 'Zambia']}
                     containerStyle={{height: 35, marginBottom: 25}}
-                />
-                <BasicSummaryView props={props}/>
-                <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'Total tests taken', footerValue: item.tests}}/>
-                <BasicPieChart props={{data: recoveryDeathsDiagnosedCaseData, cardTitle: 'OUTCOME BREAKDOWN', footerText: 'Total cases', footerValue: item.cases}}/>
+                /> */}
                 {/* <BasicPieChart props={{data: recoveryDiagnosedCaseData, cardTitle: 'Recovery Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
                 {/* <BasicPieChart props={{data: deathsDiagnosedCaseData, cardTitle: 'Fatality Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
                 {/* <BasicPieChart props={{data: activeInactiveCaseData, cardTitle: 'Cases Breakdown', footerText: 'Total cases', footerValue: item.cases}}/> */}
-                {this.state.isZA && 
-                  <BasicPieChart props={{data: provincialData, cardTitle: 'PROVINCIAL BREAKDOWN',  height: 175, isAbsolute: true}}/>
-                }
                 {/* <BasicPieChart props={{data: mildSeriousCaseData, cardTitle: 'Mild / Critical Cases', footerText: 'Total active cases', footerValue: item.active}}/> */}
-            </ScrollView>
+            {/* </ScrollView> */}
             <AdViewWithBanner/> 
         </View>
       ); 

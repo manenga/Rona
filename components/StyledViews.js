@@ -35,10 +35,11 @@ export class BasicSummaryView extends React.Component {
         const headerText = data.headerText ?? "";
         const headerImage = data.headerImage ?? "";
         const hasHeaderText = headerText.trim() != "";
+        const hasHeaderImage = headerImage.trim() != "";
 
     return (
     <View >
-        { hasHeaderText ? <Image source={{uri: headerImage}} style={styles.basicSummaryViewHeaderImage}/> : null }
+        { hasHeaderImage ? <Image source={{uri: headerImage}} style={[styles.basicSummaryViewHeaderImage, {marginTop: 15, marginBottom: 5}]}/> : null }
         { hasHeaderText ? <Text style={styles.countryNameHeaderText}>{headerText}</Text> : null }
         <CardV3 props={data}/>
     </View>
