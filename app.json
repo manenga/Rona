@@ -37,6 +37,7 @@
       "userInterfaceStyle": "dark",
       "bundleIdentifier": "com.manengamungandi.rona"
     },
-    "description": "Mobile App to track the Covid19 Global Pandemic for South Africa "
+    "description": "Mobile App to track the Covid19 Global Pandemic for South Africa ",
+    "githubUrl": "https://github.com/manenga/Rona"
   }
 }

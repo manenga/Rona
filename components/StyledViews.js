@@ -192,6 +192,26 @@ let defaultChartConfig = {
     }
 }
 
+export function MetricInfoCard(props) {  
+    const data = props.props.data ?? [];
+    const value = props.props.value ?? '';
+    const cardTitle = props.props.cardTitle ?? "";
+    // console.log(props);
+    
+    return (
+        <Card 
+            title={
+                <View style={{justifyContent: 'center', height: 35}}>
+                    <Text style={{margin: 4, color: Colors.darkGrey, alignSelf: 'center', fontWeight: '600'}}>{cardTitle.toString()}</Text>
+                    <Divider style={{margin: 4}}></Divider>
+                </View>
+            } 
+            containerStyle={{borderRadius: 2, shadowRadius: 2, paddingBottom: 10, width: cardWidth}}>
+            <Text style={{fontSize: 21, textAlign: 'center'}}>{value}</Text>
+        </Card>
+    );
+        }
+
 export function LoadingSummaryRow(props) {
     return (
         <View style={{marginTop:35, alignItems: 'center', justifyContent: 'center'}}>
