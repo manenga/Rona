@@ -115,16 +115,17 @@ function CardV3(props) {
                 <View style={{backgroundColor: Colors.lightGrey, height: 0.75, width: '100%', marginBottom: 10}}/>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                     <MiniSummaryRow props={{header: 'TESTS', value: format(data.tests ?? 0), icon: 'vials', iconColor: 'blue'}}/>
-                    <MiniSummaryRow props={{header: 'CASES TODAY', value: format(data.todayCases ?? 0), icon: 'search-plus', iconColor: 'blue'}}/>
-                </View>
-                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: 'RECOVERED', value: format(data.recovered ?? 0), icon: 'heartbeat', iconColor: 'green'}}/>
+                    {/* <MiniSummaryRow props={{header: 'TESTS POP', value: format(data.tests ?? 0), icon: 'vials', iconColor: 'blue'}}/> */}
                     <MiniSummaryRow props={{header: 'RECOVERY RATE', value: parseInt((data.recovered/data.cases) * 100) + '%', icon: 'heartbeat', iconColor: 'green'}}/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: 'DEATHS', value: format(data.deaths ?? 0), icon: 'praying-hands', iconColor: 'red'}}/>
-                    <MiniSummaryRow props={{header: "DEATHS TODAY", value: format(data.todayDeaths ?? 0), icon: 'praying-hands', iconColor: 'red'}}/>
+                    <MiniSummaryRow props={{header: 'RECOVERED', value: format(data.recovered ?? 0), icon: 'heartbeat', iconColor: 'green'}}/>
+                    <MiniSummaryRow props={{header: 'DEATHS', value: format(data.deaths ?? 0), subValue: format(data.todayDeaths ?? 0), icon: 'praying-hands', iconColor: 'red'}}/>
                 </View>
+                {/* <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <MiniSummaryRow props={{header: 'RECOVERY RATE', value: parseInt((data.recovered/data.cases) * 100) + '%', icon: 'heartbeat', iconColor: 'green'}}/>
+                    <MiniSummaryRow props={{header: 'DEATH RATE', value: parseInt((data.deaths/data.cases) * 100) + '%', icon: 'praying-hands', iconColor: 'red'}}/>
+                </View> */}
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                     <MiniSummaryRow props={{header: 'ACTIVE', value: format(data.active ?? 0), icon: 'first-aid', iconColor: 'orange'}}/>
                     <MiniSummaryRow props={{header: 'CRITICAL', value: format(data.critical ?? 0), icon: 'procedures', iconColor: 'orange'}}/>
@@ -133,7 +134,7 @@ function CardV3(props) {
                     <MiniSummaryRow props={{header: 'DEATH RATE', value: parseInt((data.deaths/data.cases) * 100) + '%', icon: 'praying-hands', iconColor: 'red'}}/>
                 </View> */}
             </View>
-            <Text style={[styles.lastUpdateFooterText, {marginBottom: 0}]}>LAST UPDATE: {Moment(data.lastUpdate).format('D MMM HH:mm')}</Text>
+            <Text style={[styles.lastUpdateFooterText, {marginBottom: 0}]}>Last update: {Moment(data.lastUpdate).format('D MMM HH:mm')}</Text>
         </Card>
     );
 }
@@ -196,7 +197,10 @@ export function MetricInfoCard(props) {
     const data = props.props.data ?? [];
     const value = props.props.value ?? '';
     const cardTitle = props.props.cardTitle ?? "";
-    // console.log(props);
+    
+    // Examples: 
+    // Death rate
+    // Average death age, min death age, max death age
     
     return (
         <Card 

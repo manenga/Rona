@@ -8,7 +8,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/corona.png",
     "scheme": "myapp",
@@ -32,7 +32,7 @@
       "package": "com.manengamungandi.rona"
     },
     "ios": {
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.1",
       "supportsTablet": true,
       "userInterfaceStyle": "dark",
       "bundleIdentifier": "com.manengamungandi.rona"
