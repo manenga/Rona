@@ -116,7 +116,10 @@ class CountryDetailScreen extends React.Component {
       todayCases: todayCases, 
       deaths: item.deaths, 
       todayDeaths: todayDeaths,
-      recovered: item.recovered
+      recovered: item.recovered,
+      screenName: 'LOCAL SUMMARY',
+      active: item.active,
+      critical: item.critical,
     };
 
     // Mark: Chart Data
@@ -292,7 +295,7 @@ class CountryDetailScreen extends React.Component {
     if (this.state.summaryLoaded) {
       return (
         <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
-            <ScrollView style={[styles.container, {height: '100%'}]} contentContainerStyle={styles.contentContainer}>
+            <ScrollView style={[styles.container, {height: '100%'}]}>
                 <ButtonGroup
                     selectedIndex={this.state.isZA ? 0 : 1}
                     onPress={this.updateIndex}
@@ -300,14 +303,14 @@ class CountryDetailScreen extends React.Component {
                     containerStyle={{height: 35, marginBottom: 25}}
                 />
                 <BasicSummaryView props={props}/>
-                <BasicPieChart props={{data: testsData, headerText: 'Tests Breakdown', footerText: 'Total tests taken', footerValue: item.tests}}/>
-                <BasicPieChart props={{data: recoveryDiagnosedCaseData, headerText: 'Recovery Rate', footerText: 'Total cases', footerValue: item.cases}}/>
-                <BasicPieChart props={{data: deathsDiagnosedCaseData, headerText: 'Fatality Rate', footerText: 'Total cases', footerValue: item.cases}}/>
-                <BasicPieChart props={{data: activeInactiveCaseData, headerText: 'Cases Breakdown', footerText: 'Total cases', footerValue: item.cases}}/>
+                <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'TOTAL TESTS TAKEN', footerValue: item.tests}}/>
+                {/* <BasicPieChart props={{data: recoveryDiagnosedCaseData, cardTitle: 'Recovery Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
+                {/* <BasicPieChart props={{data: deathsDiagnosedCaseData, cardTitle: 'Fatality Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
+                {/* <BasicPieChart props={{data: activeInactiveCaseData, cardTitle: 'Cases Breakdown', footerText: 'Total cases', footerValue: item.cases}}/> */}
                 {this.state.isZA && 
-                  <BasicPieChart props={{data: provincialData, headerText: 'Provincial Breakdown', footerText: 'Total cases', footerValue: item.cases, height: 165, isAbsolute: true}}/>
+                  <BasicPieChart props={{data: provincialData, cardTitle: 'PROVINCIAL BREAKDOWN',  height: 175, isAbsolute: true}}/>
                 }
-                {/* <BasicPieChart props={{data: mildSeriousCaseData, headerText: 'Mild / Critical Cases', footerText: 'Total active cases', footerValue: item.active}}/> */}
+                {/* <BasicPieChart props={{data: mildSeriousCaseData, cardTitle: 'Mild / Critical Cases', footerText: 'Total active cases', footerValue: item.active}}/> */}
             </ScrollView>
             <AdViewWithBanner/> 
         </View>

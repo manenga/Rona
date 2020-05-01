@@ -10,18 +10,25 @@ import styles from '../constants/Styles';
 import Colors from '../constants/Colors';
 import { format } from '../constants/Extensions';
 import { MonoText } from '../components/StyledText';
-import { Card } from 'react-native-elements'
+import { Card, Divider } from 'react-native-elements'
 import { DotIndicator, PulseIndicator, SkypeIndicator } from 'react-native-indicators';
 import { LineChart, BarChart, PieChart, ProgressChart, StackedBarChart } from "react-native-chart-kit";
 import { LinearGradient } from 'expo-linear-gradient';
 import Moment from 'moment';
 import { FontAwesome5 } from "@expo/vector-icons";
+import { TouchableHighlight } from 'react-native-gesture-handler';
+
+const cardWidth = Dimensions.get('window').width * .90;
 
 export class BasicSummaryView extends React.Component {
     constructor(props) {
         super(props);
         this.state = { };
       }
+
+    leanMore () {
+
+    }
 
     render() {
         const data = this.props.props ?? [];
@@ -30,10 +37,9 @@ export class BasicSummaryView extends React.Component {
         const hasHeaderText = headerText.trim() != "";
 
     return (
-    <View style={styles.getStartedContainer}>
+    <View >
         { hasHeaderText ? <Image source={{uri: headerImage}} style={styles.basicSummaryViewHeaderImage}/> : null }
         { hasHeaderText ? <Text style={styles.countryNameHeaderText}>{headerText}</Text> : null }
-
         <CardV3 props={data}/>
     </View>
   );}
@@ -47,7 +53,6 @@ function BasicSummaryRow(props) {
     return (
       <View>
           <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-            {/* hidden for now <FontAwesome5 name={icon} size={17} color={Colors.darkGrey}/> */}
             <Text style={[styles.getStartedText, {marginLeft: 12}]}>{data.header}</Text>
           </View>
           <View style={[styles.metricHighlightContainer, styles.homeScreenFilename, {alignItems: 'center'}]}>
@@ -95,36 +100,40 @@ function CardV3(props) {
     const subValue = data.subValue ?? 0;
     const icon = data.icon;
     const iconColor = data.iconColor ?? Colors.black;
+    const screenName = data.screenName ?? "";
     return(
-        <Card containerStyle={{borderRadius: 2, shadowRadius: 2, padding: 25}}>
+        <Card title={screenName.toString()} containerStyle={{borderRadius: 2, shadowRadius: 2, padding: 15, width: cardWidth}}>
             <View style={{justifyContent: 'space-between', alignItems: 'center',  backgroundColor: 'rgba(253, 155, 152, 0.20)', margin: 4, padding: 12, borderRadius: 5}}>
-                <Text style={[styles.getStartedText, {fontSize: 12, color: Colors.darkGrey, lineHeight: 12}]}>Cases</Text>
+                <Text style={[styles.getStartedText, {fontSize: 12, color: Colors.darkGrey, lineHeight: 12}]}>CASES</Text>
                 <View style={{justifyContent: 'space-around'}}>
-                    <Text style={{fontSize: 24, color: data.valueColor ?? iconColor ?? 'black'}}>245,223,232</Text>
+                    <Text style={{fontSize: 24, color: data.valueColor ?? iconColor ?? 'black'}}>{format(data.cases ?? 0)}</Text>
                     {subValue > 0
-                        ? <Text style={[styles.lastUpdateFooterText, {marginTop: 5, marginBottom: 0, fontSize: 7}]}>+{format(2323)} today</Text>
+                        ? <Text style={[styles.lastUpdateFooterText, {marginTop: 5, marginBottom: 0, fontSize: 7}]}>+{format(data.todayCases)} today</Text>
                         : <Text style={[styles.lastUpdateFooterText, {marginTop: 5, marginBottom: 0, fontSize: 7}]}></Text>
                     }
                 </View>
                 <View style={{backgroundColor: Colors.lightGrey, height: 0.75, width: '100%', marginBottom: 10}}/>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: 'Tests', value: format(data.tests ?? 0), icon: 'vials', iconColor: 'blue'}}/>
-                    <MiniSummaryRow props={{header: 'Recovered', value: format(data.recovered ?? 0), icon: 'vials', iconColor: 'green'}}/>
+                    <MiniSummaryRow props={{header: 'TESTS', value: format(data.tests ?? 0), icon: 'vials', iconColor: 'blue'}}/>
+                    <MiniSummaryRow props={{header: 'CASES TODAY', value: format(data.todayCases ?? 0), icon: 'vials', iconColor: 'blue'}}/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: 'Active', value: format(data.deaths ?? 0), subValue: data.todayDeaths, icon: 'vials', iconColor: 'red'}}/>
-                    <MiniSummaryRow props={{header: 'Critical', value: format(data.deaths ?? 0), subValue: data.todayDeaths, icon: 'vials', iconColor: 'red'}}/>
+                    <MiniSummaryRow props={{header: 'RECOVERED', value: format(data.recovered ?? 0), icon: 'vials', iconColor: 'green'}}/>
+                    <MiniSummaryRow props={{header: 'RECOVERY RATE', value: parseInt((data.recovered/data.cases) * 100) + '%', icon: 'vials', iconColor: 'green'}}/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: "Today's Deaths", value: format(data.deaths ?? 0), subValue: data.todayDeaths, icon: 'vials', iconColor: 'red'}}/>
-                    <MiniSummaryRow props={{header: 'Deaths', value: format(data.deaths ?? 0), subValue: data.todayDeaths, icon: 'vials', iconColor: 'red'}}/>
+                    <MiniSummaryRow props={{header: 'ACTIVE', value: format(data.active ?? 0), icon: 'vials', iconColor: 'orange'}}/>
+                    <MiniSummaryRow props={{header: 'CRITICAL', value: format(data.critical ?? 0), icon: 'vials', iconColor: 'orange'}}/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: 'Recovery Rate', value: '20%', iconColor: 'red'}}/>
-                    <MiniSummaryRow props={{header: 'Fatality Rate', value: '2%', iconColor: 'red'}}/>
+                    <MiniSummaryRow props={{header: 'DEATHS', value: format(data.deaths ?? 0), icon: 'vials', iconColor: 'red'}}/>
+                    <MiniSummaryRow props={{header: "DEATHS TODAY", value: format(data.todayDeaths ?? 0), icon: 'vials', iconColor: 'red'}}/>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+                    <MiniSummaryRow props={{header: 'DEATH RATE', value: parseInt((data.deaths/data.cases) * 100) + '%', iconColor: 'red'}}/>
                 </View>
             </View>
-            <Text style={[styles.lastUpdateFooterText, {marginBottom: 0}]}>Last update: {Moment(data.lastUpdate).format('D MMM HH:mm')}</Text>
+            <Text style={[styles.lastUpdateFooterText, {marginBottom: 0}]}>LAST UPDATE: {Moment(data.lastUpdate).format('D MMM HH:mm')}</Text>
         </Card>
     );
 }
@@ -144,7 +153,7 @@ function MiniSummaryRow(props) {
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{fontSize: 15, color: data.valueColor ?? iconColor ?? 'black'}}>{data.value}</Text>
                 {subValue > 0
-                    ? <Text style={[styles.lastUpdateFooterText, {marginTop: 2, marginBottom: 0, fontSize: 7}]}>+{format(subValue)} today</Text>
+                    ? <Text style={[styles.lastUpdateFooterText, {marginTop: 2, marginBottom: 0, fontSize: 7}]}>+{format(subValue)} TODAY</Text>
                     : <Text style={[styles.lastUpdateFooterText, {marginTop: 2, marginBottom: 0, fontSize: 7}]}></Text>
                 }
             </View>
@@ -196,19 +205,29 @@ export function LoadingSummaryRow(props) {
     const data = props.props.data ?? [];
     const headerText = props.props.headerText ?? '';
     const footerText = props.props.footerText ?? '';
-    const footerValue = props.props.footerValue ?? 0;
+    const footerValue = props.props.footerValue ?? '';
     const height = props.props.height ?? 100;
     const isAbsolute = props.props.isAbsolute ?? false;
     const backgroundColor = 'rgba(253, 155, 152, 0.6)';
+    const cardTitle = props.props.cardTitle ?? "";
     // console.log(props);
     let chartConfig = data.chartConfig ?? defaultChartConfig
+
+    
+
     return (
-        <Card containerStyle={{borderRadius: 2, shadowRadius: 2, padding: 25}}>
-            <Text style={styles.countryNameHeaderText}>{headerText}</Text>
+        <Card 
+            title={
+                <View style={{justifyContent: 'center', height: 35}}>
+                    <Text style={{margin: 4, color: Colors.darkGrey, alignSelf: 'center', fontWeight: '600'}}>{cardTitle.toString()}</Text>
+                    <Divider style={{margin: 4}}></Divider>
+                </View>
+            } 
+            containerStyle={{borderRadius: 2, shadowRadius: 2, paddingBottom: 10, width: cardWidth}}>
             <PieChart
                 style={{marginTop: 0}}
                 data={data}
-                width={Dimensions.get('window').width * .7}
+                width={Dimensions.get('window').width * .75}
                 height={height}
                 chartConfig={chartConfig}
                 accessor="population"
@@ -217,6 +236,9 @@ export function LoadingSummaryRow(props) {
                 hasLegend={true}
             />
             <Text style={styles.lastUpdateFooterText}>{footerText} {format(footerValue)}</Text>
+            {/* <TouchableHighlight style={{padding: 12}} onPress={() => this.leanMore()}>
+                <FontAwesome5 name={'info-circle'} size={16} color={Colors.primary} style={{alignSelf: 'flex-end'}}/>
+            </TouchableHighlight> */}
         </Card>
     );
   }

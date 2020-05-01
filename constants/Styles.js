@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     basicSummaryViewHeaderImage: {
       width: 70, 
       height: 40, 
+      alignSelf: 'center',
       resizeMode: 'contain'
     },
     gradientView: {

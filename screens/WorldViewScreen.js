@@ -83,13 +83,16 @@ export default class WorldViewScreen extends React.Component {
     // console.log('Number of todayDeaths: ' + format(this.state.todayDeaths))
     // console.log('Number of todayCases: ' + format(this.state.todayCases))
     const props = {
-      tests: format(this.state.worldTests), 
-      cases: format(this.state.worldConfirmed), 
+      tests: this.state.worldTests, 
+      cases: this.state.worldConfirmed, 
       todayDeaths: this.state.todayDeaths, 
       todayCases: this.state.todayCases, 
-      deaths: format(this.state.worldDeaths), 
-      recovered: format(this.state.worldRecovered),
-      lastUpdate: this.state.lastUpdate
+      deaths: this.state.worldDeaths, 
+      recovered: this.state.worldRecovered,
+      lastUpdate: this.state.lastUpdate,
+      screenName: 'WORLD SUMMARY',
+      active: this.state.active,
+      critical: this.state.critical,
     };
 
     // Mark: Chart Data
@@ -187,11 +190,11 @@ export default class WorldViewScreen extends React.Component {
           colors={['#600200', '#D35D5A', '#390100']}>
             <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, {alignItems: 'center'}]}>
               <BasicSummaryView props={props}/>
-              <BasicPieChart props={{data: testsData, headerText: 'Tests Breakdown', footerText: 'Total tests taken', footerValue: this.state.worldTests}}/>
-              <BasicPieChart props={{data: recoveryDiagnosedCaseData, headerText: 'Recovery Rate', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
-              <BasicPieChart props={{data: deathsDiagnosedCaseData, headerText: 'Fatality Rate', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
-              <BasicPieChart props={{data: activeInactiveCaseData, headerText: 'Cases Breakdown', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
-              <BasicPieChart props={{data: mildSeriousCaseData, headerText: 'Cases Breakdown', footerText: 'Total active cases', footerValue: this.state.active}}/>
+              <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'Total tests taken', footerValue: this.state.worldTests}}/>
+              <BasicPieChart props={{data: recoveryDiagnosedCaseData, cardTitle: 'RECOVERY RATE', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
+              <BasicPieChart props={{data: deathsDiagnosedCaseData, cardTitle: 'DEATH RATE', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
+              {/* <BasicPieChart props={{data: activeInactiveCaseData, cardTitle: 'CASES BREAKDOWN', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/> */}
+              <BasicPieChart props={{data: mildSeriousCaseData, cardTitle: 'CASES BREAKDOWN', footerText: 'Total active cases', footerValue: this.state.active}}/>
           </ScrollView>
           <ViewWithBanner/> 
         </LinearGradient>
