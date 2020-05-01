@@ -8,7 +8,7 @@
 // news / tweets
 //
 import * as React from 'react';
-import { Text, Switch, View } from 'react-native';
+import { Text, Switch, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from '../constants/Styles';
 import Color from '../constants/Colors';
@@ -17,7 +17,7 @@ import * as FacebookAds from 'expo-ads-facebook';
 import { ButtonGroup } from 'react-native-elements';
 import Papa from 'papaparse';
 import SegmentControl from 'react-native-segment-control';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+// import { AppBar, Tab, Tabs, TabPanel } from '@material-ui/core';
 
 const initialState = {
   dataSource: '',
@@ -57,7 +57,7 @@ class CountryDetailScreen extends React.Component {
     });
 
     setTimeout(()=> {
-      console.log(results[0]);
+      // console.log(results[0]);
       // console.log(results[results.length - 1]);
       this.setState({ZAProvincialData: results});
     }, 1500);
@@ -82,7 +82,7 @@ class CountryDetailScreen extends React.Component {
   }
 
   updateIndex (selectedIndex) {
-    console.log('Index updated!');
+    // console.warn('Index updated! at ' + selectedIndex);
     // this.setState({summaryLoaded: false})
     const country = selectedIndex == 0 ? Country.ZA.query : Country.ZM.query;
 
@@ -206,8 +206,8 @@ class CountryDetailScreen extends React.Component {
     const today = array[array.length - 1];
     
     if (today != null) {
-      console.log(today);
-      console.log(today["EC"]);
+      // console.log(today);
+      // console.log(today["EC"]);
 
       provincialData = [
         {
@@ -286,7 +286,7 @@ class CountryDetailScreen extends React.Component {
     }
 
     const view = (selectedIndex) => {
-      console.log('selectedIndex ' + selectedIndex)
+      // console.log('selectedIndex ' + selectedIndex)
       const isZaTab = selectedIndex == 0 ? true : false;
       if (this.state.isZA != isZaTab) {
         // this.setState({isZA: isZaTab});
@@ -306,10 +306,12 @@ class CountryDetailScreen extends React.Component {
     
     const segments = [
       {
+        index: 0,
         title: 'South Africa',
         view: view
       },
       {
+        index: 1,
         title: 'Zambia',
         view: view
       }
@@ -318,14 +320,22 @@ class CountryDetailScreen extends React.Component {
     if (this.state.summaryLoaded) {
       return (
         <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
-          <SegmentControl segments={segments } color={Colors.primary} onRenderSegment={this.updateIndex}/>
+          <SegmentControl segments={segments } onIndexChange={this.updateIndex}/>
+          {/* <TouchableOpacity
+              // onPress={() => this.socialAuthClick()}
+              style={{padding: 8, marginTop: 8, alignSelf: 'center'}}
+              underlayColor='transparent'>
+                  <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderWidth: 2, borderColor: 'black', borderRadius: 28, paddingVertical: 10, paddingHorizontal: 15}}>
+                      <Text style={{fontFamily: 'HelveticaNeue-Bold', letterSpacing: 0.8, color: 'black', fontSize: 11}}>South Africa</Text>
+                  </View>
+          </TouchableOpacity> */}
             {/* <ScrollView style={[styles.container, {height: '100%'}]}> */}
                 {/* <ButtonGroup
                     selectedIndex={this.state.isZA ? 0 : 1}
                     onPress={this.updateIndex}
                     buttons={['South Africa', 'Zambia']}
                     containerStyle={{height: 35, marginBottom: 25}}
-                /> */}
+                /> 
                 {/* <BasicPieChart props={{data: recoveryDiagnosedCaseData, cardTitle: 'Recovery Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
                 {/* <BasicPieChart props={{data: deathsDiagnosedCaseData, cardTitle: 'Fatality Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
                 {/* <BasicPieChart props={{data: activeInactiveCaseData, cardTitle: 'Cases Breakdown', footerText: 'Total cases', footerValue: item.cases}}/> */}

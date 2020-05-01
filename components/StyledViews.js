@@ -10,13 +10,13 @@ import styles from '../constants/Styles';
 import Colors from '../constants/Colors';
 import { format } from '../constants/Extensions';
 import { MonoText } from '../components/StyledText';
-import { Card, Divider } from 'react-native-elements'
+import { Card, Divider, Overlay, TouchableHighlight } from 'react-native-elements'
 import { DotIndicator, PulseIndicator, SkypeIndicator } from 'react-native-indicators';
 import { LineChart, BarChart, PieChart, ProgressChart, StackedBarChart } from "react-native-chart-kit";
 import { LinearGradient } from 'expo-linear-gradient';
 import Moment from 'moment';
 import { FontAwesome5 } from "@expo/vector-icons";
-import { TouchableHighlight } from 'react-native-gesture-handler';
+// import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const cardWidth = Dimensions.get('window').width * .90;
 
@@ -270,6 +270,57 @@ export function TimelineView(props) {
   
 }
 
+// https://github.com/xotahal/react-native-material-ui/blob/master/docs/Dialog.md
+export class MoreInfoOverlay extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {showMoreInfoOverlay: false};
+      }
+      
+    render() {
+        return(
+            <Overlay
+                isVisible={this.state.showMoreInfoOverlay}
+                onBackdropPress={() => this.setState({showMoreInfoOverlay: false})}
+                windowBackgroundColor="rgba(0, 0, 0, .5)"
+                overlayBackgroundColor="white"
+                width="75%"
+                height="auto">
+                    <View style={{flexDirection: 'row', alignItems:'flex-start', padding: 10}}>
+                        <TouchableHighlight
+                            onPress={() => this.setState({ showMoreInfoOverlay: false })}
+                            style={{position: 'absolute', right: 0, top:10}}
+                            underlayColor='transparent'>
+                                <Icon name='close' type='antdesign' size={21} iconStyle={{padding: 6}}/>
+                        </TouchableHighlight>
+    
+                        <View style={{flexDirection: 'column', justifyContent: 'center'}}>
+                            <Text style={{fontSize: 21, letterSpacing: 0.8, fontFamily: 'HelveticaNeue-Bold', color: '#000', marginBottom: 20}}>{'COMING_SOON'}</Text>
+                            <Text style={{fontSize: 21, letterSpacing: 0.8, fontFamily: 'HelveticaNeue-Bold', color: '#000', marginBottom: 20}}>{ 'SHOWCASE_APP' }</Text>
+                            
+                            <TouchableOpacity
+                                onPress={() => this.socialAuthClick()}
+                                style={{padding: 8, marginTop: 8, alignSelf: 'center'}}
+                                underlayColor='transparent'>
+                                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderWidth: 2, borderColor: 'black', borderRadius: 28, paddingVertical: 10, paddingHorizontal: 15}}>
+                                        <Text style={{fontFamily: 'HelveticaNeue-Bold', letterSpacing: 0.8, color: Colours.black, fontSize: 11}}>YES, PLEASE</Text>
+                                    </View>
+                            </TouchableOpacity>
+    
+                            <TouchableHighlight
+                                onPress={() => this.setState({ isOverlayVisible: false })}
+                                style={{padding: 8, marginTop: 8 ,alignSelf: 'center'}}
+                                underlayColor='transparent'>
+                                    <View style={{padding: 10, alignContent: 'center'}}>
+                                        <Text style={{fontFamily: 'HelveticaNeue-Bold', letterSpacing: 0.8, color: 'black', fontSize: 11}}>NO THANKS</Text>
+                                    </View>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+            </Overlay>
+        );
+    }
+}
 // Nice to have charts
 // Cases over time / Recoveries / Deaths
 // New cases over time / Deaths
