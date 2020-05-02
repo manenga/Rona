@@ -11,6 +11,9 @@ Mobile App to track the spread of the Covid19 Coronavirus Global Pandemic in Sou
 * Statistics for South Africa and Zambia
 * Provincial Statistics for South Africa
 
+## Availability 
+[Expo for Android and iOS ](https://expo.io/@mungand/Rona)
+
 # Demo
 <img src="https://github.com/manenga/Rona/blob/master/demo-gif.gif?raw=true" width="50%" /> 
 
@@ -21,8 +24,6 @@ Inspiration from [Worldometers](https://www.worldometers.info/coronavirus/) and 
 
 Special thanks to [Hillzy](https://www.instagram.com/hillzy911/), [Atanga Mungandi](https://www.instagram.com/atangamungandi/) and [Llewellyn Iyer](https://za.linkedin.com/in/llewellyn-iyer-596b9111a) 🤝
 
-## Availability 
-[Expo] for Android and iOS (https://expo.io/@mungand/Rona)
 
 ## How can I support the developers?
 - Star our GitHub repo ⭐
@@ -32,7 +33,7 @@ Special thanks to [Hillzy](https://www.instagram.com/hillzy911/), [Atanga Mungan
 - Buy me coffee or [Donate](https://paypal.me/Mungandi)
 
 ## More from the developers
-- [Rona Mobile App](https://github.com/manenga/Rona/) - Covid19 Global Pandemic Statistics Tracker
+- [TabbedControl](https://github.com/manenga/react-native-tabbed-control) - Swipeable SegmentedControl component for React Native apps
 
 ## License
 [MIT](https://github.com/manenga/react-native-tabbed-control/blob/master/LICENSE) license.
