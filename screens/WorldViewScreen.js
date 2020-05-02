@@ -7,7 +7,7 @@
 // most affected countries by total deaths, new deaths, total cases, new cases
 //
 import * as React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, View, TouchableOpacity, Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from '../constants/Styles';
 import Color from '../constants/Colors';
@@ -85,6 +85,16 @@ export default class WorldViewScreen extends React.Component {
         this.setState({summaryLoaded: true})
       })
   }
+
+  handleClick = (url) => {
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("Don't know how to open URI: " + url);
+      }
+    });
+  };
 
   render() {
     // Data for BasicSummaryView
@@ -212,6 +222,10 @@ export default class WorldViewScreen extends React.Component {
               {/* <BasicPieChart props={{data: activeInactiveCaseData, cardTitle: 'CASES BREAKDOWN', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/> */}
               <BasicPieChart props={{data: mildSeriousCaseData, cardTitle: 'CASES BREAKDOWN', footerText: 'Total active cases', footerValue: this.state.active}}/>
               <AcknowledgmentsView/>
+              {/* <TouchableOpacity
+                onPress={this.handleClick('https://github.com/manenga')}> */}
+                <Text style={{color: 'white', fontSize: 14, fontWeight: '300', marginVertical: 14}}>Made with ♥ by Manenga </Text>
+              {/* </TouchableOpacity> */}
           </ScrollView>
           <ViewWithBanner/> 
         </LinearGradient>

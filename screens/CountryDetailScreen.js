@@ -8,11 +8,11 @@
 // news / tweets
 //
 import * as React from 'react';
-import { Text, Switch, TouchableOpacity, View } from 'react-native';
+import { Text, Switch, TouchableOpacity, View, Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import styles from '../constants/Styles';
 import Color from '../constants/Colors';
-import { BasicPieChart, BasicSummaryView, LoadingSummaryRow } from '../components/StyledViews';
+import { AcknowledgmentsView, BasicPieChart, BasicSummaryView, LoadingSummaryRow } from '../components/StyledViews';
 import * as FacebookAds from 'expo-ads-facebook';
 import { ButtonGroup } from 'react-native-elements';
 import Papa from 'papaparse';
@@ -307,29 +307,20 @@ class CountryDetailScreen extends React.Component {
       return (
         <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
           <SegmentControl segments={segments } color={'#024b30'} onIndexChange={this.updateIndex}/>
-          <ScrollView style={{backgroundColor: '#FFF1F1'}}>
+          <ScrollView style={{backgroundColor: '#FFF1F1'}} contentContainerStyle={[{alignItems: 'center'}]}>
             <BasicSummaryView props={props}/>
             <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'Total tests taken', footerValue: item.tests}}/>
             <BasicPieChart props={{data: recoveryDeathsDiagnosedCaseData, cardTitle: 'OUTCOME BREAKDOWN', footerText: 'Total cases', footerValue: item.cases}}/>
             {this.state.isZA && 
                 <BasicPieChart props={{data: provincialData, cardTitle: 'PROVINCIAL BREAKDOWN',  height: 175, isAbsolute: true}}/>
             }
+            <AcknowledgmentsView/>
+            {/* <TouchableOpacity
+                onPress={this.handleClick('https://github.com/manenga')}> */}
+                <Text style={{color: 'black', fontSize: 14, fontWeight: '300', marginVertical: 14}}>Made with 🖤 by Manenga </Text>
+            {/* </TouchableOpacity> */}
         </ScrollView>
-          {/* <TouchableOpacity
-              // onPress={() => this.socialAuthClick()}
-              style={{padding: 8, marginTop: 8, alignSelf: 'center'}}
-              underlayColor='transparent'>
-                  <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderWidth: 2, borderColor: 'black', borderRadius: 28, paddingVertical: 10, paddingHorizontal: 15}}>
-                      <Text style={{fontFamily: 'HelveticaNeue-Bold', letterSpacing: 0.8, color: 'black', fontSize: 11}}>South Africa</Text>
-                  </View>
-          </TouchableOpacity> */}
-            {/* <ScrollView style={[styles.container, {height: '100%'}]}> */}
-                {/* <BasicPieChart props={{data: recoveryDiagnosedCaseData, cardTitle: 'Recovery Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
-                {/* <BasicPieChart props={{data: deathsDiagnosedCaseData, cardTitle: 'Fatality Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
-                {/* <BasicPieChart props={{data: activeInactiveCaseData, cardTitle: 'Cases Breakdown', footerText: 'Total cases', footerValue: item.cases}}/> */}
-                {/* <BasicPieChart props={{data: mildSeriousCaseData, cardTitle: 'Mild / Critical Cases', footerText: 'Total active cases', footerValue: item.active}}/> */}
-            {/* </ScrollView> */}
-            <AdViewWithBanner/> 
+        <AdViewWithBanner/> 
         </View>
       ); 
     } else {

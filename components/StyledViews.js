@@ -5,7 +5,7 @@
 //
 
 import * as React from 'react';
-import { Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, View, Image, Dimensions, TouchableOpacity, Linking } from 'react-native';
 import styles from '../constants/Styles';
 import Colors from '../constants/Colors';
 import { format } from '../constants/Extensions';
@@ -16,7 +16,7 @@ import { LineChart, BarChart, PieChart, ProgressChart, StackedBarChart } from "r
 import { LinearGradient } from 'expo-linear-gradient';
 import Moment from 'moment';
 import { FontAwesome5 } from "@expo/vector-icons";
-// import { TouchableHighlight } from 'react-native-gesture-handler';
+import Hyperlink from 'react-native-hyperlink'
 
 export const cardWidth = Dimensions.get('window').width * .90;
 
@@ -288,30 +288,43 @@ export function CountryHeader(props) {
 function DeveloperRows() {
     return(
         <View style={{justifyContent: 'space-between', marginVertical: 15}}>
-            <TouchableOpacity style={{flexDirection: 'row'}}>
+            <TouchableOpacity 
+                style={{flexDirection: 'row'}}>
+                {/* onPress={Linking.openURL('https://github.com/manenga')}> */}
                 <FontAwesome5 name={'github'} size={21} style={{marginHorizontal: 10}}/>
                 <Text style={{color: Colors.darkGrey, fontWeight: '500', fontSize: 15}}>manenga</Text>
             </TouchableOpacity>
             <Divider style={{marginVertical: 15, height: 0}}></Divider>
-            <TouchableOpacity style={{flexDirection: 'row'}}>
+            <TouchableOpacity 
+                onPress={Linking.openURL('https://www.linkedin.com/in/mungandi/')} 
+                style={{flexDirection: 'row'}}>
                 <FontAwesome5 name={'linkedin'} size={21} color={'#0072b1'} style={{marginHorizontal: 10}}/>
                 <Text style={{color: Colors.darkGrey, fontWeight: '500', fontSize: 15}}>mungandi</Text>
             </TouchableOpacity>
-            <Divider style={{marginVertical: 15, height: 0}}></Divider>
+            <Divider style={{marginVertical: 15, height: 0}}></Divider> */}
             <TouchableOpacity style={{flexDirection: 'row'}}>
                 <FontAwesome5 name={'instagram'} size={21} color={'#0072b1'} style={{marginHorizontal: 10}}/>
                 <Text style={{color: Colors.darkGrey, fontWeight: '500', fontSize: 15}}>mungandi</Text>
             </TouchableOpacity>
             <Divider style={{marginVertical: 15, height: 0}}></Divider>
-            <TouchableOpacity style={{alignSelf: 'center'}}>
-                <LinearGradient style={[styles.gradientView, {borderRadius: 0, height: 37, width: 108, justifyContent: 'center'}]}
-                    colors={['#FFC439', '#f7f7a1', '#FFC439']}>
-                    <Text style={{color: Colors.darkGrey, fontWeight: '500', fontSize: 18, fontStyle: 'italic'}}>Donate</Text>
-                </LinearGradient>
-            </TouchableOpacity>
+            <DonateButton/>
         </View>
     );
 }
+
+function DonateButton() {
+    return(
+        <TouchableOpacity 
+            style={{alignSelf: 'center'}}>
+            {/* onPress={Linking.openURL('https://paypal.me/Mungandi')} > */}
+            <LinearGradient style={[styles.gradientView, {borderRadius: 0, height: 37, width: 108, justifyContent: 'center'}]}
+                colors={['#FFC439', '#f7f7a1', '#FFC439']}>
+                <Text style={{color: Colors.darkGrey, fontWeight: '500', fontSize: 18, fontStyle: 'italic'}}>Donate</Text>
+            </LinearGradient>
+        </TouchableOpacity>
+    );
+}
+
 export function DeveloperAcknowledgmentsView(props) {
     
     return(
@@ -340,9 +353,38 @@ export function AcknowledgmentsView(props) {
             } 
             containerStyle={{borderRadius: 2, shadowRadius: 2, paddingBottom: 10, width: cardWidth}}>
             <View style={{marginTop: 8, justifyContent: 'space-between', alignItems: 'center'}}>
-                <Text style={{color: Colors.darkGrey, fontWeight: '500', alignSelf: 'center'}}>Data sourced from Novel COVID API.</Text>
-                <Divider style={{marginVertical: 15, height: 0}}></Divider>
-                <DeveloperRows/>
+                <Hyperlink
+                    linkStyle={ { color: '#2980b9'} }
+                    linkText={ url =>  {
+                        switch (url) {
+                            case 'https://github.com/NovelCOVID/API':
+                              return 'Novel COVID API';
+                            case 'https://www.worldometers.info/coronavirus/':
+                                return 'Worldometers';
+                            case 'https://corona.rickkln.com/data/':
+                                return '@rickkln';
+                            case 'https://www.instagram.com/hillzy911/':
+                                return 'Hillzy';
+                            case 'https://www.instagram.com/atangamungandi/':
+                                return 'Atanga Mungandi'
+                            case 'https://www.instagram.com/alhybrido/':
+                                return 'Llewellyn Iyer'
+                            default:
+                                return url;
+                          }
+                    }}>
+                    <Text style={ { fontSize: 15 } }>
+                    Data was sourced from https://github.com/NovelCOVID/API. 📊 It's updated each time you open the app.
+                    </Text>
+                    <Text style={ { fontSize: 15, marginTop: 5 } }>
+                    Inspiration from https://www.worldometers.info/coronavirus/ and https://corona.rickkln.com/data/ 🎉
+                    </Text>
+                    <Text style={ { fontSize: 15, marginTop: 5 } }>
+                    Special thanks to https://www.instagram.com/hillzy911/, https://www.instagram.com/atangamungandi/ and https://www.instagram.com/alhybrido/ 🤝
+                    </Text>
+                </Hyperlink>
+                <Divider style={{marginVertical: 8, height: 0}}></Divider>
+                <DonateButton/>
             </View>
         </Card>
     );
