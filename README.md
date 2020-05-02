@@ -12,7 +12,7 @@ Mobile App to track the spread of the Covid19 Coronavirus Global Pandemic in Sou
 * Provincial Statistics for South Africa
 
 # Demo
-<img src="https://github.com/manenga/react-native-tabbed-control/blob/f9102583d0fc93b9fae6c2e4ef2dda6954b84f8e/tab-demo.gif?raw=true" width="30%" /> 
+<img src="https://github.com/manenga/Rona/blob/master/demo-gif.gif?raw=true" width="50%" /> 
 
 ## Acknowledgements
 Data was sourced from [NovelCOVID API](https://github.com/NovelCOVID/API/) and [Covid19za](https://github.com/dsfsi/covid19za) 📊 <br/>
