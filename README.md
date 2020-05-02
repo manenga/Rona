@@ -34,6 +34,10 @@ Special thanks to [Hillzy](https://www.instagram.com/hillzy911/), [Atanga Mungan
 
 ## More from the developers
 - [TabbedControl](https://github.com/manenga/react-native-tabbed-control) - Swipeable SegmentedControl component for React Native apps
+- [Luno API Playground](https://github.com/manenga/LunoAPI) - A Swift playground on the Public Luno API.
+- [VALR API Playground](https://github.com/manenga/Valr-API) - A Swift playground on the VALR Public API
+- [DemoProject](https://github.com/manenga/DemoProject)
+- [Fin24](https://github.com/manenga/Fin24)
 
 ## License
 [MIT](https://github.com/manenga/react-native-tabbed-control/blob/master/LICENSE) license.
