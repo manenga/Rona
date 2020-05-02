@@ -195,70 +195,70 @@ class CountryDetailScreen extends React.Component {
         provincialData = [
           {
             name: "EC",
-            population: parseInt(today['EC'] ?? '0'),
+            population: parseInt(today['EC'] ?? 0),
             color: 'pink',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "FS",
-            population: parseInt(today['FS'] ?? '0'),
+            population: parseInt(today['FS'] ?? 0),
             color: 'grey',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "GP",
-            population: parseInt(today['GP'] ?? '0'),
+            population: parseInt(today['GP'] ?? 0),
             color: 'cyan',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "KZN",
-            population: parseInt(today['KZN'] ?? '0'),
+            population: parseInt(today['KZN'] ?? 0),
             color: 'orange',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "LP",
-            population: parseInt(today['LP'] ?? '0'),
+            population: parseInt(today['LP'] ?? 0),
             color: 'red',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "MP",
-            population: parseInt(today['MP'] ?? '0'),
+            population: parseInt(today['MP'] ?? 0),
             color: 'yellow',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "NW",
-            population: parseInt(today['NW'] ?? '0'),
+            population: parseInt(today['NW'] ?? 0),
             color: 'pink',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "NC",
-            population: parseInt(today['NC' ?? '0']),
+            population: parseInt(today['NC'] ?? 0),
             color: 'blue',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "WC",
-            population: parseInt(today['WC'] ?? '0'),
+            population: parseInt(today['WC'] ?? 0),
             color: 'purple',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "UNKNOWN",
-            population: parseInt(today['UNKNOWN']) ?? 0,
+            population: parseInt(today['UNKNOWN'] ?? 0),
             color: 'black',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
