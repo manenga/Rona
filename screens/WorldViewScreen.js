@@ -86,7 +86,8 @@ export default class WorldViewScreen extends React.Component {
       })
   }
 
-  handleClick = (url) => {
+  LoveClick = () => {
+    const url = 'https://github.com/manenga';
     Linking.canOpenURL(url).then(supported => {
       if (supported) {
         Linking.openURL(url);
@@ -94,7 +95,7 @@ export default class WorldViewScreen extends React.Component {
         console.log("Don't know how to open URI: " + url);
       }
     });
-  };
+  }
 
   render() {
     // Data for BasicSummaryView
@@ -222,10 +223,10 @@ export default class WorldViewScreen extends React.Component {
               {/* <BasicPieChart props={{data: activeInactiveCaseData, cardTitle: 'CASES BREAKDOWN', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/> */}
               <BasicPieChart props={{data: mildSeriousCaseData, cardTitle: 'CASES BREAKDOWN', footerText: 'Total active cases', footerValue: this.state.active}}/>
               <AcknowledgmentsView/>
-              {/* <TouchableOpacity
-                onPress={this.handleClick('https://github.com/manenga')}> */}
+              <TouchableOpacity
+                onPress={this.LoveClick}>
                 <Text style={{color: 'white', fontSize: 14, fontWeight: '300', marginVertical: 14}}>Made with ♥ by Manenga </Text>
-              {/* </TouchableOpacity> */}
+              </TouchableOpacity>
           </ScrollView>
           <ViewWithBanner/> 
         </LinearGradient>

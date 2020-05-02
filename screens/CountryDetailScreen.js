@@ -14,10 +14,8 @@ import styles from '../constants/Styles';
 import Color from '../constants/Colors';
 import { AcknowledgmentsView, BasicPieChart, BasicSummaryView, LoadingSummaryRow } from '../components/StyledViews';
 import * as FacebookAds from 'expo-ads-facebook';
-import { ButtonGroup } from 'react-native-elements';
 import Papa from 'papaparse';
-import SegmentControl from 'react-native-segment-control';
-// import { AppBar, Tab, Tabs, TabPanel } from '@material-ui/core';
+import TabbedControl from 'react-native-tabbed-control';
 
 const initialState = {
   dataSourceZA: '',
@@ -37,38 +35,17 @@ class CountryDetailScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = initialState;
-    this.reloadData = this.reloadData.bind(this)
-    this.updateIndex = this.updateIndex.bind(this)
+    this.reloadData = this.reloadData.bind(this);
+    this.updateIndex = this.updateIndex.bind(this);
   }
 
   componentDidMount(){ 
     this.reloadData()
-
-    let results;
-    Papa.parse('https://raw.githubusercontent.com/dsfsi/covid19za/master/data/covid19za_provincial_cumulative_timeline_confirmed.csv', {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: function(data) {
-        results = data.data ?? 'none'
-        errors = data.errors ?? 'none'
-        meta = data.meta ?? 'none'
-        
-        // console.log('/n/nPapaparse data ' + JSON.stringify(data) + '/n/n')
-      }
-    });
-
-    setTimeout(()=> {
-      // console.log(results[0]);
-      // console.log(results[results.length - 1]);
-      this.setState({ZAProvincialData: results});
-    }, 1500);
   }
 
   reloadData() {
     fetch('https://corona.lmao.ninja/v2/countries/South%20Africa')
     .then((response) => {
-      // console.log('response: ' + response)
       return response.json()
     })
     .then((json) => {
@@ -77,13 +54,11 @@ class CountryDetailScreen extends React.Component {
     })
     .catch((error) => console.error(error))
     .finally(() => {
-      // console.log('finally finished')
       this.setState({summaryLoaded: true})
     })
 
     fetch('https://corona.lmao.ninja/v2/countries/Zambia')
     .then((response) => {
-      // console.log('response: ' + response)
       return response.json()
     })
     .then((json) => {
@@ -92,9 +67,22 @@ class CountryDetailScreen extends React.Component {
     })
     .catch((error) => console.error(error))
     .finally(() => {
-      // console.log('finally finished')
       this.setState({summaryLoaded: true})
     })
+
+    let results;
+    Papa.parse('https://raw.githubusercontent.com/dsfsi/covid19za/master/data/covid19za_provincial_cumulative_timeline_confirmed.csv', {
+      download: true,
+      header: true,
+      skipEmptyLines: true,
+      complete: function(data) {
+        results = data.data ?? 'none'
+      }
+    });
+
+    setTimeout(()=> {
+      this.setState({ZAProvincialData: results});
+    }, 1500);
   }
 
   updateIndex(selectedIndex) {
@@ -104,44 +92,21 @@ class CountryDetailScreen extends React.Component {
     }
   }
 
+  LoveClick = () => {
+    const url = 'https://github.com/manenga';
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("Don't know how to open URI: " + url);
+      }
+    });
+  }
+
   render() {
     let item = this.state.selectedIndex == 0 ? this.state.dataSourceZA : this.state.dataSourceZM;
 
       // Mark: Chart Data
-
-      const activeInactiveCaseData = [
-        {
-          name: "Active",
-          population: item.active,
-          color: Color.primary,
-          legendFontColor: Color.primary,
-          legendFontSize: legendFontSize
-        },
-        {
-          name: "Inactive",
-          population: item.cases - item.active,
-          color: 'rgba(253, 155, 152, 0.6)',
-          legendFontColor: 'black',
-          legendFontSize: legendFontSize
-        },
-      ];
-
-      const mildSeriousCaseData = [
-        {
-          name: "Critical",
-          population: item.critical,
-          color: Color.primary,
-          legendFontColor: Color.primary,
-          legendFontSize: legendFontSize
-        },
-        {
-          name: "Mild",
-          population: item.active - item.critical,
-          color: 'rgba(253, 155, 152, 0.6)',
-          legendFontColor: 'black',
-          legendFontSize: legendFontSize
-        },
-      ];
 
       const recoveryDeathsDiagnosedCaseData = [
         {
@@ -184,81 +149,79 @@ class CountryDetailScreen extends React.Component {
         },
       ];
 
-      var provincialData = []
+      var provincialData = [];
       const array = this.state.ZAProvincialData ?? [];
       const today = array[array.length - 1];
       
       if (today != null && this.state.isZA) {
-        // console.log(today);
-        // console.log(today["EC"]);
 
         provincialData = [
           {
             name: "EC",
-            population: parseInt(today['EC'] ?? 0),
+            population: parseInt(today['EC'] ?? '0'),
             color: 'orange',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "FS",
-            population: parseInt(today['FS'] ?? 0),
+            population: parseInt(today['FS'] ?? '0'),
             color: 'grey',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "GP",
-            population: parseInt(today['GP'] ?? 0),
+            population: parseInt(today['GP'] ?? '0'),
             color: '#c41e3a',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "KZN",
-            population: parseInt(today['KZN'] ?? 0),
+            population: parseInt(today['KZN'] ?? '0'),
             color: Color.blue,
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "LP",
-            population: parseInt(today['LP'] ?? 0),
+            population: parseInt(today['LP'] ?? '0'),
             color: 'green',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "MP",
-            population: parseInt(today['MP'] ?? 0),
+            population: parseInt(today['MP'] ?? '0'),
             color: '#ffa6c9',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "NW",
-            population: parseInt(today['NW'] ?? 0),
+            population: parseInt(today['NW'] ?? '0'),
             color: 'purple',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "NC",
-            population: parseInt(today['NC'] ?? 0),
+            population: parseInt(today['NC'] ?? '0'),
             color: 'brown',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "WC",
-            population: parseInt(today['WC'] ?? 0),
+            population: parseInt(today['WC'] ?? '0'),
             color: Color.navy,
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "UNKNOWN",
-            population: parseInt(today['UNKNOWN'] ?? 0),
+            population: parseInt(today['UNKNOWN'] ?? '0'),
             color: 'black',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
@@ -287,38 +250,31 @@ class CountryDetailScreen extends React.Component {
         critical: item.critical,
       };
 
-    const Empty = () => {
-      return <Text style={{height: 0, width: 0}}></Text>;
-    };
-    const segments = [
+    const tabs = [
       {
-        index: 0,
         title: 'South Africa',
-        view: Empty
       },
       {
-        index: 1,
         title: 'Zambia',
-        view: Empty
       }
     ];
 
     if (this.state.summaryLoaded) {
       return (
         <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
-          <SegmentControl segments={segments } color={'#024b30'} onIndexChange={this.updateIndex}/>
+          <TabbedControl tabs={tabs} color={'#024b30'} onIndexChange={this.updateIndex}/>
           <ScrollView style={{backgroundColor: '#FFF1F1'}} contentContainerStyle={[{alignItems: 'center'}]}>
             <BasicSummaryView props={props}/>
             <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'Total tests taken', footerValue: item.tests}}/>
             <BasicPieChart props={{data: recoveryDeathsDiagnosedCaseData, cardTitle: 'OUTCOME BREAKDOWN', footerText: 'Total cases', footerValue: item.cases}}/>
-            {this.state.isZA && 
+            {this.state.isZA && provincialData.length > 1 &&
                 <BasicPieChart props={{data: provincialData, cardTitle: 'PROVINCIAL BREAKDOWN',  height: 175, isAbsolute: true}}/>
             }
             <AcknowledgmentsView/>
-            {/* <TouchableOpacity
-                onPress={this.handleClick('https://github.com/manenga')}> */}
+            <TouchableOpacity
+                onPress={this.LoveClick}>
                 <Text style={{color: 'black', fontSize: 14, fontWeight: '300', marginVertical: 14}}>Made with 🖤 by Manenga </Text>
-            {/* </TouchableOpacity> */}
+            </TouchableOpacity>
         </ScrollView>
         <AdViewWithBanner/> 
         </View>
@@ -335,7 +291,7 @@ function AdViewWithBanner(props) {
         <FacebookAds.BannerAd
             placementId="237156577505364_237619077459114"
             type="standard"
-            onPress={() => console.log('click')}
+            onPress={() => {}}
             onError={error => console.log('error', error)}
         />
         </View>

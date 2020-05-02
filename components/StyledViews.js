@@ -26,9 +26,7 @@ export class BasicSummaryView extends React.Component {
         this.state = { };
       }
 
-    leanMore () {
-
-    }
+    leanMore () { }
 
     render() {
         const data = this.props.props ?? [];
@@ -130,8 +128,8 @@ function CardV3(props) {
                     <MiniSummaryRow props={{header: "DEATHS TODAY", value: format(todayDeaths), icon: 'praying-hands', iconColor: Colors.navy}}/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: 'RECOVERY RATE', value: parseInt((recovered/cases) * 100) + '%', icon: 'heartbeat', iconColor: 'green'}}/>
-                    <MiniSummaryRow props={{header: 'DEATH RATE', value: parseInt((deaths/cases) * 100) + '%', icon: 'praying-hands', iconColor: 'red'}}/>
+                    <MiniSummaryRow props={{header: 'RECOVERY RATE', value: Math.round((recovered/cases) * 100) + '%', icon: 'heartbeat', iconColor: 'green'}}/>
+                    <MiniSummaryRow props={{header: 'DEATH RATE', value: Math.round((deaths/cases) * 100) + '%', icon: 'praying-hands', iconColor: 'red'}}/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                     <MiniSummaryRow props={{header: 'ACTIVE', value: format(active), icon: 'first-aid', iconColor: 'orange'}}/>
@@ -156,7 +154,7 @@ function MiniSummaryRow(props) {
             <FontAwesome5 name={icon} size={17} color={Colors.darkGrey} style={{marginBottom: 7}}/>
             <Text style={[styles.getStartedText, {fontSize: 10, color: 'black', fontWeight: '600', lineHeight: 11,}]}>{data.header}</Text>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                <Text style={{fontSize: 17, fontWeight: '300', color: data.valueColor ?? iconColor ?? 'black'}}>{data.value}</Text>
+                <Text style={{fontSize: 20, fontWeight: '300', color: data.valueColor ?? iconColor ?? 'black'}}>{data.value}</Text>
                 {subValue > 0
                     ? <Text style={[styles.lastUpdateFooterText, {marginTop: 2, marginBottom: 0, fontSize: 7}]}>+{format(subValue)} TODAY</Text>
                     : <Text style={[styles.lastUpdateFooterText, {marginTop: 2, marginBottom: 0, fontSize: 7}]}></Text>
@@ -322,8 +320,8 @@ function DeveloperRows() {
 function DonateButton() {
     return(
         <TouchableOpacity 
-            style={{alignSelf: 'center'}}>
-            {/* onPress={Linking.openURL('https://paypal.me/Mungandi')} > */}
+            style={{alignSelf: 'center'}}
+            onPress={(url) => {Linking.openURL('https://paypal.me/Mungandi')}}> 
             <LinearGradient style={[styles.gradientView, {borderRadius: 0, height: 37, width: 108, justifyContent: 'center'}]}
                 colors={['#FFC439', '#f7f7a1', '#FFC439']}>
                 <Text style={{color: Colors.darkGrey, fontWeight: '500', fontSize: 18, fontStyle: 'italic'}}>Donate</Text>
@@ -349,7 +347,6 @@ export function DeveloperAcknowledgmentsView(props) {
 }
 
 export function AcknowledgmentsView(props) {
-    
     return(
         <Card 
             title={
@@ -368,6 +365,8 @@ export function AcknowledgmentsView(props) {
                               return 'Novel COVID API';
                             case 'https://www.worldometers.info/coronavirus/':
                                 return 'Worldometers';
+                            case 'https://github.com/dsfsi/covid19za':
+                                return 'Covid19za';
                             case 'https://corona.rickkln.com/data/':
                                 return '@rickkln';
                             case 'https://www.instagram.com/hillzy911/':
@@ -381,7 +380,7 @@ export function AcknowledgmentsView(props) {
                           }
                     }}>
                     <Text style={ { fontSize: 15 } }>
-                    Data was sourced from https://github.com/NovelCOVID/API. 📊 It's updated each time you open the app.
+                    Data was sourced from https://github.com/NovelCOVID/API and https://github.com/dsfsi/covid19za. It's updated each time you open the app.
                     </Text>
                     <Text style={ { fontSize: 15, marginTop: 5 } }>
                     Inspiration from https://www.worldometers.info/coronavirus/ and https://corona.rickkln.com/data/ 🎉
