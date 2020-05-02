@@ -13,7 +13,13 @@ import styles from '../constants/Styles';
 import Color from '../constants/Colors';
 import { format } from '../constants/Extensions'
 import * as FacebookAds from 'expo-ads-facebook';
-import { BasicPieChart, BasicSummaryView, LoadingSummaryRow } from '../components/StyledViews';
+import { 
+  AcknowledgmentsView, 
+  DeveloperAcknowledgmentsView, 
+  BasicPieChart, 
+  BasicSummaryView, 
+  LoadingSummaryRow 
+} from '../components/StyledViews';
 import { PieChart } from "react-native-chart-kit";
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -205,6 +211,7 @@ export default class WorldViewScreen extends React.Component {
               <BasicPieChart props={{data: deathsDiagnosedCaseData, cardTitle: 'DEATH RATE', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/> */}
               {/* <BasicPieChart props={{data: activeInactiveCaseData, cardTitle: 'CASES BREAKDOWN', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/> */}
               <BasicPieChart props={{data: mildSeriousCaseData, cardTitle: 'CASES BREAKDOWN', footerText: 'Total active cases', footerValue: this.state.active}}/>
+              <AcknowledgmentsView/>
           </ScrollView>
           <ViewWithBanner/> 
         </LinearGradient>

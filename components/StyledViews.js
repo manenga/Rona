@@ -5,7 +5,7 @@
 //
 
 import * as React from 'react';
-import { Text, View, Image, Dimensions } from 'react-native';
+import { Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
 import styles from '../constants/Styles';
 import Colors from '../constants/Colors';
 import { format } from '../constants/Extensions';
@@ -18,7 +18,7 @@ import Moment from 'moment';
 import { FontAwesome5 } from "@expo/vector-icons";
 // import { TouchableHighlight } from 'react-native-gesture-handler';
 
-const cardWidth = Dimensions.get('window').width * .90;
+export const cardWidth = Dimensions.get('window').width * .90;
 
 export class BasicSummaryView extends React.Component {
     constructor(props) {
@@ -264,7 +264,90 @@ export function LoadingSummaryRow(props) {
     );
   }
 
-  
+
+export function CountryHeader(props) {
+    let name = props.props.name ?? 'SOUTH AFRICA';
+    let flag = props.props.flag ?? '';
+    const hasFlag = flag.trim() != "";
+
+    return(
+        <TouchableOpacity
+            // onPress={() => this.socialAuthClick()}
+            underlayColor='transparent'>
+            <Card containerStyle={{borderRadius: 2, shadowRadius: 2, paddingBottom: 10, width: cardWidth}}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    {hasFlag && <Image source={{uri: flag}} style={[styles.basicSummaryViewHeaderImage, {height: 14, width: 28}]}/>}
+                    <Text style={{color: Colors.darkGrey, fontWeight: '500', alignSelf: 'center'}}>{name}</Text>
+                    <FontAwesome5 name={'caret-square-down'} size={16} color={Colors.primary} style={{}}/>
+                </View>
+            </Card>
+        </TouchableOpacity>
+    );
+}
+
+function DeveloperRows() {
+    return(
+        <View style={{justifyContent: 'space-between', marginVertical: 15}}>
+            <TouchableOpacity style={{flexDirection: 'row'}}>
+                <FontAwesome5 name={'github'} size={21} style={{marginHorizontal: 10}}/>
+                <Text style={{color: Colors.darkGrey, fontWeight: '500', fontSize: 15}}>manenga</Text>
+            </TouchableOpacity>
+            <Divider style={{marginVertical: 15, height: 0}}></Divider>
+            <TouchableOpacity style={{flexDirection: 'row'}}>
+                <FontAwesome5 name={'linkedin'} size={21} color={'#0072b1'} style={{marginHorizontal: 10}}/>
+                <Text style={{color: Colors.darkGrey, fontWeight: '500', fontSize: 15}}>mungandi</Text>
+            </TouchableOpacity>
+            <Divider style={{marginVertical: 15, height: 0}}></Divider>
+            <TouchableOpacity style={{flexDirection: 'row'}}>
+                <FontAwesome5 name={'instagram'} size={21} color={'#0072b1'} style={{marginHorizontal: 10}}/>
+                <Text style={{color: Colors.darkGrey, fontWeight: '500', fontSize: 15}}>mungandi</Text>
+            </TouchableOpacity>
+            <Divider style={{marginVertical: 15, height: 0}}></Divider>
+            <TouchableOpacity style={{alignSelf: 'center'}}>
+                <LinearGradient style={[styles.gradientView, {borderRadius: 0, height: 37, width: 108, justifyContent: 'center'}]}
+                    colors={['#FFC439', '#f7f7a1', '#FFC439']}>
+                    <Text style={{color: Colors.darkGrey, fontWeight: '500', fontSize: 18, fontStyle: 'italic'}}>Donate</Text>
+                </LinearGradient>
+            </TouchableOpacity>
+        </View>
+    );
+}
+export function DeveloperAcknowledgmentsView(props) {
+    
+    return(
+        <Card 
+            title={
+                <View style={{justifyContent: 'center', height: 35}}>
+                    <Text style={{margin: 4, color: Colors.darkGrey, alignSelf: 'center', fontWeight: '600'}}>DEVELOPER INFO</Text>
+                    <Divider style={{margin: 4}}></Divider>
+                </View>
+            } 
+            containerStyle={{borderRadius: 2, shadowRadius: 2, padding: 15, width: cardWidth}}>
+            <DeveloperRows/>
+        </Card>
+    );
+}
+
+export function AcknowledgmentsView(props) {
+    
+    return(
+        <Card 
+            title={
+                <View style={{justifyContent: 'center', height: 35}}>
+                    <Text style={{margin: 4, color: Colors.darkGrey, alignSelf: 'center', fontWeight: '600'}}>ACKNOWLEDGMENTS</Text>
+                    <Divider style={{margin: 4}}></Divider>
+                </View>
+            } 
+            containerStyle={{borderRadius: 2, shadowRadius: 2, paddingBottom: 10, width: cardWidth}}>
+            <View style={{marginTop: 8, justifyContent: 'space-between', alignItems: 'center'}}>
+                <Text style={{color: Colors.darkGrey, fontWeight: '500', alignSelf: 'center'}}>Data sourced from Novel COVID API.</Text>
+                <Divider style={{marginVertical: 15, height: 0}}></Divider>
+                <DeveloperRows/>
+            </View>
+        </Card>
+    );
+}
+
 // https://github.com/thegamenicorus/react-native-timeline-listview
 export function TimelineView(props) {  
   
