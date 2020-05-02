@@ -358,6 +358,7 @@ export function AcknowledgmentsView(props) {
             containerStyle={{borderRadius: 2, shadowRadius: 2, paddingBottom: 10, width: cardWidth}}>
             <View style={{marginTop: 8, justifyContent: 'space-between', alignItems: 'center'}}>
                 <Hyperlink
+                    linkDefault={ true }
                     linkStyle={ { color: '#2980b9'} }
                     linkText={ url =>  {
                         switch (url) {

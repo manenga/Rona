@@ -32,7 +32,7 @@
       "package": "com.manengamungandi.rona"
     },
     "ios": {
-      "buildNumber": "1.0.1",
+      "buildNumber": "2",
       "supportsTablet": true,
       "userInterfaceStyle": "dark",
       "bundleIdentifier": "com.manengamungandi.rona"
