@@ -99,6 +99,13 @@ function CardV2(props) {
 function CardV3(props) {
     const data = props.props ?? [];
     const subValue = data.subValue ?? 0;
+    const recovered = data.recovered ?? 0;
+    const cases = data.cases ?? 0;
+    const deaths = data.deaths ?? 0;
+    const todayCases = data.todayCases ?? 0;
+    const todayDeaths = data.todayDeaths ?? 0;
+    const active = data.active ?? 0;
+    const critical = data.critical ?? 0;
     const icon = data.icon;
     const iconColor = data.iconColor ?? Colors.black;
     const screenName = data.screenName ?? "";
@@ -115,20 +122,20 @@ function CardV3(props) {
                 </View>
                 <View style={{backgroundColor: Colors.lightGrey, height: 0.75, width: '100%', marginBottom: 10}}/>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: 'RECOVERED', value: format(data.recovered ?? 0), icon: 'heartbeat', iconColor: 'green'}}/>
-                    <MiniSummaryRow props={{header: 'DEATHS', value: format(data.deaths ?? 0), icon: 'praying-hands', iconColor: 'red'}}/>
+                    <MiniSummaryRow props={{header: 'RECOVERED', value: format(recovered), icon: 'heartbeat', iconColor: 'green'}}/>
+                    <MiniSummaryRow props={{header: 'DEATHS', value: format(deaths), icon: 'praying-hands', iconColor: 'red'}}/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: 'CASES TODAY', value: format(data.todayCases ?? 0), icon: 'search-plus', iconColor: 'blue'}}/>
-                    <MiniSummaryRow props={{header: "DEATHS TODAY", value: format(data.todayDeaths ?? 0), icon: 'praying-hands', iconColor: 'red'}}/>
+                    <MiniSummaryRow props={{header: 'CASES TODAY', value: format(todayCases), icon: 'search-plus', iconColor: Colors.navy}}/>
+                    <MiniSummaryRow props={{header: "DEATHS TODAY", value: format(todayDeaths), icon: 'praying-hands', iconColor: Colors.navy}}/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: 'RECOVERY RATE', value: parseInt((data.recovered/data.cases) * 100) + '%', icon: 'heartbeat', iconColor: 'green'}}/>
-                    <MiniSummaryRow props={{header: 'DEATH RATE', value: parseInt((data.deaths/data.cases) * 100) + '%', icon: 'praying-hands', iconColor: 'red'}}/>
+                    <MiniSummaryRow props={{header: 'RECOVERY RATE', value: parseInt((recovered/cases) * 100) + '%', icon: 'heartbeat', iconColor: 'green'}}/>
+                    <MiniSummaryRow props={{header: 'DEATH RATE', value: parseInt((deaths/cases) * 100) + '%', icon: 'praying-hands', iconColor: 'red'}}/>
                 </View>
                 <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                    <MiniSummaryRow props={{header: 'ACTIVE', value: format(data.active ?? 0), icon: 'first-aid', iconColor: 'orange'}}/>
-                    <MiniSummaryRow props={{header: 'CRITICAL', value: format(data.critical ?? 0), icon: 'procedures', iconColor: 'orange'}}/>
+                    <MiniSummaryRow props={{header: 'ACTIVE', value: format(active), icon: 'first-aid', iconColor: 'orange'}}/>
+                    <MiniSummaryRow props={{header: 'CRITICAL', value: format(critical), icon: 'procedures', iconColor: 'orange'}}/>
                 </View>
             </View>
             <Text style={[styles.lastUpdateFooterText, {marginBottom: 0}]}>Last update: {Moment(data.lastUpdate).format('D MMM HH:mm')}</Text>

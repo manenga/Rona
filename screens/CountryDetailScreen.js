@@ -196,7 +196,7 @@ class CountryDetailScreen extends React.Component {
           {
             name: "EC",
             population: parseInt(today['EC'] ?? 0),
-            color: 'pink',
+            color: 'orange',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
@@ -210,49 +210,49 @@ class CountryDetailScreen extends React.Component {
           {
             name: "GP",
             population: parseInt(today['GP'] ?? 0),
-            color: 'cyan',
+            color: '#c41e3a',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "KZN",
             population: parseInt(today['KZN'] ?? 0),
-            color: 'orange',
+            color: Color.blue,
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "LP",
             population: parseInt(today['LP'] ?? 0),
-            color: 'red',
+            color: 'green',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "MP",
             population: parseInt(today['MP'] ?? 0),
-            color: 'yellow',
+            color: '#ffa6c9',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "NW",
             population: parseInt(today['NW'] ?? 0),
-            color: 'pink',
+            color: 'purple',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "NC",
             population: parseInt(today['NC'] ?? 0),
-            color: 'blue',
+            color: 'brown',
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
           {
             name: "WC",
             population: parseInt(today['WC'] ?? 0),
-            color: 'purple',
+            color: Color.navy,
             legendFontColor: 'black',
             legendFontSize: legendFontSize
           },
