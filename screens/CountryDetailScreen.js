@@ -20,8 +20,10 @@ import SegmentControl from 'react-native-segment-control';
 // import { AppBar, Tab, Tabs, TabPanel } from '@material-ui/core';
 
 const initialState = {
-  dataSource: '',
+  dataSourceZA: '',
+  dataSourceZM: '',
   ZAProvincialData: '',
+  selectedIndex: 0,
   isZA: true,
   summaryLoaded: false,
 }
@@ -64,15 +66,29 @@ class CountryDetailScreen extends React.Component {
   }
 
   reloadData() {
-    const country = this.state.isZA ? Country.ZA.query : Country.ZM.query;
-    fetch('https://corona.lmao.ninja/v2/countries/' + country)
+    fetch('https://corona.lmao.ninja/v2/countries/South%20Africa')
     .then((response) => {
       // console.log('response: ' + response)
       return response.json()
     })
     .then((json) => {
       // Save state
-      this.setState({dataSource: json})
+      this.setState({dataSourceZA: json})
+    })
+    .catch((error) => console.error(error))
+    .finally(() => {
+      // console.log('finally finished')
+      this.setState({summaryLoaded: true})
+    })
+
+    fetch('https://corona.lmao.ninja/v2/countries/Zambia')
+    .then((response) => {
+      // console.log('response: ' + response)
+      return response.json()
+    })
+    .then((json) => {
+      // Save state
+      this.setState({dataSourceZM: json})
     })
     .catch((error) => console.error(error))
     .finally(() => {
@@ -81,246 +97,224 @@ class CountryDetailScreen extends React.Component {
     })
   }
 
-  updateIndex (selectedIndex) {
-    // console.warn('Index updated! at ' + selectedIndex);
-    // this.setState({summaryLoaded: false})
-    const country = selectedIndex == 0 ? Country.ZA.query : Country.ZM.query;
-
-    fetch('https://corona.lmao.ninja/v2/countries/' + country)
-    .then((response) => {
-      // console.log('response: ' + response)
-      return response.json()
-    })
-    .then((json) => {
-      // Save state
-      this.setState({dataSource: json})
-      this.setState({isZA: selectedIndex == 0 ? true : false});
-    })
-    .catch((error) => console.error(error))
-    .finally(() => {
-      this.setState({summaryLoaded: true})
-    })
+  updateIndex(selectedIndex) {
+    if (this.state.selectedIndex != selectedIndex) {
+      this.setState({selectedIndex: selectedIndex});
+      this.setState({isZA: selectedIndex == 0});
+    }
   }
 
   render() {
-    let item = this.state.dataSource;
-    
-    // Percentages vs Africa vs World
-    const legendFontSize = 11;
-    var todayCases = item.todayCases ?? 0;
-    var todayDeaths = item.todayDeaths ?? 0;
-    var flag = this.state.isZA ? Country.ZA.flag : Country.ZM.flag;
+    let item = this.state.selectedIndex == 0 ? this.state.dataSourceZA : this.state.dataSourceZM;
 
-    const props = {
-      headerImage: flag, 
-      tests: item.tests,
-      cases: item.cases,
-      todayCases: todayCases, 
-      deaths: item.deaths, 
-      todayDeaths: todayDeaths,
-      recovered: item.recovered,
-      screenName: 'LOCAL SUMMARY',
-      active: item.active,
-      critical: item.critical,
-    };
+      // Mark: Chart Data
 
-    // Mark: Chart Data
-
-    const activeInactiveCaseData = [
-      {
-        name: "Active",
-        population: item.active,
-        color: Color.primary,
-        legendFontColor: Color.primary,
-        legendFontSize: legendFontSize
-      },
-      {
-        name: "Inactive",
-        population: item.cases - item.active,
-        color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'black',
-        legendFontSize: legendFontSize
-      },
-    ];
-
-    const mildSeriousCaseData = [
-      {
-        name: "Critical",
-        population: item.critical,
-        color: Color.primary,
-        legendFontColor: Color.primary,
-        legendFontSize: legendFontSize
-      },
-      {
-        name: "Mild",
-        population: item.active - item.critical,
-        color: 'rgba(253, 155, 152, 0.6)',
-        legendFontColor: 'black',
-        legendFontSize: legendFontSize
-      },
-    ];
-
-    const recoveryDeathsDiagnosedCaseData = [
-      {
-        name: "Recovered",
-        population: item.recovered,
-        color: 'green',
-        legendFontColor: 'green',
-        legendFontSize: legendFontSize
-      },
-      {
-        name: "Deaths",
-        population: item.deaths,
-        color: Color.primary,
-        legendFontColor: Color.primary,
-        legendFontSize: legendFontSize
-      },
-      {
-        name: "",
-        population: item.cases - (item.deaths + item.recovered),
-        color: Color.lightGrey,
-        legendFontColor: Color.darkGrey,
-        legendFontSize: legendFontSize
-      },
-    ];
-
-    const testsData = [
-      {
-        name: "Cases",
-        population: item.cases,
-        color: Color.primary,
-        legendFontColor: Color.primary,
-        legendFontSize: legendFontSize
-      },
-      {
-        name: "Unknown",
-        population: item.tests - item.cases,
-        color: Color.lightGrey,
-        legendFontColor: 'black',
-        legendFontSize: legendFontSize
-      },
-    ];
-
-    var provincialData = []
-    const array = this.state.ZAProvincialData ?? [];
-    const today = array[array.length - 1];
-    
-    if (today != null) {
-      // console.log(today);
-      // console.log(today["EC"]);
-
-      provincialData = [
+      const activeInactiveCaseData = [
         {
-          name: "EC",
-          population: parseInt(today['EC']) ?? 0,
-          color: 'pink',
-          legendFontColor: 'black',
+          name: "Active",
+          population: item.active,
+          color: Color.primary,
+          legendFontColor: Color.primary,
           legendFontSize: legendFontSize
         },
         {
-          name: "FS",
-          population: parseInt(today['FS']) ?? 0,
-          color: 'grey',
-          legendFontColor: 'black',
-          legendFontSize: legendFontSize
-        },
-        {
-          name: "GP",
-          population: parseInt(today['GP']) ?? 0,
-          color: 'cyan',
-          legendFontColor: 'black',
-          legendFontSize: legendFontSize
-        },
-        {
-          name: "KZN",
-          population: parseInt(today['KZN']) ?? 0,
-          color: 'orange',
-          legendFontColor: 'black',
-          legendFontSize: legendFontSize
-        },
-        {
-          name: "LP",
-          population: parseInt(today['LP']) ?? 0,
-          color: 'red',
-          legendFontColor: 'black',
-          legendFontSize: legendFontSize
-        },
-        {
-          name: "MP",
-          population: parseInt(today['MP']) ?? 0,
-          color: 'yellow',
-          legendFontColor: 'black',
-          legendFontSize: legendFontSize
-        },
-        {
-          name: "NW",
-          population: parseInt(today['NW']) ?? 0,
-          color: 'pink',
-          legendFontColor: 'black',
-          legendFontSize: legendFontSize
-        },
-        {
-          name: "NC",
-          population: parseInt(today['NC']) ?? 0,
-          color: 'blue',
-          legendFontColor: 'black',
-          legendFontSize: legendFontSize
-        },
-        {
-          name: "WC",
-          population: parseInt(today['WC']) ?? 0,
-          color: 'purple',
-          legendFontColor: 'black',
-          legendFontSize: legendFontSize
-        },
-        {
-          name: "UNKNOWN",
-          population: parseInt(today['UNKNOWN']) ?? 0,
-          color: 'black',
+          name: "Inactive",
+          population: item.cases - item.active,
+          color: 'rgba(253, 155, 152, 0.6)',
           legendFontColor: 'black',
           legendFontSize: legendFontSize
         },
       ];
-      provincialData.sort((a,b) => a.population < b.population);
-      provincialData = provincialData.filter(a => a.population > 0);
-    }
 
-    const view = (selectedIndex) => {
-      // console.log('selectedIndex ' + selectedIndex)
-      const isZaTab = selectedIndex == 0 ? true : false;
-      if (this.state.isZA != isZaTab) {
-        // this.setState({isZA: isZaTab});
-      }
+      const mildSeriousCaseData = [
+        {
+          name: "Critical",
+          population: item.critical,
+          color: Color.primary,
+          legendFontColor: Color.primary,
+          legendFontSize: legendFontSize
+        },
+        {
+          name: "Mild",
+          population: item.active - item.critical,
+          color: 'rgba(253, 155, 152, 0.6)',
+          legendFontColor: 'black',
+          legendFontSize: legendFontSize
+        },
+      ];
+
+      const recoveryDeathsDiagnosedCaseData = [
+        {
+          name: "Recovered",
+          population: item.recovered,
+          color: 'green',
+          legendFontColor: 'green',
+          legendFontSize: legendFontSize
+        },
+        {
+          name: "Deaths",
+          population: item.deaths,
+          color: Color.primary,
+          legendFontColor: Color.primary,
+          legendFontSize: legendFontSize
+        },
+        {
+          name: "",
+          population: item.cases - (item.deaths + item.recovered),
+          color: Color.lightGrey,
+          legendFontColor: Color.darkGrey,
+          legendFontSize: legendFontSize
+        },
+      ];
+
+      const testsData = [
+        {
+          name: "Cases",
+          population: item.cases,
+          color: Color.primary,
+          legendFontColor: Color.primary,
+          legendFontSize: legendFontSize
+        },
+        {
+          name: "Unknown",
+          population: item.tests - item.cases,
+          color: Color.lightGrey,
+          legendFontColor: 'black',
+          legendFontSize: legendFontSize
+        },
+      ];
+
+      var provincialData = []
+      const array = this.state.ZAProvincialData ?? [];
+      const today = array[array.length - 1];
       
-      return (
-        <ScrollView style={{backgroundColor: '#FFF1F1'}}>
-          <BasicSummaryView props={props}/>
-          <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'Total tests taken', footerValue: item.tests}}/>
-          <BasicPieChart props={{data: recoveryDeathsDiagnosedCaseData, cardTitle: 'OUTCOME BREAKDOWN', footerText: 'Total cases', footerValue: item.cases}}/>
-          {this.state.isZA && 
-              <BasicPieChart props={{data: provincialData, cardTitle: 'PROVINCIAL BREAKDOWN',  height: 175, isAbsolute: true}}/>
-          }
-        </ScrollView>
-      );
+      if (today != null && this.state.isZA) {
+        // console.log(today);
+        // console.log(today["EC"]);
+
+        provincialData = [
+          {
+            name: "EC",
+            population: parseInt(today['EC'] ?? '0'),
+            color: 'pink',
+            legendFontColor: 'black',
+            legendFontSize: legendFontSize
+          },
+          {
+            name: "FS",
+            population: parseInt(today['FS'] ?? '0'),
+            color: 'grey',
+            legendFontColor: 'black',
+            legendFontSize: legendFontSize
+          },
+          {
+            name: "GP",
+            population: parseInt(today['GP'] ?? '0'),
+            color: 'cyan',
+            legendFontColor: 'black',
+            legendFontSize: legendFontSize
+          },
+          {
+            name: "KZN",
+            population: parseInt(today['KZN'] ?? '0'),
+            color: 'orange',
+            legendFontColor: 'black',
+            legendFontSize: legendFontSize
+          },
+          {
+            name: "LP",
+            population: parseInt(today['LP'] ?? '0'),
+            color: 'red',
+            legendFontColor: 'black',
+            legendFontSize: legendFontSize
+          },
+          {
+            name: "MP",
+            population: parseInt(today['MP'] ?? '0'),
+            color: 'yellow',
+            legendFontColor: 'black',
+            legendFontSize: legendFontSize
+          },
+          {
+            name: "NW",
+            population: parseInt(today['NW'] ?? '0'),
+            color: 'pink',
+            legendFontColor: 'black',
+            legendFontSize: legendFontSize
+          },
+          {
+            name: "NC",
+            population: parseInt(today['NC' ?? '0']),
+            color: 'blue',
+            legendFontColor: 'black',
+            legendFontSize: legendFontSize
+          },
+          {
+            name: "WC",
+            population: parseInt(today['WC'] ?? '0'),
+            color: 'purple',
+            legendFontColor: 'black',
+            legendFontSize: legendFontSize
+          },
+          {
+            name: "UNKNOWN",
+            population: parseInt(today['UNKNOWN']) ?? 0,
+            color: 'black',
+            legendFontColor: 'black',
+            legendFontSize: legendFontSize
+          },
+        ];
+        provincialData.sort((a,b) => a.population < b.population);
+        provincialData = provincialData.filter(a => a.population > 0);
+      }
+
+      // Percentages vs Africa vs World
+      const legendFontSize = 11;
+      var todayCases = item.todayCases ?? 0;
+      var todayDeaths = item.todayDeaths ?? 0;
+      var flag = this.state.selectedIndex == 0 ? Country.ZA.flag : Country.ZM.flag;
+
+      const props = {
+        headerImage: flag, 
+        tests: item.tests,
+        cases: item.cases,
+        todayCases: todayCases, 
+        deaths: item.deaths, 
+        todayDeaths: todayDeaths,
+        recovered: item.recovered,
+        screenName: 'LOCAL SUMMARY',
+        active: item.active,
+        critical: item.critical,
+      };
+
+    const Empty = () => {
+      return <Text style={{height: 0, width: 0}}></Text>;
     };
-    
     const segments = [
       {
         index: 0,
         title: 'South Africa',
-        view: view
+        view: Empty
       },
       {
         index: 1,
         title: 'Zambia',
-        view: view
+        view: Empty
       }
     ];
 
     if (this.state.summaryLoaded) {
       return (
         <View style={[styles.container, {backgroundColor: '#FFF1F1'}]}>
-          <SegmentControl segments={segments } onIndexChange={this.updateIndex}/>
+          <SegmentControl segments={segments } color={'#024b30'} onIndexChange={this.updateIndex}/>
+          <ScrollView style={{backgroundColor: '#FFF1F1'}}>
+            <BasicSummaryView props={props}/>
+            <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'Total tests taken', footerValue: item.tests}}/>
+            <BasicPieChart props={{data: recoveryDeathsDiagnosedCaseData, cardTitle: 'OUTCOME BREAKDOWN', footerText: 'Total cases', footerValue: item.cases}}/>
+            {this.state.isZA && 
+                <BasicPieChart props={{data: provincialData, cardTitle: 'PROVINCIAL BREAKDOWN',  height: 175, isAbsolute: true}}/>
+            }
+        </ScrollView>
           {/* <TouchableOpacity
               // onPress={() => this.socialAuthClick()}
               style={{padding: 8, marginTop: 8, alignSelf: 'center'}}
@@ -330,12 +324,6 @@ class CountryDetailScreen extends React.Component {
                   </View>
           </TouchableOpacity> */}
             {/* <ScrollView style={[styles.container, {height: '100%'}]}> */}
-                {/* <ButtonGroup
-                    selectedIndex={this.state.isZA ? 0 : 1}
-                    onPress={this.updateIndex}
-                    buttons={['South Africa', 'Zambia']}
-                    containerStyle={{height: 35, marginBottom: 25}}
-                /> 
                 {/* <BasicPieChart props={{data: recoveryDiagnosedCaseData, cardTitle: 'Recovery Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
                 {/* <BasicPieChart props={{data: deathsDiagnosedCaseData, cardTitle: 'Fatality Rate', footerText: 'Total cases', footerValue: item.cases}}/> */}
                 {/* <BasicPieChart props={{data: activeInactiveCaseData, cardTitle: 'Cases Breakdown', footerText: 'Total cases', footerValue: item.cases}}/> */}
