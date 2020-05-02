@@ -22,10 +22,10 @@ Data was sourced from [NovelCOVID API](https://github.com/NovelCOVID/API/) and [
 
 Inspiration from [Worldometers](https://www.worldometers.info/coronavirus/) and [@rickkln](https://corona.rickkln.com/data/). 🎉
 
-Special thanks to [Hillzy](https://www.instagram.com/hillzy911/), [Atanga Mungandi](https://www.instagram.com/atangamungandi/) and [Llewellyn Iyer](https://www.instagram.com/alhybrido/). 🤝
+Special thanks to [Hillzy](https://www.instagram.com/hillzy911/), [Atanga Mungandi](https://www.instagram.com/atangamungandi/) and [Llewellyn Iyer](https://za.linkedin.com/in/llewellyn-iyer-596b9111a). 🤝
                     
 Made with ♥ by [Manenga](https://linkedin.com/in/mungandi/)
 
 
-## Available on
-[Android & iOS](https://expo.io/@mungand/Rona)
+## Availability 
+[Get the Beta](https://expo.io/@mungand/Rona)
