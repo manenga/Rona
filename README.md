@@ -18,11 +18,11 @@ Mobile App to track the spread of the Covid19 Coronavirus Global Pandemic in Sou
 </p>
 
 ## Acknowledgements
-Data was sourced from [NovelCOVID API](https://github.com/NovelCOVID/API/) and [Covid19za](https://github.com/dsfsi/covid19za). 📊 <br/>
+Data was sourced from [NovelCOVID API](https://github.com/NovelCOVID/API/) and [Covid19za](https://github.com/dsfsi/covid19za) 📊 <br/>
 
-Inspiration from [Worldometers](https://www.worldometers.info/coronavirus/) and [@rickkln](https://corona.rickkln.com/data/). 🎉
+Inspiration from [Worldometers](https://www.worldometers.info/coronavirus/) and [@rickkln](https://corona.rickkln.com/data/) 🎉
 
-Special thanks to [Hillzy](https://www.instagram.com/hillzy911/), [Atanga Mungandi](https://www.instagram.com/atangamungandi/) and [Llewellyn Iyer](https://za.linkedin.com/in/llewellyn-iyer-596b9111a). 🤝
+Special thanks to [Hillzy](https://www.instagram.com/hillzy911/), [Atanga Mungandi](https://www.instagram.com/atangamungandi/) and [Llewellyn Iyer](https://za.linkedin.com/in/llewellyn-iyer-596b9111a) 🤝
                     
 Made with ♥ by [Manenga](https://linkedin.com/in/mungandi/)
 
