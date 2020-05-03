@@ -121,7 +121,7 @@ export default class CountryDetailScreen extends React.Component {
           legendFontSize: legendFontSize
         },
         {
-          name: "",
+          name: "Confirmed",
           population: item.cases - (item.deaths + item.recovered),
           color: Color.lightGrey,
           legendFontColor: Color.darkGrey,
