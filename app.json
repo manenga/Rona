@@ -36,7 +36,7 @@
       "buildNumber": "3",
       "supportsTablet": true,
       "userInterfaceStyle": "dark",
-      "icon": "./assets/images/corona_appstore.png",
+      "icon": "./assets/images/corona-app-store.png",
       "bundleIdentifier": "com.manengamungandi.rona"
     },
     "description": "Mobile App to track the Covid19 Global Pandemic for South Africa ",
