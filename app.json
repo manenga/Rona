@@ -17,7 +17,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FDE5E8"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -27,14 +27,16 @@
     ],
     "userInterfaceStyle": "automatic",
     "android": {
-      "versionCode": 1,
+      "versionCode": 2,
       "userInterfaceStyle": "dark",
+      "icon": "./assets/images/corona_playstore.png",
       "package": "com.manengamungandi.rona"
     },
     "ios": {
-      "buildNumber": "2",
+      "buildNumber": "3",
       "supportsTablet": true,
       "userInterfaceStyle": "dark",
+      "icon": "./assets/images/corona_appstore.png",
       "bundleIdentifier": "com.manengamungandi.rona"
     },
     "description": "Mobile App to track the Covid19 Global Pandemic for South Africa ",
