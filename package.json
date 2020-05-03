@@ -12,7 +12,6 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@bam.tech/react-native-make": "^3.0.0",
     "@expo/vector-icons": "~10.0.6",
     "@material-ui/core": "^4.9.12",
     "@react-native-community/masked-view": "0.1.6",
@@ -37,7 +36,6 @@
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
-    "react-native-alphabetlistview": "^0.3.1",
     "react-native-animated-nav-tab-bar": "^2.0.3",
     "react-native-appearance": "~0.3.3",
     "react-native-chart-kit": "^5.5.0",
@@ -47,7 +45,6 @@
     "react-native-indicators": "^0.17.0",
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
-    "react-native-segment-control": "^1.0.5",
     "react-native-svg": "^12.1.0",
     "react-native-tabbed-control": "^1.1.6",
     "react-native-vector-icons": "^6.6.0",

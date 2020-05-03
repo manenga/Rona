@@ -12,7 +12,6 @@ import CountryListScreen from '../screens/CountryListScreen';
 import CountryDetailScreen from '../screens/CountryDetailScreen';
 import Colors from '../constants/Colors';
 import { TabBar } from "react-native-animated-nav-tab-bar";
-import Icon from 'react-native-vector-icons/Feather';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'World';

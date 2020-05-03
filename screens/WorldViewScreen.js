@@ -225,7 +225,7 @@ export default class WorldViewScreen extends React.Component {
               <AcknowledgmentsView/>
               <TouchableOpacity
                 onPress={this.LoveClick}>
-                <Text style={{color: 'white', fontSize: 14, fontWeight: '300', marginVertical: 14}}>Made with ♥ by Manenga </Text>
+                <Text style={{color: 'white', fontSize: 14, fontWeight: '300', marginTop: 14, marginBottom: 8}}>Made with ♥ by Manenga </Text>
               </TouchableOpacity>
           </ScrollView>
           <ViewWithBanner/> 
