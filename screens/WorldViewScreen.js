@@ -3,14 +3,12 @@
 // WorldViewScreen.js
 // Rona
 //
-// Potential nice to have features:
-// most affected countries by total deaths, new deaths, total cases, new cases
-//
+
 import * as React from 'react';
 import { Image, Text, View, TouchableOpacity, Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import styles from '../constants/Styles';
-import Color from '../constants/Colors';
+import Styles from '../constants/Styles';
+import Colors from '../constants/Colors';
 import { format } from '../constants/Extensions'
 import * as FacebookAds from 'expo-ads-facebook';
 import { 
@@ -48,7 +46,6 @@ export default class WorldViewScreen extends React.Component {
   componentDidMount(){
     fetch('https://corona.lmao.ninja/v2/all')
       .then((response) => {
-        // console.log('response: ' + response)
         return response.json()
       })
       .then((json) => {
@@ -73,15 +70,9 @@ export default class WorldViewScreen extends React.Component {
         this.setState({lastUpdate: lastUpdate})
         this.setState({worldConfirmed: confirmed})
         this.setState({worldRecovered: recovered})
-        
-        // Print Summary
-        // console.log('Number of todayDeaths: ' + format(todayDeaths))
-        // console.log('Number of confirmed cases: ' + format(confirmed))
-        // console.log('Number of todayCases: ' + format(todayCases))
       })
       .catch((error) => console.error(error))
       .finally(() => {
-        // console.log('finally finished')
         this.setState({summaryLoaded: true})
       })
   }
@@ -98,9 +89,6 @@ export default class WorldViewScreen extends React.Component {
   }
 
   render() {
-    // Data for BasicSummaryView
-    // console.log('Number of todayDeaths: ' + format(this.state.todayDeaths))
-    // console.log('Number of todayCases: ' + format(this.state.todayCases))
     const props = {
       tests: this.state.worldTests, 
       cases: this.state.worldConfirmed, 
@@ -120,8 +108,8 @@ export default class WorldViewScreen extends React.Component {
       {
         name: "Active",
         population: this.state.active,
-        color: Color.primary,
-        legendFontColor: Color.primary,
+        color: Colors.primary,
+        legendFontColor: Colors.primary,
         legendFontSize: legendFontSize
       },
       {
@@ -137,8 +125,8 @@ export default class WorldViewScreen extends React.Component {
       {
         name: "Critical",
         population: this.state.critical,
-        color: Color.primary,
-        legendFontColor: Color.primary,
+        color: Colors.primary,
+        legendFontColor: Colors.primary,
         legendFontSize: legendFontSize
       },
       {
@@ -161,8 +149,8 @@ export default class WorldViewScreen extends React.Component {
       {
         name: "",
         population: this.state.worldConfirmed,
-        color: Color.lightGrey,
-        legendFontColor: Color.black,
+        color: Colors.lightGrey,
+        legendFontColor: Colors.black,
         legendFontSize: legendFontSize
       },
     ];
@@ -178,15 +166,15 @@ export default class WorldViewScreen extends React.Component {
       {
         name: "Deaths",
         population: this.state.worldDeaths,
-        color: Color.primary,
-        legendFontColor: Color.primary,
+        color: Colors.primary,
+        legendFontColor: Colors.primary,
         legendFontSize: legendFontSize
       },
       {
         name: "",
         population: this.state.worldConfirmed- (this.state.worldDeaths + this.state.worldRecovered),
-        color: Color.lightGrey,
-        legendFontColor: Color.darkGrey,
+        color: Colors.lightGrey,
+        legendFontColor: Colors.darkGrey,
         legendFontSize: legendFontSize
       },
     ];
@@ -196,8 +184,8 @@ export default class WorldViewScreen extends React.Component {
       {
         name: "Cases",
         population: this.state.worldConfirmed,
-        color: Color.primary,
-        legendFontColor: Color.primary,
+        color: Colors.primary,
+        legendFontColor: Colors.primary,
         legendFontSize: 12
       },
       {
@@ -212,15 +200,12 @@ export default class WorldViewScreen extends React.Component {
     if (this.state.summaryLoaded) {
       return (
         <LinearGradient 
-          style={[styles.gradientView, {height: '100%', width: '100%', borderRadius: 0}]}
+          style={[Styles.gradientView, {height: '100%', width: '100%', borderRadius: 0}]}
           colors={['#600200', '#D35D5A', '#390100']}>
-            <ScrollView style={styles.container} contentContainerStyle={[styles.contentContainer, {alignItems: 'center'}]}>
+            <ScrollView style={Styles.container} contentContainerStyle={[Styles.contentContainer, {alignItems: 'center'}]}>
               <BasicSummaryView props={props}/>
               <BasicPieChart props={{data: testsData, cardTitle: 'TESTS BREAKDOWN', footerText: 'Total tests taken', footerValue: this.state.worldTests}}/>
               <BasicPieChart props={{data: recoveryDeathsDiagnosedCaseData, cardTitle: 'OUTCOME BREAKDOWN', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
-              {/* <BasicPieChart props={{data: recoveryDiagnosedCaseData, cardTitle: 'RECOVERY RATE', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/>
-              <BasicPieChart props={{data: deathsDiagnosedCaseData, cardTitle: 'DEATH RATE', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/> */}
-              {/* <BasicPieChart props={{data: activeInactiveCaseData, cardTitle: 'CASES BREAKDOWN', footerText: 'Total cases', footerValue: this.state.worldConfirmed}}/> */}
               <BasicPieChart props={{data: mildSeriousCaseData, cardTitle: 'CASES BREAKDOWN', footerText: 'Total active cases', footerValue: this.state.active}}/>
               <AcknowledgmentsView/>
               <TouchableOpacity
@@ -228,7 +213,7 @@ export default class WorldViewScreen extends React.Component {
                 <Text style={{color: 'white', fontSize: 14, fontWeight: '300', marginTop: 14, marginBottom: 8}}>Made with ♥ by Manenga </Text>
               </TouchableOpacity>
           </ScrollView>
-          <ViewWithBanner/> 
+          <AdWithBanner/> 
         </LinearGradient>
       );
     } else {
@@ -237,7 +222,7 @@ export default class WorldViewScreen extends React.Component {
   }
 }
 
-function ViewWithBanner(props) {
+function AdWithBanner(props) {
   return (
     <View style={{width: '100%', paddingBottom: 20}}>
       <FacebookAds.BannerAd
@@ -249,3 +234,8 @@ function ViewWithBanner(props) {
     </View>
   );
 }
+
+// TODO: most affected countries by number of cases
+// TODO: most affected countries by total deaths
+// TODO: most affected countries by new deaths
+// TODO: most affected countries by new cases

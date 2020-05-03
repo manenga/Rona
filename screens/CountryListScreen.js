@@ -13,7 +13,7 @@ import styles from '../constants/Styles';
 // import { AlphabetListView } from 'react-native-alphabetlistview';
 import { format } from '../constants/Extensions'
 
-class CountryListScreen extends React.Component {
+export default class CountryListScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,8 +28,6 @@ class CountryListScreen extends React.Component {
   componentDidMount(){
     fetch('https://corona.lmao.ninja/v2/countries?sort=country')
       .then((response) => {
-        // console.log('=============================')
-        // console.log('response: ' + response)
         return response.json()
       })
       .then((json) => {
@@ -41,19 +39,11 @@ class CountryListScreen extends React.Component {
       })
       .catch((error) => console.error(error))
       .finally(() => {
-        // console.log('finally finished')
       })
   }
 
   render() {
     return (
-      // https://github.com/i6mi6/react-native-alphabetlistview
-      // <AlphabetListView
-      //   data={this.state.countries}
-      //   cell={this.countryRow}
-      //   cellHeight={100}
-      //   sectionHeaderHeight={22.5}
-      // />
       <FlatList
           style={{marginHorizontal: 5, alignSelf: 'center',}}
           data={this.state.countries}
@@ -65,7 +55,6 @@ class CountryListScreen extends React.Component {
     countryRow = ({index}) => {
       let item = this.state.dataSource[index];
       let isLastOption = false;
-      // console.log('Rendering country: ' + key)
 
       var deaths = item.deaths ?? 0;
       var country = item.country;
@@ -91,7 +80,6 @@ class CountryListScreen extends React.Component {
                 <Text style={styles.optionText}>{'Deaths:'}</Text> 
                 <Text style={[styles.optionText, {color: 'red'}]}>{format(deaths)}</Text>
               </View>
-              {/* <Text style={styles.optionText}>{'Last update: 1'}</Text> */}
           </View>
           <Icon name='right' type='antdesign' size={10} iconStyle={{padding: 6}}/>
         </View>
@@ -100,8 +88,5 @@ class CountryListScreen extends React.Component {
   };
   }
 
-export default CountryListScreen;
-
-/* Features
-- continent filter chips
-*/
+// TODO: Country Alphabet list
+// TODO: continent filter chips

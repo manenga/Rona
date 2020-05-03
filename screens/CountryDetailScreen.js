@@ -3,10 +3,7 @@
 // CountryDetailScreen.js
 // Rona
 //
-// Potential nice to have features:
-// lockdown status
-// news / tweets
-//
+
 import * as React from 'react';
 import { Text, Switch, TouchableOpacity, View, Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -31,7 +28,7 @@ var Country = {
   ZM: {name: "Zambia", query: "Zambia", flag: 'https://corona.lmao.ninja/assets/img/flags/zm.png'}, 
 };
 
-class CountryDetailScreen extends React.Component {
+export default class CountryDetailScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = initialState;
@@ -298,4 +295,5 @@ function AdViewWithBanner(props) {
     );
 }
 
-export default CountryDetailScreen;
+// TODO: lockdown status
+// TODO: news / tweets
