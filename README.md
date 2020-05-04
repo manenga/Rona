@@ -12,9 +12,9 @@ Mobile App to track the spread of the Covid19 Coronavirus Global Pandemic for So
 * Provincial Statistics for South Africa
 
 ## Availability 
-[Download the IPA](https://my.testfairy.com/download/74S36E1G70TJTD1J68W3ACSG6GS2TXEDPBKCAM93RJ1BVQETKS4BBB8HPVWGT/getapp?_=1588537371)
-[Download the APK](https://expo.io/@mungand/Rona)
-[View it via the Expo App for Android and iOS](https://my.testfairy.com/download/74S36E1G6RV2TD1J68W3ACSG6GS2VSQT7KF2Z9AZHRZAT8NR73JSW7H2PMV7R/getapp?_=1588533287)
+* [Download the IPA](https://my.testfairy.com/download/74S36E1G70TJTD1J68W3ACSG6GS2TXEDPBKCAM93RJ1BVQETKS4BBB8HPVWGT/getapp?_=1588537371)
+* [Download the APK](https://expo.io/@mungand/Rona)
+* [View it via the Expo App for Android and iOS](https://my.testfairy.com/download/74S36E1G6RV2TD1J68W3ACSG6GS2VSQT7KF2Z9AZHRZAT8NR73JSW7H2PMV7R/getapp?_=1588533287)
 
 # Demo
 <img src="https://github.com/manenga/Rona/blob/master/demo-gif.gif?raw=true" width="50%" /> 
