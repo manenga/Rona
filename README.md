@@ -1,6 +1,6 @@
 # Rona
 <p align="center">
-  <img src="https://github.com/manenga/Rona/blob/master/assets/images/coronavirus.png?raw=true" width="250" title="Coronavirus">
+  <img src="https://github.com/manenga/Rona/blob/master/assets/images/corona.png?raw=true" width="250" title="Coronavirus">
 </p>
 
 ## Purpose
