@@ -24,7 +24,7 @@ export default {
   black: '#000',
   primary: '#B03633',
   palePrimary: '#FFDDDC',
-  darkGrey: '#434041', //#212121
+  darkGrey: '#434041', 
   tabIconDefault: '#ccc',
   tabIconSelected: tintColor,
   tabBar: '#fefefe',

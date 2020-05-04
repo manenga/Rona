@@ -51,7 +51,5 @@ function DevelopmentModeNotice() {
     );
   }
 
-  // TODO
-  // Object level function extensions
+  // TODO: Object level function extensions
   // https://stackoverflow.com/questions/47630632/react-where-to-extend-object-prototype
-  //

@@ -195,15 +195,14 @@ let defaultChartConfig = {
     }
 }
 
+// Examples: 
+// Death rate
+// Average death age, min death age, max death age
 export function MetricInfoCard(props) {  
     const data = props.props.data ?? [];
     const value = props.props.value ?? '';
     const cardTitle = props.props.cardTitle ?? "";
-    
-    // Examples: 
-    // Death rate
-    // Average death age, min death age, max death age
-    
+
     return (
         <Card 
             title={
@@ -236,10 +235,7 @@ export function LoadingSummaryRow(props) {
     const isAbsolute = props.props.isAbsolute ?? false;
     const backgroundColor = 'rgba(253, 155, 152, 0.6)';
     const cardTitle = props.props.cardTitle ?? "";
-    // console.log(props);
     let chartConfig = data.chartConfig ?? defaultChartConfig
-
-    
 
     return (
         <Card 
@@ -262,9 +258,6 @@ export function LoadingSummaryRow(props) {
                 hasLegend={true}
             />
             <Text style={styles.lastUpdateFooterText}>{footerText} {format(footerValue)}</Text>
-            {/* <TouchableHighlight style={{padding: 12}} onPress={() => this.leanMore()}>
-                <FontAwesome5 name={'info-circle'} size={16} color={Colors.primary} style={{alignSelf: 'flex-end'}}/>
-            </TouchableHighlight> */}
         </Card>
     );
   }
@@ -277,7 +270,6 @@ export function CountryHeader(props) {
 
     return(
         <TouchableOpacity
-            // onPress={() => this.socialAuthClick()}
             underlayColor='transparent'>
             <Card containerStyle={{borderRadius: 2, shadowRadius: 2, paddingBottom: 10, width: cardWidth}}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -402,57 +394,5 @@ export function TimelineView(props) {
   
 }
 
-// https://github.com/xotahal/react-native-material-ui/blob/master/docs/Dialog.md
-export class MoreInfoOverlay extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {showMoreInfoOverlay: false};
-      }
-      
-    render() {
-        return(
-            <Overlay
-                isVisible={this.state.showMoreInfoOverlay}
-                onBackdropPress={() => this.setState({showMoreInfoOverlay: false})}
-                windowBackgroundColor="rgba(0, 0, 0, .5)"
-                overlayBackgroundColor="white"
-                width="75%"
-                height="auto">
-                    <View style={{flexDirection: 'row', alignItems:'flex-start', padding: 10}}>
-                        <TouchableHighlight
-                            onPress={() => this.setState({ showMoreInfoOverlay: false })}
-                            style={{position: 'absolute', right: 0, top:10}}
-                            underlayColor='transparent'>
-                                <Icon name='close' type='antdesign' size={21} iconStyle={{padding: 6}}/>
-                        </TouchableHighlight>
-    
-                        <View style={{flexDirection: 'column', justifyContent: 'center'}}>
-                            <Text style={{fontSize: 21, letterSpacing: 0.8, fontFamily: 'HelveticaNeue-Bold', color: '#000', marginBottom: 20}}>{'COMING_SOON'}</Text>
-                            <Text style={{fontSize: 21, letterSpacing: 0.8, fontFamily: 'HelveticaNeue-Bold', color: '#000', marginBottom: 20}}>{ 'SHOWCASE_APP' }</Text>
-                            
-                            <TouchableOpacity
-                                onPress={() => this.socialAuthClick()}
-                                style={{padding: 8, marginTop: 8, alignSelf: 'center'}}
-                                underlayColor='transparent'>
-                                    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderWidth: 2, borderColor: 'black', borderRadius: 28, paddingVertical: 10, paddingHorizontal: 15}}>
-                                        <Text style={{fontFamily: 'HelveticaNeue-Bold', letterSpacing: 0.8, color: Colours.black, fontSize: 11}}>YES, PLEASE</Text>
-                                    </View>
-                            </TouchableOpacity>
-    
-                            <TouchableHighlight
-                                onPress={() => this.setState({ isOverlayVisible: false })}
-                                style={{padding: 8, marginTop: 8 ,alignSelf: 'center'}}
-                                underlayColor='transparent'>
-                                    <View style={{padding: 10, alignContent: 'center'}}>
-                                        <Text style={{fontFamily: 'HelveticaNeue-Bold', letterSpacing: 0.8, color: 'black', fontSize: 11}}>NO THANKS</Text>
-                                    </View>
-                            </TouchableHighlight>
-                        </View>
-                    </View>
-            </Overlay>
-        );
-    }
-}
-// Nice to have charts
-// Cases over time / Recoveries / Deaths
-// New cases over time / Deaths
+// TODO: Cases over time / Recoveries / Deaths
+// TODO: New cases over time / Deaths
