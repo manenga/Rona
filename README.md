@@ -4,7 +4,7 @@
 </p>
 
 ## Purpose
-Mobile App to track the spread of the Covid19 Coronavirus Global Pandemic in South Africa.
+Mobile App to track the spread of the Covid19 Coronavirus Global Pandemic for South Africa.
 
 ## Features
 * Global statistics
@@ -12,7 +12,9 @@ Mobile App to track the spread of the Covid19 Coronavirus Global Pandemic in Sou
 * Provincial Statistics for South Africa
 
 ## Availability 
-[Expo for Android and iOS ](https://expo.io/@mungand/Rona)
+[Download the IPA](https://my.testfairy.com/download/74S36E1G70TJTD1J68W3ACSG6GS2TXEDPBKCAM93RJ1BVQETKS4BBB8HPVWGT/getapp?_=1588537371)
+[Download the APK](https://expo.io/@mungand/Rona)
+[View it via the Expo App for Android and iOS](https://my.testfairy.com/download/74S36E1G6RV2TD1J68W3ACSG6GS2VSQT7KF2Z9AZHRZAT8NR73JSW7H2PMV7R/getapp?_=1588533287)
 
 # Demo
 <img src="https://github.com/manenga/Rona/blob/master/demo-gif.gif?raw=true" width="50%" /> 
@@ -43,7 +45,7 @@ Special thanks to [Hillzy](https://www.instagram.com/hillzy911/), [Atanga Mungan
 [MIT](https://github.com/manenga/react-native-tabbed-control/blob/master/LICENSE) license.
 
 ## From Developers
-Made with ♥ by [Manenga](https://linkedin.com/in/mungandi/). Support me by making a [donation](https://paypal.me/Mungandi).
+Made with ♥ by [Manenga](https://linkedin.com/in/mungandi/). [Support me](https://paypal.me/Mungandi).
 
 ## TO-DO's:
 - [X] South Africa Provincial Data
