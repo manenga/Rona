@@ -49,4 +49,3 @@ Made with ♥ by [Manenga](https://linkedin.com/in/mungandi/). [Support me](http
 
 ## TO-DO's:
 - [X] South Africa Provincial Data
-- [ ] Save the world
