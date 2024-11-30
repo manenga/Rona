@@ -41,7 +41,7 @@ Special thanks to [Hillzy](https://www.instagram.com/hillzy911/), [Atanga Mungan
 - [Fin24](https://github.com/manenga/Fin24)
 
 ## License
-[MIT](https://github.com/manenga/react-native-tabbed-control/blob/master/LICENSE) license.
+[MIT](https://github.com/manenga/Rona/blob/master/LICENSE) license.
 
 ## From Developers
 Made with ♥ by [Manenga](https://linkedin.com/in/mungandi/). [Support me](https://paypal.me/Mungandi).
