@@ -30,7 +30,7 @@
     "expo-linear-gradient": "~8.1.0",
     "expo-web-browser": "~8.1.0",
     "mem": "^6.1.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "node": "^14.0.0",
     "papaparse": "^5.2.0",
     "react": "~16.9.0",
